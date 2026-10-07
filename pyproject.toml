@@ -3,7 +3,9 @@ name = "citibike-free-edition"
 version = "0.1.0"
 dependencies = [
     "scikit-lego==0.9.9",
-    "skops",
+    "skops==0.16.0",
+    "pandas==3.0.6",
+    "scikit-learn=1.9.1"
 ]
 [tool.databricks.environment]
 environment_version = "6"
