@@ -1,0 +1,9 @@
+[project]
+name = "citibike-free-edition"
+version = "0.1.0"
+dependencies = [
+    "scikit-lego==0.9.9",
+    "skops",
+]
+[tool.databricks.environment]
+environment_version = "6"
