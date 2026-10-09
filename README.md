@@ -1,2 +1,7 @@
-# citibike-data-pipeline
-This code logs and processes data from the GBFS citibike feed as well as associated data which is useful for citibike related ML and stats applications.
+# DATA 622 Citibike Project Readme
+
+This is the readme for the main github branch of our DATA 622 workspace. 
+
+The files in this lowest level directory
+
+
