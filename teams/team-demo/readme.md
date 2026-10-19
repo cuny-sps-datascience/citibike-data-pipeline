@@ -1,1 +1,1 @@
-This directory is for team-demo's code
+This directory is for team-demo team's code
