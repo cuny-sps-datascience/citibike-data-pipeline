@@ -1,2 +1,1 @@
-This directory is for team-demo's code. I have now changed it
-
+This directory is for team-demo team's code
