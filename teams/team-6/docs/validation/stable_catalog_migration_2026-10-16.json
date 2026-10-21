@@ -1,0 +1,40 @@
+{
+  "schema_version": "stable-catalog-migration-audit-v1",
+  "status": "VERIFIED",
+  "workspace_schema": "workspace.citibike_3h",
+  "migration_run_id": 112283255459161,
+  "migration_version": "20261017T000227Z-ab6f1e41",
+  "migration_report": "/Volumes/workspace/citibike_3h/exports/catalog_migrations/20261017T000227Z-ab6f1e41/report.json",
+  "migrated_stable_tables": 23,
+  "pre_migration_catalog_objects": 76,
+  "post_migration_catalog_objects": 55,
+  "post_migration_managed_tables": 37,
+  "post_migration_views": 18,
+  "timestamp_named_tables_remaining": 0,
+  "migration_checks": {
+    "source_view_targets_matched": true,
+    "row_counts_preserved": true,
+    "one_non_null_dataset_version_per_table": true,
+    "timestamped_source_names_absent": true,
+    "immutable_volume_and_raid_copies_preserved": true
+  },
+  "future_import_validation": {
+    "station_subway_run_id": 631562599782093,
+    "station_subway_status": "SUCCESS",
+    "station_subway_dataset_version": "20261016T135632Z-c198ce44",
+    "station_subway_stable_tables": 5,
+    "availability_run_id": 121243631254620,
+    "availability_status": "SUCCESS",
+    "availability_snapshot": "20261017T000522Z-30dfdcbd",
+    "availability_forecast_rows": 124,
+    "availability_table": "workspace.citibike_3h.availability_live_predictions"
+  },
+  "operational_invariants": {
+    "active_departure_pointer_sha256": "61e1eaa0f924dfcbf9e8440b9e477477629a18dbc34af4f0f03c344c8c1bff08",
+    "active_departure_pointer_changed": false,
+    "scheduled_jobs_unpaused": 3,
+    "daily_public_evidence_job_id": 537646732304684,
+    "daily_forecast_health_job_id": 899230762229374,
+    "prospective_source_collection_job_id": 1072725421467387
+  }
+}

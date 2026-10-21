@@ -1,0 +1,293 @@
+{
+  "recorded_at_utc": "2026-10-16T21:03:36.965638+00:00",
+  "scope": "conditional station inventory and point-in-time empty/no-dock risk",
+  "package_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/availability_packages/20261016T205258Z-ce84473b",
+  "package_manifest_sha256": "649bb03119614ab7ee8e13d83d0316447acce8513baf70e72189d3a9cdf47e8f",
+  "source_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_sources/20261016T195145Z-57b9a118",
+  "example_rows": 492270,
+  "cohort_stations": 32,
+  "test_stations": 31,
+  "split_rows": {
+    "train": 321420,
+    "validation": 39460,
+    "refit": 361128,
+    "calibration": 48116,
+    "test": 82286
+  },
+  "selected_counts": {
+    "bikes": "boosting_31",
+    "docks": "boosting_31"
+  },
+  "test_by_horizon": {
+    "15": {
+      "rows": 20591,
+      "bikes": {
+        "model": {
+          "mae": 1.2118647971356542,
+          "rmse": 1.945636036718064
+        },
+        "persistence": {
+          "mae": 1.075809819824195,
+          "rmse": 2.0459725300705087
+        },
+        "interval_coverage": 0.9035986596085669,
+        "mean_interval_width": 5.883899549304904,
+        "zero_events": 77,
+        "brier": 0.00213055879212655,
+        "persistence_brier": 0.0031567189548832014,
+        "prevalence_brier": 0.0037420548215004274,
+        "average_precision": 0.6274058696716649
+      },
+      "docks": {
+        "model": {
+          "mae": 1.163225453112702,
+          "rmse": 1.8075370245948914
+        },
+        "persistence": {
+          "mae": 1.0603176144917683,
+          "rmse": 1.9320570505559314
+        },
+        "interval_coverage": 0.9018503229566316,
+        "mean_interval_width": 5.428332506896931,
+        "zero_events": 2025,
+        "brier": 0.03537329385404033,
+        "persistence_brier": 0.05089602253411685,
+        "prevalence_brier": 0.08870189126975883,
+        "average_precision": 0.8272236472525024
+      }
+    },
+    "30": {
+      "rows": 20588,
+      "bikes": {
+        "model": {
+          "mae": 1.632179872296179,
+          "rmse": 2.654426300711914
+        },
+        "persistence": {
+          "mae": 1.6128327180882067,
+          "rmse": 2.940351574056368
+        },
+        "interval_coverage": 0.9046531960365262,
+        "mean_interval_width": 8.06733048211577,
+        "zero_events": 78,
+        "brier": 0.0026943147246804486,
+        "persistence_brier": 0.0043714785311832136,
+        "prevalence_brier": 0.003789187649560492,
+        "average_precision": 0.45823064618988785
+      },
+      "docks": {
+        "model": {
+          "mae": 1.5824457186539174,
+          "rmse": 2.529020673337309
+        },
+        "persistence": {
+          "mae": 1.5912181853506897,
+          "rmse": 2.8411920483633137
+        },
+        "interval_coverage": 0.9007188653584612,
+        "mean_interval_width": 7.229390008098464,
+        "zero_events": 2033,
+        "brier": 0.042723301160665236,
+        "persistence_brier": 0.06430930639207305,
+        "prevalence_brier": 0.08902415395822937,
+        "average_precision": 0.766319207697678
+      }
+    },
+    "60": {
+      "rows": 20559,
+      "bikes": {
+        "model": {
+          "mae": 2.285231404909569,
+          "rmse": 3.667721188201585
+        },
+        "persistence": {
+          "mae": 2.454934578530084,
+          "rmse": 4.364887157182476
+        },
+        "interval_coverage": 0.9033999708157011,
+        "mean_interval_width": 11.370474062873623,
+        "zero_events": 91,
+        "brier": 0.0034880708091103627,
+        "persistence_brier": 0.005399095286735736,
+        "prevalence_brier": 0.004414890776985819,
+        "average_precision": 0.3394228853584058
+      },
+      "docks": {
+        "model": {
+          "mae": 2.222424719977659,
+          "rmse": 3.512581066799313
+        },
+        "persistence": {
+          "mae": 2.4149520891093923,
+          "rmse": 4.2731474231809905
+        },
+        "interval_coverage": 0.9042754997811178,
+        "mean_interval_width": 10.141852895119237,
+        "zero_events": 2024,
+        "brier": 0.050654200101010335,
+        "persistence_brier": 0.08011090033561943,
+        "prevalence_brier": 0.0887844759251364,
+        "average_precision": 0.6843479782334453
+      }
+    },
+    "180": {
+      "rows": 20548,
+      "bikes": {
+        "model": {
+          "mae": 3.932451679349842,
+          "rmse": 5.942702481171393
+        },
+        "persistence": {
+          "mae": 5.041950554798521,
+          "rmse": 8.612434704304928
+        },
+        "interval_coverage": 0.8967296087210435,
+        "mean_interval_width": 18.791859609919637,
+        "zero_events": 88,
+        "brier": 0.004247025432246443,
+        "persistence_brier": 0.007689312828499124,
+        "prevalence_brier": 0.004272132215293273,
+        "average_precision": 0.08468935907137552
+      },
+      "docks": {
+        "model": {
+          "mae": 3.858127029243777,
+          "rmse": 5.769017028845755
+        },
+        "persistence": {
+          "mae": 4.973817403153592,
+          "rmse": 8.526630408560994
+        },
+        "interval_coverage": 0.8996496009343975,
+        "mean_interval_width": 16.586151213509098,
+        "zero_events": 1984,
+        "brier": 0.06283069328878044,
+        "persistence_brier": 0.1145610278372591,
+        "prevalence_brier": 0.08728092663148496,
+        "average_precision": 0.525239531795925
+      }
+    }
+  },
+  "training_run_id": 239441304535843,
+  "training_task_run_id": 1070224036303253,
+  "training_status": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "SUCCESS",
+    "state_message": "",
+    "user_cancelled_or_timedout": false
+  },
+  "model_root": "/Volumes/workspace/citibike_3h/exports/availability_pilots/20261016T205658Z-53093e33",
+  "local_result_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/availability_results/20261016T205658Z-53093e33",
+  "model_artifacts": [
+    {
+      "path": "report.json",
+      "bytes": 20017,
+      "sha256": "56c607fd4e852d44cd225f709cb79bf465755d8c3a2f17fd699d36e0380b3691"
+    },
+    {
+      "path": "selection.json",
+      "bytes": 841,
+      "sha256": "6dae850de1242b99b01ebaa14515563d5e75af3e94229c0967eb85542f69bcba"
+    },
+    {
+      "path": "calibration.json",
+      "bytes": 847,
+      "sha256": "26703983c7655c0c49bb37a7bacb90116365dac616eb8b48f3c099b0f22dcb40"
+    },
+    {
+      "path": "models.joblib",
+      "bytes": 791640,
+      "sha256": "e6cf751f2ae205d0dd4af03d5330dd35c3896170356a8c295d339adb06b47c4a"
+    },
+    {
+      "path": "predictions.parquet",
+      "bytes": 5008967,
+      "sha256": "18a6a276db400185c78e7300b8990b1151313bda71bfa60b25d30a36891c4ab8"
+    }
+  ],
+  "mlflow_run_id": "5704a1f2a5a54a06abd2ad978a823f27",
+  "predictions_table": "workspace.citibike_3h.availability_test_predictions_20261016t205658z_53093e33",
+  "dashboard_notebook_url": "https://dbc-d00cbd4c-c74c.cloud.databricks.com/editor/notebooks/2830703976677819",
+  "dashboard_run_url": "https://dbc-d00cbd4c-c74c.cloud.databricks.com/?o=7474644096185196#job/1105062052157056/run/263974755399019",
+  "dashboard_run_id": 263974755399019,
+  "dashboard_status": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "SUCCESS",
+    "state_message": "",
+    "user_cancelled_or_timedout": false
+  },
+  "live_report": {
+    "schema_version": "availability-live-refresh-v1",
+    "status": "READY",
+    "snapshot_root": "/Volumes/workspace/citibike_3h/exports/availability_live/20261016T210002Z-8480b02e",
+    "model_root": "/Volumes/workspace/citibike_3h/exports/availability_pilots/20261016T205658Z-53093e33",
+    "issue_time_utc": "2026-10-16T21:00:03.626107+00:00",
+    "source_observed_at_utc": "2026-10-16T21:00:03.414306+00:00",
+    "source_provider_at_utc": "2026-10-16T20:58:55+00:00",
+    "published_at_utc": "2026-10-16T21:00:09.719552+00:00",
+    "forecast_rows": 124,
+    "cohort_stations": 32,
+    "fresh_eligible_stations": 31,
+    "station_status_counts": {
+      "ready": 31,
+      "missing_or_ambiguous_information": 1
+    },
+    "predictions_table": "workspace.citibike_3h.availability_live_predictions_20261016t205658z_53093e33",
+    "active_departure_pointer_sha256": "61e1eaa0f924dfcbf9e8440b9e477477629a18dbc34af4f0f03c344c8c1bff08",
+    "active_departure_model_changed": false,
+    "scheduled": false,
+    "nominal_interval_coverage": 0.9
+  },
+  "live_checks_passed": true,
+  "live_forecast_rows": 124,
+  "live_unknown_stations": [
+    {
+      "station_id": "5073.07",
+      "station_name": "Greenwich St & Rector St",
+      "status": "missing_or_ambiguous_information",
+      "source_observed_at_utc": "2026-10-16 21:00:03.414306+00:00",
+      "provider_at_utc": "2026-10-16 20:58:55+00:00",
+      "current_bikes": null,
+      "current_docks": null
+    }
+  ],
+  "save_reload_checked_rows": 100,
+  "save_reload_max_difference": 0.0,
+  "package_checks": {
+    "duplicate_example_keys": 0,
+    "label_key_mismatch": 0,
+    "future_or_stale_input": 0,
+    "future_information": 0,
+    "bad_target_window": 0,
+    "negative_inventory": 0,
+    "invalid_horizon": 0,
+    "future_or_stale_lag_15": 0,
+    "future_or_stale_lag_30": 0,
+    "future_or_stale_lag_60": 0,
+    "input_not_from_actual_poll": 0,
+    "label_not_from_actual_open_poll": 0
+  },
+  "result_checks": {
+    "duplicate_keys": 0,
+    "bad_horizon": 0,
+    "invalid_bikes_forecast": 0,
+    "invalid_docks_forecast": 0
+  },
+  "independent_metric_recomputation_passed": true,
+  "local_tests_passed": 261,
+  "local_tests_seconds": 34.21,
+  "active_departure_pointer_sha256": "61e1eaa0f924dfcbf9e8440b9e477477629a18dbc34af4f0f03c344c8c1bff08",
+  "active_departure_model_changed": false,
+  "canonical_eligibility_promoted": false,
+  "new_schedule_enabled": false,
+  "original_proposal_sha256": "fde305547639fb55442a84d0bb5f737ea5b4a4da7d24cc4988593a1231c2c90d",
+  "limitations": [
+    "Retrospective reconstructed observations; exact daily metadata publication is assumed",
+    "Restricted 32-station geography",
+    "Targets conditional on continued station service and fresh endpoint coverage",
+    "Observed inventory includes unidentified operator/maintenance effects",
+    "Predicts inventory, not attempted demand or optimal movements",
+    "Uncertainty calibration may drift outside its historical window",
+    "No weather or subway predictors in this first direct-inventory model"
+  ]
+}
