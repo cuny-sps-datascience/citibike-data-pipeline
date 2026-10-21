@@ -1,6 +1,12 @@
 # Three hour Citi Bike execution status
 
-**Updated:** October 16, 2026. **Operator:** Randy Howk owns every workstream for now. **Workspace:** `workspace.citibike_3h` in the authenticated Free Edition account.
+**Updated:** October 21, 2026. **Operator:** Randy Howk owns every workstream for now. **Workspace:** `workspace.citibike_3h` in the authenticated Free Edition account.
+
+## October 21 station-hour integration
+
+The [canonical station-hour integration](station_hour_integration.md) now combines the validated 32-station operating-hour cohort with dated UUID/short-name identity, next-hour departures and returns, current bike/dock state, Farhod's spatial weather handoff, release-aware subway advisory fields and the frozen chronological split tags. The immutable local build contains 78,049 station-hours; features and outcomes are separate checksummed artifacts.
+
+The join completed, but common-fold coverage does not support a new combined model. Spatial weather has 13,471 eligible training and 8,230 validation rows but no September test rows, and its October 18 static station mapping fails strict historical as-of availability. Valid disruption fields have 14,224 September test rows but none in April/June training or validation. No model, catalog table or schedule was activated.
 
 Public-only execution now includes real **Manhattan-total** model training, held-out evaluation, and live forecast issuance in Databricks Free Edition. The combined collection/scoring job runs hourly at **minute 55 UTC**. This is a reduced spatial scope: the original station-level model and historical alert ablation remain gated. See the [public-only scope decision/runbook](public_only_mvp.md) and [model card](manhattan_benchmark_model_card.md). The earlier six-example synthetic capability model remains separately labeled.
 
