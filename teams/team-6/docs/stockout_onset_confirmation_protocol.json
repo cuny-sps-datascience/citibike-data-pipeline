@@ -1,0 +1,55 @@
+{
+  "schema_version": "stockout-onset-confirmation-protocol-v1",
+  "frozen_at_utc": "2026-10-21T01:20:00Z",
+  "frozen_before_source_window": true,
+  "latest_shared_status_date_known_at_freeze": "2026-10-18",
+  "purpose": "Untouched prospective confirmation of the frozen 30-minute stockout-onset candidates",
+  "source": {
+    "status_prefix": "s3://cuny-sps-citibike-archive/exports/station_status/",
+    "information_object": "s3://cuny-sps-citibike-archive/exports/station_info.parquet",
+    "status_dates_local": ["2026-11-01", "2026-12-01"],
+    "acquisition": "Version every object on first observation; record key, version ID, ETag, last-modified time, SHA-256, schema, row count, key uniqueness and coverage. Automated checksum acquisition may run during the window, but no outcome summaries or model metrics may be inspected before the window closes.",
+    "metadata_freshness_hours": 49,
+    "metadata_gate": "Each origin requires a station-information observation strictly before the origin and less than 49 hours old. A later S3 object modification time does not refresh embedded records. If collection is not restored, the confirmation remains blocked rather than forward-filled."
+  },
+  "cohort": {
+    "definition": "The 32 UUID/short-name mappings frozen in stockout_onset_packages/20261021T010515Z-v1/cohort.json",
+    "reselection": false,
+    "unknown_or_missing_station": "Exclude with a counted reason; do not substitute another station"
+  },
+  "outcome": {
+    "horizon_minutes": 30,
+    "definition": "A new zero-bike or zero-dock observation after a stocked eligible issue state and through minute 30",
+    "source_freshness_seconds": 120,
+    "maximum_gap_seconds": 120,
+    "endpoint_tolerance_seconds": 120,
+    "service_gate": "Installed, renting and returning at issue and every observed poll through the confirming endpoint",
+    "current_stockouts": "Excluded"
+  },
+  "frozen_candidates": {
+    "bike_selected": "histogram_boosting_15_leaves",
+    "dock_selected": "histogram_boosting_15_leaves",
+    "comparators": ["persistence_no_onset", "regularized_station_logistic"],
+    "model_bundle_sha256": "97da86549e0e5971e1e69c911911023c958fda9f276d10c34432d7480aebeacd",
+    "retraining": false,
+    "recalibration": false,
+    "threshold_tuning": false
+  },
+  "primary_metric": "Brier score by outcome on identical eligible keys",
+  "secondary_metrics": ["log loss", "average precision", "event prevalence", "calibration bins", "daily paired Brier difference"],
+  "minimum_evidence": {
+    "eligible_local_dates": 20,
+    "stations": 25,
+    "bike_onset_events": 50,
+    "dock_onset_events": 200
+  },
+  "decision_rule": "Report the window as inconclusive if any minimum-evidence or source-quality gate fails. Otherwise compare the frozen selected candidate with both comparators on common keys and report uncertainty by local date. Do not change the model or threshold after viewing results.",
+  "earliest_evaluation_utc": "2026-12-01T05:32:00Z",
+  "production_activation": false,
+  "limitations": [
+    "Confirmation remains conditional on observed service and dense polling",
+    "The frozen cohort is not a full-system sample",
+    "A one-month window may contain too few bike-onset events",
+    "No causal demand or rebalancing claim follows from observed inventory zeros"
+  ]
+}

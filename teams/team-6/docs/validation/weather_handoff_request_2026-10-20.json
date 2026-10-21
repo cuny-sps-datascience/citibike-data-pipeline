@@ -1,0 +1,27 @@
+{
+  "schema_version": "weather-handoff-request-v1",
+  "requested_at_local_date": "2026-10-20",
+  "source_pull_request": "https://github.com/cuny-sps-datascience/citibike-data-pipeline/pull/47",
+  "request_comment": "https://github.com/cuny-sps-datascience/citibike-data-pipeline/pull/47#issuecomment-6305310216",
+  "requested_from": "Farhod Ibragimov",
+  "requested_scope": {
+    "date_range": ["2026-04-01", "2026-07-01"],
+    "artifacts": [
+      "manifest",
+      "Parquet files",
+      "checksums",
+      "station mapping",
+      "import instructions or accessible volume path"
+    ],
+    "required_fields": [
+      "forecast horizon",
+      "fallback indicator",
+      "missing-weather indicator",
+      "request-class mapping",
+      "assumed seven-hour availability delay"
+    ]
+  },
+  "status": "pending external handoff",
+  "artifact_received": false,
+  "model_activation": false
+}
