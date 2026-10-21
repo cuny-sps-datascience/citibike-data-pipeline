@@ -49,6 +49,29 @@ A later spatial-weather model needs a weather extension through a later untouche
 
 Farhod's ZIP is stored outside Git under `modeling_exports/three_hour/weather_handoffs/20261018T033852681910Z/`. Its independently computed SHA-256 is `b98e6120a46abaa1d1c8db18197fae44590e42dbae66233b3cae21c9e710f4cc`; the local receipt also hashes every extracted member.
 
+## Shared Databricks handoff
+
+The station-hour build and the complete extracted weather handoff were published to the existing Team 6 Free Edition workspace on October 21. All 172 source objects were downloaded again from the managed volume and matched their local byte counts and SHA-256 hashes.
+
+```text
+/Volumes/workspace/citibike_3h/inputs/station_hour_integrations/20261021T-team6-v2
+/Volumes/workspace/citibike_3h/inputs/weather_handoffs/20261018T033852681910Z
+```
+
+Versioned Delta tables preserve the immutable publication, while stable views give notebooks a fixed name:
+
+| Stable view | Versioned table | Rows |
+|---|---|---:|
+| `workspace.citibike_3h.station_hour_features_current` | `station_hour_features_20261021_team6_v2` | 78,049 |
+| `workspace.citibike_3h.station_hour_labels_current` | `station_hour_labels_20261021_team6_v2` | 78,049 |
+| `workspace.citibike_3h.station_crosswalk_current` | `station_crosswalk_20261021_team6_v2` | 5,554 |
+| `workspace.citibike_3h.spatial_weather_classes_current` | `spatial_weather_classes_20261018` | 2,780,568 |
+| `workspace.citibike_3h.station_weather_mapping_current` | `station_weather_mapping_20261018` | 2,519 |
+
+The Databricks `account users` group has `USE CATALOG`, `USE SCHEMA`, inherited `SELECT`, and read/write access to the shared `inputs` volume. The existing SQL warehouse grants the same group `CAN USE`. This covers every active user in the workspace and permits teammates to query the tables or add an independently versioned subway contribution. Labels remain a separate table and no model, job, schedule, or stable model output was activated by this publication.
+
+The committed [Databricks handoff receipt](validation/databricks_team_handoff_2026-10-21.json) records the remote locations, object verification, row-count checks, stable views, and effective access grants.
+
 ## Rebuild and validation
 
 ```sh
