@@ -1,0 +1,315 @@
+{
+  "validated_at_utc": "2026-10-16T17:26:42.975732+00:00",
+  "units": {
+    "2026-09": {
+      "releases": [
+        "2026-09"
+      ],
+      "sources": 5,
+      "source_rows": 4982855,
+      "published_rows": 4982855,
+      "quarantined_rows": 0,
+      "removed_rows": 0,
+      "months": [
+        [
+          2026,
+          8,
+          549
+        ],
+        [
+          2026,
+          9,
+          4982306
+        ]
+      ],
+      "flags": [
+        [
+          "end_coords_invalid",
+          14554
+        ],
+        [
+          "end_station_missing",
+          14576
+        ],
+        [
+          "start_coords_invalid",
+          2917
+        ],
+        [
+          "start_station_missing",
+          2917
+        ]
+      ],
+      "membership": [
+        [
+          "casual",
+          "casual",
+          935245
+        ],
+        [
+          "member",
+          "member",
+          4047610
+        ]
+      ],
+      "rideable": [
+        [
+          "classic_bike",
+          1364040
+        ],
+        [
+          "electric_bike",
+          3618815
+        ]
+      ],
+      "duration": [
+        570.336,
+        3521.3918999999996,
+        90025.547,
+        0
+      ],
+      "selection_problems": [],
+      "unlisted_files": 0,
+      "stale_ledger_sources": [],
+      "start_stations": 2378,
+      "ride_id_identical": 0,
+      "ride_id_conflicting": 0,
+      "date_range": [
+        "2026-08-31 00:50:32.105000",
+        "2026-09-30 23:58:16.821000"
+      ],
+      "per_source": [
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_1.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_2.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_3.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_4.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_5.csv",
+          982855,
+          982855,
+          0,
+          0,
+          0
+        ]
+      ],
+      "quarantine_mismatches": [],
+      "row_mismatches": [],
+      "record_removals": 0,
+      "selection_complete": true,
+      "orphaned_removals": 0,
+      "orphaned_ride_ids": [],
+      "schema_consistent": true,
+      "reconciled": true
+    },
+    "2026-08,2026-09": {
+      "releases": [
+        "2026-08",
+        "2026-09"
+      ],
+      "sources": 11,
+      "source_rows": 10229091,
+      "published_rows": 10229091,
+      "quarantined_rows": 0,
+      "removed_rows": 0,
+      "months": [
+        [
+          2026,
+          7,
+          1454
+        ],
+        [
+          2026,
+          8,
+          5245331
+        ],
+        [
+          2026,
+          9,
+          4982306
+        ]
+      ],
+      "flags": [
+        [
+          "end_coords_invalid",
+          29287
+        ],
+        [
+          "end_station_missing",
+          29343
+        ],
+        [
+          "start_coords_invalid",
+          5787
+        ],
+        [
+          "start_station_missing",
+          5787
+        ]
+      ],
+      "membership": [
+        [
+          "casual",
+          "casual",
+          2063087
+        ],
+        [
+          "member",
+          "member",
+          8166004
+        ]
+      ],
+      "rideable": [
+        [
+          "classic_bike",
+          2777622
+        ],
+        [
+          "electric_bike",
+          7451469
+        ]
+      ],
+      "duration": [
+        578.776,
+        3747.3973999999985,
+        90025.547,
+        0
+      ],
+      "selection_problems": [],
+      "unlisted_files": 0,
+      "stale_ledger_sources": [],
+      "start_stations": 2392,
+      "ride_id_identical": 0,
+      "ride_id_conflicting": 0,
+      "date_range": [
+        "2026-07-31 02:10:56.632000",
+        "2026-09-30 23:58:16.821000"
+      ],
+      "per_source": [
+        [
+          "202608-citibike-tripdata/202608-citibike-tripdata_1.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "202608-citibike-tripdata/202608-citibike-tripdata_2.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "202608-citibike-tripdata/202608-citibike-tripdata_3.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "202608-citibike-tripdata/202608-citibike-tripdata_4.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "202608-citibike-tripdata/202608-citibike-tripdata_5.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "202608-citibike-tripdata/202608-citibike-tripdata_6.csv",
+          246236,
+          246236,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_1.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_2.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_3.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_4.csv",
+          1000000,
+          1000000,
+          0,
+          0,
+          0
+        ],
+        [
+          "external/486f1202551d/objects/2026-09/a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf/202609-citibike-tripdata.zip::202609-citibike-tripdata_5.csv",
+          982855,
+          982855,
+          0,
+          0,
+          0
+        ]
+      ],
+      "quarantine_mismatches": [],
+      "row_mismatches": [],
+      "record_removals": 0,
+      "selection_complete": true,
+      "orphaned_removals": 0,
+      "orphaned_ride_ids": [],
+      "schema_consistent": true,
+      "reconciled": true
+    }
+  }
+}
