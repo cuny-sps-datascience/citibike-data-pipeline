@@ -1,0 +1,51 @@
+{
+  "schema_version": "station-hour-integration-validation-v1",
+  "validated_on": "2026-10-21",
+  "status": "validated_with_coverage_gates",
+  "root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_hour_integrations/20261021T-team6-v2",
+  "rows": 78049,
+  "stations": 32,
+  "artifacts": [
+    {"path": "features.parquet", "rows": 78049, "bytes": 601026, "sha256": "843bb1e3e9825565367533df2dacf10e497c0721e0e2cc0fa49701e2fc80519b"},
+    {"path": "labels.parquet", "rows": 78049, "bytes": 443951, "sha256": "3d91036dbc236be76c1fe2cd1527fcf1c3f206508f791a6cae85b6448ed53a4a"},
+    {"path": "station_crosswalk.parquet", "rows": 5554, "bytes": 9422, "sha256": "8b824653c85c6a6c7bc4effbd8135f3a2bbb26ca6fa8e0266ba1b369098c0c04"}
+  ],
+  "flows": {
+    "departures": 326992,
+    "returns": 328922,
+    "return_operation_supported_rows": 74799,
+    "negative_flow_rows": 0
+  },
+  "crosswalk": {
+    "rows": 5554,
+    "station_uuids": 32,
+    "station_short_names": 32,
+    "future_use_violations": 0
+  },
+  "coverage_by_split": [
+    {"split": "train", "rows": 16789, "inventory_rows": 16064, "spatial_weather_rows": 16258, "spatial_weather_sensitivity_rows": 13471, "spatial_weather_strict_rows": 0, "disruption_asof_rows": 0},
+    {"split": "validation", "rows": 9941, "inventory_rows": 9532, "spatial_weather_rows": 9817, "spatial_weather_sensitivity_rows": 8230, "spatial_weather_strict_rows": 0, "disruption_asof_rows": 0},
+    {"split": "test", "rows": 19655, "inventory_rows": 18838, "spatial_weather_rows": 0, "spatial_weather_sensitivity_rows": 0, "spatial_weather_strict_rows": 0, "disruption_asof_rows": 14224},
+    {"split": "excluded", "rows": 31664, "inventory_rows": 30365, "spatial_weather_rows": 31476, "spatial_weather_sensitivity_rows": 26126, "spatial_weather_strict_rows": 0, "disruption_asof_rows": 0}
+  ],
+  "weather_handoff": {
+    "source_pr": 47,
+    "source_commit": "accfccac6f70f76a78f6e5b36af6dfed7125c8a6",
+    "dataset_build_id": "20261018T033852681910Z",
+    "zip_sha256": "b98e6120a46abaa1d1c8db18197fae44590e42dbae66233b3cae21c9e710f4cc",
+    "class_rows": 2780568,
+    "station_mappings": 2519,
+    "strict_asof_limitation": "The mapping snapshot is dated 2026-10-18 and cannot be treated as historically available in the April-September folds."
+  },
+  "checks": {
+    "unique_example_ids": true,
+    "unique_station_origin_keys": true,
+    "feature_label_counts_match": true,
+    "outcomes_absent_from_features": true,
+    "future_crosswalk_violations": 0,
+    "future_disruption_violations": 0,
+    "negative_flow_rows": 0,
+    "artifact_checksums_verified": true
+  },
+  "model_activation": false
+}
