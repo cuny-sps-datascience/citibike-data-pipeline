@@ -1,6 +1,10 @@
 # Three hour Citi Bike execution status
 
-**Updated:** October 21, 2026. **Operator:** Randy Howk owns every workstream for now. **Workspace:** `workspace.citibike_3h` in the authenticated Free Edition account.
+**Updated:** October 26, 2026. **Operator:** Randy Howk owns every workstream for now. **Workspace:** `workspace.citibike_3h` in the authenticated Free Edition account.
+
+## October 26 historical station panel
+
+The [separate historical Manhattan panel](historical_station_panel.md) now covers March 1, 2025–August 10, 2026 for 689 retrospectively mapped stations, with 26,178,555 station-origin-horizon rows. It reuses the existing hourly trip aggregates, audits Farhod's newer five-table release, and aligns all three weather targets and prior-origin subway publications under a five-minute issue cutoff. The user authorized retrospective geography and unknown unsupported zero counts; full historical station evaluation remains gated. The original 32-station spatial-weather alignment is superseded due to a one-hour target mismatch. Existing labels/receipts, dataset pointers, models, November confirmation and schedules are preserved. See the [protocol](historical_station_panel_protocol.json) and [receipt](validation/historical_station_panel_2026-10-26.json).
 
 ## October 21 station-hour integration
 

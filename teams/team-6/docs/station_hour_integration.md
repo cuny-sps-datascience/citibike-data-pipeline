@@ -1,6 +1,8 @@
 # Canonical station-hour integration
 
-**Built:** October 21, 2026. **Status:** validated with coverage gates. **Model activation:** none.
+**Built:** October 21, 2026. **Status:** historical package; spatial-weather alignment superseded October 26. **Model activation:** none.
+
+The [new historical Manhattan panel](historical_station_panel.md) implements the agreed March 2025–August 10, 2026 study as a separate version. The October 21 build below is preserved, but its weather horizon 1 targets the hour after the departure label. Do not use its spatial-weather fields for modeling. The corrected builder matches actual target timestamps, and validation now rejects that older misalignment. Its checksummed departure labels remain usable as bounded operation evidence; no combined model was trained from the misaligned features. Coverage figures below describe the original execution, not corrected weather eligibility.
 
 The first canonical integration combines the validated 32-station operating-hour cohort with hourly trip flows, current bike/dock state, Farhod's spatial forecast handoff, and release-aware subway advisory features. Predictors and outcomes remain in separate Parquet files joined by `example_id`; the feature artifact contains no departure, return, or label-availability fields.
 

@@ -24,6 +24,13 @@ START_DST = ("start_dst_ambiguous", "start_dst_nonexistent")
 END_DST = ("end_dst_ambiguous", "end_dst_nonexistent")
 
 
+def assert_weather_alignment(con) -> None:
+    invalid = con.execute("""SELECT count(*) FROM features
+        WHERE spatial_weather_covered AND (target_hour_utc IS NULL OR target_hour_utc<>origin_utc)""").fetchone()[0]
+    if invalid:
+        raise ValueError("Spatial weather target hour differs from departure label hour")
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with Path(path).open("rb") as stream:
@@ -344,7 +351,8 @@ def build_station_hour_integration(
         con.execute(
             f"""CREATE TEMP TABLE spatial_weather AS
             SELECT m.station_id AS station_uuid,
-                timezone('UTC',w.forecast_origin_utc) AS origin_utc,
+                b.origin_utc,
+                timezone('UTC',w.forecast_origin_utc) AS weather_source_origin_utc,
                 timezone('UTC',w.target_hour_utc) AS target_hour_utc,
                 timezone('UTC',w.selected_model_run_utc) AS selected_model_run_utc,
                 timezone('UTC',w.selected_run_available_utc) AS selected_run_available_utc,
@@ -361,7 +369,8 @@ def build_station_hour_integration(
             JOIN read_parquet({weather_sql},hive_partitioning=true) w
               USING(weather_request_class,dataset_build_id)
             JOIN (SELECT DISTINCT origin_utc FROM base) b
-              ON timezone('UTC',w.forecast_origin_utc)=b.origin_utc
+              ON timezone('UTC',w.target_hour_utc)=b.origin_utc
+                AND timezone('UTC',w.forecast_origin_utc)=b.origin_utc-INTERVAL '1 hour'
             WHERE w.forecast_horizon=1"""
         )
         weather_duplicates = con.execute(
@@ -406,7 +415,7 @@ def build_station_hour_integration(
                 i.current_bikes,i.current_docks,i.current_ebikes,i.disabled_bikes,i.disabled_docks,
                 i.inventory_capacity,(i.station_id IS NOT NULL) AS inventory_covered,
                 k.proxy_temperature_c,k.proxy_precipitation_mm,k.proxy_wind_speed_ms,k.proxy_wet,
-                sw.target_hour_utc,sw.selected_model_run_utc,sw.selected_run_available_utc,
+                sw.target_hour_utc,sw.weather_source_origin_utc,sw.selected_model_run_utc,sw.selected_run_available_utc,
                 sw.forecast_temperature_f,sw.forecast_precipitation_in,sw.forecast_rain_in,
                 sw.forecast_snowfall_in,sw.forecast_wind_speed_mph,sw.weather_request_class,
                 sw.is_fallback_weather_run,sw.weather_forecast_has_missing,sw.weather_model,
@@ -452,6 +461,7 @@ def build_station_hour_integration(
         ).fetchone()[0]
         if future_crosswalk or future_disruptions:
             raise ValueError("Predictor availability violation")
+        assert_weather_alignment(con)
         if con.execute("SELECT count(*) FROM features").fetchone()[0] != con.execute(
             "SELECT count(*) FROM labels"
         ).fetchone()[0]:
@@ -517,7 +527,7 @@ def build_station_hour_integration(
             "contracts": {
                 "identifier": "dated GBFS station UUID to Citi Bike short_name; strict before origin",
                 "flows": "validated station-pilot departures plus returns by end hour from every selected earlier trip partition",
-                "weather": "forecast horizon 1 joined by UUID weather class; missing values retained",
+                "weather": "previous-origin forecast horizon 1 matched to the actual departure target hour; missing values retained",
                 "disruptions": "null unless a semantically complete archived snapshot predates the issue cutoff",
                 "split": "frozen station pilot train/validation/test dates; refit membership is separate",
                 "label_separation": "features.parquet contains no departure or return outcomes",
@@ -548,6 +558,9 @@ def validate_station_hour_integration(root: Path) -> dict:
             rows = con.execute(
                 "SELECT count(*) FROM read_parquet(?)", [str(path)]
             ).fetchone()[0]
+            if artifact["path"] == "features.parquet":
+                con.read_parquet(str(path)).create_view("features")
+                assert_weather_alignment(con)
         if rows != artifact["rows"]:
             raise ValueError("Integration artifact row-count mismatch")
     return manifest

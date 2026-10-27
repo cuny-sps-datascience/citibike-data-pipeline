@@ -4,14 +4,15 @@ The Team 6 project lives in the shared `cuny-sps-datascience/citibike-data-pipel
 
 ## Start here
 
-- [Weather and subway dataset handoff](docs/weather_subway_handoff.md): Farhod's October 23 five-table release, import instructions and March 1, 2025–August 10, 2026 common study period. Integration with the longer-history station departure labels is pending.
+- [Historical Manhattan departure panel](docs/historical_station_panel.md): October 26 integration of the March 2025–August 10, 2026 study, 689 retrospective stations and three aligned hourly targets. Unsupported zeros remain unknown and main evaluation is gated.
+- [Weather and subway dataset handoff](docs/weather_subway_handoff.md): Farhod's October 23 five-table release, import instructions and source limitations, preserved alongside the separate integration report.
 
 - [Ensemble model results](docs/ensemble_results.md) and [incorporation plan](docs/ensemble_incorporation_plan.md): October 20 local/cloud comparisons. Weather histogram boosting reduces station September MAE to 2.134; inventory forests are not selected, and per-horizon routing retains persistence/boosting. Later confirmation is pending.
 - [Shared-repository migration](docs/shared_pipeline_migration.md): active branch, directory boundaries, retained archives and paths for adopting shared pipeline data.
 - [Shared station source audit](docs/shared_station_source_audit.md): pinned S3 objects, 32-station overlap comparison and the enforced station-information freshness cutoff.
 - [Thirty-minute stockout-onset comparison](docs/stockout_onset_results.md): strict continuous-window labels and common-key persistence/logistic/boosting results; boosting wins validation for bike and dock onset.
 - [Frozen future confirmation](docs/future_confirmation.md): untouched November window, fixed model hashes and evidence gates. [Farhod's weather handoff](docs/farhod_weather_handoff.md) records the received October 21 package and the newer October 23 release, with their separate coverage and validation status.
-- [Canonical station-hour integration](docs/station_hour_integration.md): dated UUID/short-name crosswalk, hourly departures and returns, bike/dock state, spatial weather, as-of disruptions and frozen chronological splits in separate feature/label artifacts.
+- [Original bounded station-hour integration](docs/station_hour_integration.md): dated identity, departure/return labels and inventory for the 32-station pilot. Its archived weather-hour alignment is superseded; use the new historical panel for correctly aligned spatial-weather features.
 - [Spark scaling decision](docs/spark_scaling_decision.md): current prepared tables fit in about 1.2 GB or less and complete within budget, so Spark ML would add overhead and validation work. Future iterations can introduce Spark first for cloud-resident, multi-year feature construction and incremental partition refreshes when measured scaling triggers are reached.
 - [Public-only benchmark and runbook](docs/public_only_mvp.md): executed Manhattan-total forecasting without class data; [model card and measured performance](docs/manhattan_benchmark_model_card.md). Randy operates all workstreams.
 - [Three-hour execution status](docs/three_hour_execution_status.md): verified exports, cloud training/forecasting, and remaining station-level/class dependencies.

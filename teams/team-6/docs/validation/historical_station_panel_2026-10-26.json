@@ -1,0 +1,133 @@
+{
+  "schema_version": "historical-station-panel-v1",
+  "status": "validated_with_coverage_gates",
+  "rows": 26178555,
+  "stations": 689,
+  "cohort": {
+    "stations": 689,
+    "mapped_borough_stations": 690,
+    "excluded_identity_or_location": 1,
+    "information": {
+      "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/station_information.json",
+      "path": "raw/gbfs_station_information.json",
+      "bytes": 1363323,
+      "sha256": "3b802ae79905e4159d530dd9f86bf4d2c70f245ee0a6369d83d3f2480654046f",
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-10-15T23:43:40.819980+00:00",
+      "name": "gbfs_station_information"
+    },
+    "borough_boundary": {
+      "url": "https://data.cityofnewyork.us/resource/gthc-hcne.geojson?$limit=10",
+      "path": "raw/boroughs.json",
+      "bytes": 3167672,
+      "sha256": "7aa44d9fb611f2f518a226ff994a6516a261a8ce982ccf1e7b37d663687f443c",
+      "content_type": "application/vnd.geo+json; charset=UTF-8",
+      "retrieved_at_utc": "2026-10-15T23:43:40.484902+00:00",
+      "name": "boroughs"
+    },
+    "policy": "Unique October GBFS UUID/short_name; <=25m reference agreement; retrospective snapshot cohort"
+  },
+  "transfer_audit": {
+    "build_id": "20261023T174914038037Z",
+    "files_verified": 14,
+    "tables": {
+      "weather_classes": {
+        "rows": 3031560,
+        "unique_keys": 3031560
+      },
+      "station_weather_mapping": {
+        "rows": 2519,
+        "unique_keys": 2519
+      },
+      "subway_bridge": {
+        "rows": 331,
+        "unique_keys": 331
+      },
+      "subway_alert_features": {
+        "rows": 5995296,
+        "unique_keys": 5995296
+      },
+      "subway_retrospective": {
+        "rows": 5995296,
+        "unique_keys": 5995296
+      }
+    }
+  },
+  "inputs": {
+    "observed_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/builds/20261016T172712Z-eb309064",
+    "observed_manifest_sha256": "19aee745d311267b4addf8e84cb781233b69ca4a8e1104c936e05aa4143059ff",
+    "transfer_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/weather_handoffs/20261023T174914038037Z/extracted",
+    "transfer_manifest_sha256": "724e79d8651716ba8049a16405d46ab047bf567e8d374331945d3e28000f7f49",
+    "reference_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/sources/20261015T234334Z-d29974e2",
+    "reference_manifest_sha256": "fe39881da33c0b2acf9b82c5dc8f25a734e89adb8ca8f5483fddd04b3785b936",
+    "pilot_labels": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_hour_integrations/20261021T-team6-v2/labels.parquet",
+    "pilot_labels_sha256": "3d91036dbc236be76c1fe2cd1527fcf1c3f206508f791a6cae85b6448ed53a4a",
+    "protocol_sha256": "705e057f01f06a6d1062d65a7cfd0fbfdd209ca9230c46cf917d1629d0cc5120"
+  },
+  "main_evaluation_ready": false,
+  "model_activated": false,
+  "existing_pointers_changed": false,
+  "gates": [
+    "Historical station operation is unverified across the full study; absent counts stay null.",
+    "The October snapshot cohort omits stations retired before that snapshot and may include stations not yet opened.",
+    "Static retrospective geography and assumed weather/trip-release availability prevent strict operational reconstruction.",
+    "Conditional zero labels come only from the preserved bounded 32-station pilot, never from missing trips or inventory.",
+    "Demand-profile means and unconditional model evaluation remain gated on valid historical exposure.",
+    "Earlier periods have been inspected; these splits are retrospective development, not untouched confirmation."
+  ],
+  "seconds": 69.14,
+  "reviewed_on_local": "2026-10-26",
+  "root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/historical_station_panels/20261027T015443Z-80ae1edf",
+  "manifest_sha256": "f8edb71321a95929460e39c52149f649b0cb9a3db5331686d8ecfe442109a9fc",
+  "artifact_count": 38,
+  "artifact_bytes": 46901471,
+  "coverage_by_split": {
+    "train": {
+      "rows": 19638567,
+      "weather_eligible_rows": 19390527,
+      "subway_eligible_rows": 3473820,
+      "combined_predictor_rows": 3428460,
+      "known_count_rows": 12524578,
+      "unknown_count_rows": 7113989,
+      "supported_zero_rows": 0,
+      "conditional_operation_rows": 0,
+      "conditional_common_rows": 0,
+      "strict_geography_rows": 0
+    },
+    "validation": {
+      "rows": 3021954,
+      "weather_eligible_rows": 3021954,
+      "subway_eligible_rows": 535248,
+      "combined_predictor_rows": 535248,
+      "known_count_rows": 2096694,
+      "unknown_count_rows": 925260,
+      "supported_zero_rows": 37883,
+      "conditional_operation_rows": 112407,
+      "conditional_common_rows": 19695,
+      "strict_geography_rows": 0
+    },
+    "test": {
+      "rows": 3518034,
+      "weather_eligible_rows": 3480828,
+      "subway_eligible_rows": 625212,
+      "combined_predictor_rows": 618408,
+      "known_count_rows": 2610061,
+      "unknown_count_rows": 907973,
+      "supported_zero_rows": 15233,
+      "conditional_operation_rows": 60463,
+      "conditional_common_rows": 10014,
+      "strict_geography_rows": 0
+    }
+  },
+  "transfer_zip_sha256_verified": "d750b7cc991d28c638a5bbfd44c4435d3de1666dec6ca92ad826ecffdb47ff41",
+  "transfer_zip_bytes": 72443437,
+  "shared_workspace_handoff": {
+    "status": "pending_authentication",
+    "target_root": "/Volumes/workspace/citibike_3h/inputs/historical_station_panels/20261027T015443Z-80ae1edf",
+    "reason": "DATA622 OAuth refresh token invalid; reauthentication required",
+    "objects_uploaded": 0,
+    "stable_views_changed": false,
+    "models_changed": false,
+    "jobs_or_schedules_changed": false
+  }
+}
