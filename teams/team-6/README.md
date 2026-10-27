@@ -4,6 +4,8 @@ The Team 6 project lives in the shared `cuny-sps-datascience/citibike-data-pipel
 
 ## Start here
 
+- [Weather and subway dataset handoff](docs/weather_subway_handoff.md): Farhod's October 23 five-table release, import instructions and March 1, 2025–August 10, 2026 common study period. Integration with the longer-history station departure labels is pending.
+
 - [Ensemble model results](docs/ensemble_results.md) and [incorporation plan](docs/ensemble_incorporation_plan.md): October 20 local/cloud comparisons. Weather histogram boosting reduces station September MAE to 2.134; inventory forests are not selected, and per-horizon routing retains persistence/boosting. Later confirmation is pending.
 - [Shared-repository migration](docs/shared_pipeline_migration.md): active branch, directory boundaries, retained archives and paths for adopting shared pipeline data.
 - [Shared station source audit](docs/shared_station_source_audit.md): pinned S3 objects, 32-station overlap comparison and the enforced station-information freshness cutoff.
