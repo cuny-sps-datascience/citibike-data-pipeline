@@ -1,0 +1,17 @@
+{
+  "python_code_cells_checked": 24,
+  "sql_calls_inspected_structurally": 19,
+  "checks": {
+    "01_citibike_noaa_weather.ipynb": "JSON and Python syntax pass; outputs cleared",
+    "02_update_noaa_weather.ipynb": "JSON and Python syntax pass; outputs cleared",
+    "03_prepare_noaa_weather.ipynb": "JSON and Python syntax pass; outputs cleared",
+    "04_validate_noaa_weather.ipynb": "JSON and Python syntax pass; outputs cleared",
+    "regressions": "Active maintenance rule, tie order, live view target, mapping preservation, no updater DDL, empty-mapping and overwrite guards all pass",
+    "runtime": "Not executed in Databricks; Spark SQL analysis and job validation required"
+  },
+  "original_input_sha256": {
+    "03_prepare_noaa_weather.ipynb": "f1d12024ff2f4cac569733594a069af0a6113ba90705bd57abf184d3120aeea1",
+    "01_citibike_noaa_weather.ipynb": "ee61092a3201e6c003643e2e976055338c26c8f779b380fe36f0e55fc19f938c",
+    "02_update_noaa_weather.ipynb": "94dec6f228dcf36fdefe2c014b447b0c424e3af76c35b663d9316f1f4ee5bf59"
+  }
+}
