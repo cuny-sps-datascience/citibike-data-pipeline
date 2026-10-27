@@ -122,12 +122,23 @@
   "transfer_zip_sha256_verified": "d750b7cc991d28c638a5bbfd44c4435d3de1666dec6ca92ad826ecffdb47ff41",
   "transfer_zip_bytes": 72443437,
   "shared_workspace_handoff": {
-    "status": "pending_authentication",
-    "target_root": "/Volumes/workspace/citibike_3h/inputs/historical_station_panels/20261027T015443Z-80ae1edf",
-    "reason": "DATA622 OAuth refresh token invalid; reauthentication required",
-    "objects_uploaded": 0,
+    "status": "uploaded_and_readback_verified",
+    "remote_root": "/Volumes/workspace/citibike_3h/inputs/historical_station_panels/20261027T015443Z-80ae1edf",
+    "verified_at_utc": "2026-10-27T03:20:55.309445+00:00",
+    "objects": 39,
+    "bytes": 46921271,
+    "manifest_sha256": "f8edb71321a95929460e39c52149f649b0cb9a3db5331686d8ecfe442109a9fc",
     "stable_views_changed": false,
     "models_changed": false,
-    "jobs_or_schedules_changed": false
+    "jobs_or_schedules_changed": false,
+    "access": {
+      "principal": "account users",
+      "effective_volume_privileges": [
+        "READ_VOLUME",
+        "WRITE_VOLUME"
+      ],
+      "verified_from": "Unity Catalog effective permissions API"
+    },
+    "receipt": "historical_station_panel_publication_2026-10-26.json"
   }
 }

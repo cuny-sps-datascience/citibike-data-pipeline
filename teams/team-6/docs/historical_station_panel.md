@@ -56,9 +56,9 @@ uv run --locked python scripts/build_historical_station_panel.py --validate /abs
 
 The builder writes a new directory and refuses overwriting it. It verifies all source member hashes and table keys, then processes one origin month at a time with a 3 GB DuckDB memory cap and two threads. Validation checks artifact hashes, unique natural keys, exact feature/label key correspondence, all three horizons, target/issue timing, split purges, predictor/label separation and the unsupported-zero policy. No bulk data is committed to Git.
 
-## Shared workspace handoff: pending authentication
+## Shared workspace handoff
 
-The local package is validated. Workspace upload could not start because the `DATA622` OAuth refresh token expired. The following is the prepared destination and reading example, to use **after** a successful upload; it is separate from the older `station_hour_*_current` views:
+The validated package is now uploaded to the shared workspace. All 39 objects (46,921,271 bytes including the manifest) were independently downloaded again and matched their local byte counts and SHA-256 hashes. The versioned destination is separate from the older `station_hour_*_current` views:
 
 ```python
 spark.conf.set("spark.sql.session.timeZone", "UTC")
@@ -70,13 +70,12 @@ crosswalk = spark.read.parquet(f"{panel_root}/station_crosswalk.parquet")
 panel = features.join(labels, ["station_id", "origin_utc", "horizon", "target_hour_utc"], "left")
 ```
 
-The [receipt](validation/historical_station_panel_2026-10-26.json) records the local validation and pending upload. After reauthentication, publish and independently download/hash-check every object with:
+The [local validation receipt](validation/historical_station_panel_2026-10-26.json) and [publication receipt](validation/historical_station_panel_publication_2026-10-26.json) pin the same manifest. The existing Unity Catalog effective permissions were checked: `account users` has `READ_VOLUME` and `WRITE_VOLUME` on the shared `inputs` volume. To repeat the immutable upload and read-back verification:
 
 ```sh
-databricks auth login --profile DATA622
 uv run --locked python scripts/publish_historical_station_panel.py \
   --package /Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/historical_station_panels/20261027T015443Z-80ae1edf \
   --receipt docs/validation/historical_station_panel_publication_2026-10-26.json
 ```
 
-Access will use the existing shared `inputs` volume permissions. The publisher refuses different-content overwrites and changes no stable table/view, model, job or schedule. The former 32-station feature views still refer to the preserved historical build and carry the weather-alignment limitation above.
+The publisher refuses different-content overwrites and changes no stable table/view, model, job or schedule. The former 32-station feature views still refer to the preserved historical build and carry the weather-alignment limitation above. The new panel is read directly from the versioned volume paths shown here; no new persistent Delta tables or stable views were created by this publication.
