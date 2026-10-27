@@ -29,7 +29,7 @@ The shared repository offers optional inputs that can extend Team 6 work without
 
 The public S3 path was audited on October 20. It contained 59 daily station-status Parquet files from August 21 through October 18 (about 438 MB total). The October 18 file contained 725,472 unique station/time rows for 2,519 stations with a median five-minute interval. The station-information file contained 138,282 rows for 2,526 stations, but its newest `fetched_at` value was October 12; it therefore failed Team 6's 49-hour metadata-freshness requirement for later status dates. Recheck these mutable paths before each use and save a checksum, object listing, row/key audit and freshness result with any derived package.
 
-Farhod's weather work remains available in shared-repository pull request 47. Treat code review and data delivery as separate steps: reviewed code can be adopted on this branch, while any uncommitted input data still requires a versioned, checksummed handoff.
+Farhod's original weather work is recorded in shared-repository pull request 47. The October 23 [weather/subway handoff](weather_subway_handoff.md) documents the newer five-table release, checksums and import instructions, with a common modeling period of March 1, 2025–August 10, 2026. Its full dataset documentation is preserved there alongside this project's README and runbooks. Treat code review, package receipt and validated modeling integration as separate steps; publication alone does not clear the station-history or forecast-timing gates.
 
 ## Adoption rules
 
