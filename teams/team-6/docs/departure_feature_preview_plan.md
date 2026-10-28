@@ -78,4 +78,4 @@ uv run --locked python scripts/build_departure_feature_preview.py
 uv run --locked python scripts/run_tests.py -q tests/test_departure_preview.py
 ```
 
-The builder checks source hashes, reads the RAID aggregates without changing them, pins the inventory completeness report, and commits only three feature/label rows, a single station crosswalk, tiny edge examples and rendered map artifacts. It never processes November confirmation outcomes. The published 26.18-million-row panel and its pointers remain unchanged. The [professor briefing](professor_briefing.md) distinguishes completed results from this proposed revision.
+The builder checks source hashes, reads the RAID aggregates without changing them, pins the inventory completeness report, and commits only three feature/label rows, a single station crosswalk, tiny edge examples and rendered map artifacts. It never processes November confirmation outcomes. The published 26.18-million-row panel and its pointers remain unchanged.
