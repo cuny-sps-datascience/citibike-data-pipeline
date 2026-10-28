@@ -4,6 +4,7 @@ The Team 6 project lives in the shared `cuny-sps-datascience/citibike-data-pipel
 
 ## Start here
 
+- [Departure feature preview and revision plan](docs/departure_feature_preview_plan.md): three actual feature/label horizons, station crosswalk, released-profile audit, variable-specific weather timing, subway cutoff explanation, an animated map demo and the plan to separate the main departure work from optional stockout experiments.
 - [Historical Manhattan departure panel](docs/historical_station_panel.md): October 26 integration of the March 2025–August 10, 2026 study, 689 retrospective stations and three aligned hourly targets. Unsupported zeros remain unknown and main evaluation is gated.
 - [Weather and subway dataset handoff](docs/weather_subway_handoff.md): Farhod's October 23 five-table release, import instructions and source limitations, preserved alongside the separate integration report.
 
