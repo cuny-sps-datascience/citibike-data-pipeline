@@ -1,0 +1,3 @@
+station_id,origin_utc,horizon,target_start_new_york,departures,label_basis,inventory_required
+4374.01,2026-06-15T14:00:00+00:00,2,2026-06-15T11:00:00-04:00,0,assumed_24h_zero,False
+5216.06,2026-06-15T14:00:00+00:00,1,2026-06-15T10:00:00-04:00,,outside_inferred_active_period,False
