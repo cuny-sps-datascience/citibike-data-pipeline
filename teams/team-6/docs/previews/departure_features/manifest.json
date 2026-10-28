@@ -133,23 +133,23 @@
   "artifacts": [
     {
       "path": "features.csv",
-      "bytes": 2721,
-      "sha256": "3be94e68eb03a1dff5e90d4b96d21c7b319ab095cbd632b100cda3045e1b9820"
+      "bytes": 2717,
+      "sha256": "804f889ee5e3e0531d5d785b295c880207b18e8af3ad18a29afbc55d57607f05"
     },
     {
       "path": "labels.csv",
-      "bytes": 653,
-      "sha256": "a5ac3ca2e37be9959e5744e89dabcd2737b993a8430340998804d758f8b0aee7"
+      "bytes": 649,
+      "sha256": "573d9794aa2807f3718ae98ffe3f9fffdd480f8654859d7f301a462a057a61f0"
     },
     {
       "path": "station_crosswalk.csv",
-      "bytes": 528,
-      "sha256": "1aaae23d98ed72fb43bf7e1c9e7e608a008c1f6f78387e659a9c1645cddf5d71"
+      "bytes": 526,
+      "sha256": "2bad9d1ff8fcbdf0e59b91124544a89c5ef01d87f77d292da3ac8d581e87c6e0"
     },
     {
       "path": "timing_alignment.csv",
-      "bytes": 729,
-      "sha256": "c6baecf4e453b798b8422ef2d9337fb1b08a3796e65b5e7094a638cadb6abc08"
+      "bytes": 725,
+      "sha256": "e7fe06400fee3f90c6834418317595fea65414b8440bead883c8fb7f4dd1cc99"
     },
     {
       "path": "map_storyboard.png",
@@ -168,8 +168,8 @@
     },
     {
       "path": "zero_policy_examples.csv",
-      "bytes": 284,
-      "sha256": "10b76d383dd196fe700635af3bef39f6310a7cf18d60dc96092fdb92b8e288f3"
+      "bytes": 281,
+      "sha256": "6c41dd745a9711dc8e381f0d42433ae2883391e4413ddbe7f36ebe6a8f2d4e8a"
     }
   ]
 }
