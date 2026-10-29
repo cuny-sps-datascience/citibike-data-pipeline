@@ -1,0 +1,29 @@
+# Environments
+.venv/
+.venv-*/
+# Data never lives in the code project
+*.parquet
+*.duckdb
+*.duckdb.wal
+*.csv
+*.zip
+station_status*.json
+data/
+# Logs and local tooling
+logs/
+*.log
+.databricks/
+.databrickscfg
+# Python and tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+# OS and local workflow scratch
+.DS_Store
+.superpowers/
+.env
+# Independent public checkout and preserved relocation state
+public/
+.local/

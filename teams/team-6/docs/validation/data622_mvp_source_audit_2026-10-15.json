@@ -1,0 +1,517 @@
+{
+  "planning_date": "2026-10-15",
+  "scope": "Read-only public source probes; no bulk trip processing or Databricks access",
+  "sources": [
+    {
+      "id": "mta_alert_monthly_coverage",
+      "url": "https://data.ny.gov/resource/7kct-peq7.json?%24select=date_trunc_ym%28date%29+as+month%2Ccount%28%2A%29+as+rows%2Cmin%28date%29+as+first_date%2Cmax%28date%29+as+last_date&%24where=agency+%3D+%27NYCT+Subway%27+AND+date+%3E%3D+%272025-03-01T00%3A00%3A00%27+AND+date+%3C+%272026-09-01T00%3A00%3A00%27&%24group=month&%24order=month",
+      "resolved_url": "https://data.ny.gov/resource/7kct-peq7.json?%24select=date_trunc_ym%28date%29+as+month%2Ccount%28%2A%29+as+rows%2Cmin%28date%29+as+first_date%2Cmax%28date%29+as+last_date&%24where=agency+%3D+%27NYCT+Subway%27+AND+date+%3E%3D+%272025-03-01T00%3A00%3A00%27+AND+date+%3C+%272026-09-01T00%3A00%3A00%27&%24group=month&%24order=month",
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_bytes": 2305,
+      "sha256": "63c0fa6308ac4c103240da2914b209541f60a4e61c4c9518fcee1986fe639ea3",
+      "summary": [
+        {
+          "month": "2025-03-01T00:00:00.000",
+          "rows": "3878",
+          "first_date": "2025-03-01T00:00:00.000",
+          "last_date": "2025-03-30T23:43:00.000"
+        },
+        {
+          "month": "2025-04-01T00:00:00.000",
+          "rows": "3743",
+          "first_date": "2025-04-01T00:18:00.000",
+          "last_date": "2025-04-29T23:47:00.000"
+        },
+        {
+          "month": "2025-05-01T00:00:00.000",
+          "rows": "3665",
+          "first_date": "2025-05-01T00:22:00.000",
+          "last_date": "2025-05-30T23:59:00.000"
+        },
+        {
+          "month": "2025-06-01T00:00:00.000",
+          "rows": "3612",
+          "first_date": "2025-06-01T00:33:00.000",
+          "last_date": "2025-06-29T23:54:00.000"
+        },
+        {
+          "month": "2025-07-01T00:00:00.000",
+          "rows": "3911",
+          "first_date": "2025-07-01T00:00:00.000",
+          "last_date": "2025-07-30T23:47:00.000"
+        },
+        {
+          "month": "2025-08-01T00:00:00.000",
+          "rows": "3459",
+          "first_date": "2025-08-01T00:11:00.000",
+          "last_date": "2025-08-30T23:55:00.000"
+        },
+        {
+          "month": "2025-09-01T00:00:00.000",
+          "rows": "3265",
+          "first_date": "2025-09-01T00:14:00.000",
+          "last_date": "2025-09-29T23:43:00.000"
+        },
+        {
+          "month": "2025-10-01T00:00:00.000",
+          "rows": "4077",
+          "first_date": "2025-10-01T00:12:00.000",
+          "last_date": "2025-10-30T23:54:00.000"
+        },
+        {
+          "month": "2025-11-01T00:00:00.000",
+          "rows": "3629",
+          "first_date": "2025-11-01T00:11:00.000",
+          "last_date": "2025-11-29T23:21:00.000"
+        },
+        {
+          "month": "2025-12-01T00:00:00.000",
+          "rows": "4291",
+          "first_date": "2025-12-01T00:40:00.000",
+          "last_date": "2025-12-30T23:21:00.000"
+        },
+        {
+          "month": "2026-01-01T00:00:00.000",
+          "rows": "4547",
+          "first_date": "2026-01-01T00:05:00.000",
+          "last_date": "2026-01-30T23:56:00.000"
+        },
+        {
+          "month": "2026-02-01T00:00:00.000",
+          "rows": "4186",
+          "first_date": "2026-02-01T00:03:00.000",
+          "last_date": "2026-02-27T23:57:00.000"
+        },
+        {
+          "month": "2026-03-01T00:00:00.000",
+          "rows": "4413",
+          "first_date": "2026-03-01T00:43:00.000",
+          "last_date": "2026-03-30T23:49:00.000"
+        },
+        {
+          "month": "2026-04-01T00:00:00.000",
+          "rows": "4147",
+          "first_date": "2026-04-01T00:01:00.000",
+          "last_date": "2026-04-29T23:56:00.000"
+        },
+        {
+          "month": "2026-05-01T00:00:00.000",
+          "rows": "4242",
+          "first_date": "2026-05-01T00:09:00.000",
+          "last_date": "2026-05-30T23:39:00.000"
+        },
+        {
+          "month": "2026-06-01T00:00:00.000",
+          "rows": "3754",
+          "first_date": "2026-06-01T00:02:00.000",
+          "last_date": "2026-06-29T23:57:00.000"
+        },
+        {
+          "month": "2026-07-01T00:00:00.000",
+          "rows": "4109",
+          "first_date": "2026-07-01T00:24:00.000",
+          "last_date": "2026-07-30T23:55:00.000"
+        },
+        {
+          "month": "2026-08-01T00:00:00.000",
+          "rows": "1396",
+          "first_date": "2026-08-01T00:05:00.000",
+          "last_date": "2026-08-11T23:51:00.000"
+        }
+      ]
+    },
+    {
+      "id": "mta_alert_schema",
+      "url": "https://data.ny.gov/api/views/7kct-peq7.json",
+      "resolved_url": "https://data.ny.gov/api/views/7kct-peq7.json",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 25284,
+      "sha256": "7d60bef75d56169b455df2823d87374bc5adaa4459777579c586ceef146e8b53",
+      "summary": {
+        "dataset_id": "7kct-peq7",
+        "name": "MTA Service Alerts: Beginning April 2020",
+        "posting_frequency": "Monthly",
+        "fields": [
+          {
+            "field": "alert_id",
+            "type": "number"
+          },
+          {
+            "field": "event_id",
+            "type": "number"
+          },
+          {
+            "field": "update_number",
+            "type": "number"
+          },
+          {
+            "field": "date",
+            "type": "calendar_date"
+          },
+          {
+            "field": "agency",
+            "type": "text"
+          },
+          {
+            "field": "status_label",
+            "type": "text"
+          },
+          {
+            "field": "affected",
+            "type": "text"
+          },
+          {
+            "field": "header",
+            "type": "text"
+          },
+          {
+            "field": "description",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mta_stations",
+      "url": "https://data.ny.gov/resource/39hk-dx4f.json?$limit=1000",
+      "resolved_url": "https://data.ny.gov/resource/39hk-dx4f.json?$limit=1000",
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "response_bytes": 285417,
+      "sha256": "40f829816b08434dfd23ddd6e2b75a98ad7bd9bc2c00861c9a257726435cb0cb",
+      "summary": {
+        "rows": 496,
+        "fields": [
+          "gtfs_stop_id",
+          "station_id",
+          "complex_id",
+          "division",
+          "line",
+          "stop_name",
+          "borough",
+          "cbd",
+          "daytime_routes",
+          "structure",
+          "gtfs_latitude",
+          "gtfs_longitude",
+          "north_direction_label",
+          "south_direction_label",
+          "ada",
+          "ada_northbound",
+          "ada_southbound",
+          "ada_notes",
+          "georeference",
+          ":@computed_region_yamh_8v7k",
+          ":@computed_region_wbg7_3whc",
+          ":@computed_region_kjdx_g34t"
+        ]
+      }
+    },
+    {
+      "id": "gbfs_discovery",
+      "url": "https://gbfs.citibikenyc.com/gbfs/gbfs.json",
+      "resolved_url": "https://gbfs.citibikenyc.com/gbfs/gbfs.json",
+      "http_status": 200,
+      "content_type": "application/json",
+      "response_bytes": 3619,
+      "sha256": "a6158d96ced942de37c87e4857fbad0f28cf7b8015dadb0a0ea77d73b9a61ec1",
+      "summary": {
+        "version": "1.1",
+        "feeds": [
+          {
+            "name": "gbfs",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/gbfs.json"
+          },
+          {
+            "name": "ebikes_at_stations",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/ebikes_at_stations.json"
+          },
+          {
+            "name": "system_information",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/system_information.json"
+          },
+          {
+            "name": "station_information",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/station_information.json"
+          },
+          {
+            "name": "station_status",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/station_status.json"
+          },
+          {
+            "name": "free_bike_status",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/free_bike_status.json"
+          },
+          {
+            "name": "system_hours",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/system_hours.json"
+          },
+          {
+            "name": "system_calendar",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/system_calendar.json"
+          },
+          {
+            "name": "system_regions",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/system_regions.json"
+          },
+          {
+            "name": "system_pricing_plans",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/system_pricing_plans.json"
+          },
+          {
+            "name": "system_alerts",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/system_alerts.json"
+          },
+          {
+            "name": "gbfs_versions",
+            "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/gbfs_versions.json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mta_live_alerts",
+      "url": "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fall-alerts",
+      "resolved_url": "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fall-alerts",
+      "http_status": 200,
+      "content_type": "application/x-protobuf",
+      "response_bytes": 920858,
+      "sha256": "e9a813143f71276cd017fee0add1304765ddb7787eb69eceaa194906bbba1578",
+      "summary": {
+        "nonempty_payload": true,
+        "protobuf_decode": "not performed"
+      }
+    },
+    {
+      "id": "open_meteo_historical_run",
+      "url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=40.75&longitude=-73.98&hourly=temperature_2m%2Cprecipitation%2Crain%2Csnowfall%2Cwind_speed_10m&models=ecmwf_ifs&run=2025-03-01T00%3A00&forecast_days=2&timezone=UTC&wind_speed_unit=ms",
+      "resolved_url": "https://single-runs-api.open-meteo.com/v1/forecast?latitude=40.75&longitude=-73.98&hourly=temperature_2m%2Cprecipitation%2Crain%2Csnowfall%2Cwind_speed_10m&models=ecmwf_ifs&run=2025-03-01T00%3A00&forecast_days=2&timezone=UTC&wind_speed_unit=ms",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 2491,
+      "sha256": "908d8d87ceae2a8c839aebc0f75e7e795161e597dff7bf249dbcf0c1d1021d48",
+      "summary": {
+        "latitude": 40.738136,
+        "longitude": -74.04254,
+        "timezone": "GMT",
+        "hourly_units": {
+          "time": "iso8601",
+          "temperature_2m": "\u00b0C",
+          "precipitation": "mm",
+          "rain": "mm",
+          "snowfall": "cm",
+          "wind_speed_10m": "m/s"
+        },
+        "hour_count": 48,
+        "first_hour": "2025-03-01T00:00",
+        "nulls": {
+          "temperature_2m": 0,
+          "precipitation": 1,
+          "rain": 1,
+          "snowfall": 1,
+          "wind_speed_10m": 0
+        }
+      }
+    },
+    {
+      "id": "nyc_borough_boundaries_schema",
+      "url": "https://data.cityofnewyork.us/api/views/gthc-hcne.json",
+      "resolved_url": "https://data.cityofnewyork.us/api/views/gthc-hcne.json",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "response_bytes": 7395,
+      "sha256": "6b035710526f2b6fc072a6150820c86d259067b37185e36517bf79142b5f0033",
+      "summary": {
+        "dataset_id": "gthc-hcne",
+        "name": "Borough Boundaries",
+        "posting_frequency": null,
+        "fields": [
+          {
+            "field": "borocode",
+            "type": "number"
+          },
+          {
+            "field": "boroname",
+            "type": "text"
+          },
+          {
+            "field": "shape_area",
+            "type": "number"
+          },
+          {
+            "field": "shape_leng",
+            "type": "number"
+          },
+          {
+            "field": "the_geom",
+            "type": "multipolygon"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mta_alert_day_presence",
+      "url": "https://data.ny.gov/resource/7kct-peq7.json?%24select=date_trunc_ymd%28date%29+as+day%2Ccount%28%2A%29+as+rows&%24where=agency+%3D+%27NYCT+Subway%27+AND+date+%3E%3D+%272025-03-01T00%3A00%3A00%27+AND+date+%3C+%272026-08-01T00%3A00%3A00%27&%24group=day&%24order=day&%24limit=1000",
+      "http_status": 200,
+      "summary": {
+        "days_with_records": 501,
+        "dates_without_records": [
+          "2025-03-31",
+          "2025-04-30",
+          "2025-05-31",
+          "2025-06-30",
+          "2025-07-31",
+          "2025-08-31",
+          "2025-09-30",
+          "2025-10-31",
+          "2025-11-30",
+          "2025-12-31",
+          "2026-01-31",
+          "2026-02-28",
+          "2026-03-31",
+          "2026-04-30",
+          "2026-05-31",
+          "2026-06-30",
+          "2026-07-31"
+        ],
+        "interpretation": "No records does not alone prove either normal service or feed completeness."
+      }
+    },
+    {
+      "id": "gbfs_station_information",
+      "url": "https://gbfs.lyft.com/gbfs/1.1/bkn/en/station_information.json",
+      "http_status": 200,
+      "response_bytes": 1363323,
+      "sha256": "74775ec0e62675a10b9f3de72995c804ce3ffe31e15e6a118a55c26bc3c4b1ea",
+      "summary": {
+        "version": "1.1",
+        "station_count": 2519,
+        "sample_identifiers": {
+          "station_id": "29ced315-14b5-4edc-bef2-665316dfe3dd",
+          "short_name": "5997.10",
+          "name": "W 12 St & Hudson St"
+        },
+        "sample_fields": [
+          "station_id",
+          "name",
+          "short_name",
+          "lon",
+          "lat",
+          "region_id",
+          "capacity",
+          "rental_uris",
+          "rental_methods",
+          "has_kiosk",
+          "station_type",
+          "external_id",
+          "electric_bike_surcharge_waiver",
+          "eightd_station_services",
+          "eightd_has_key_dispenser"
+        ]
+      }
+    },
+    {
+      "id": "tripdata_september_2026_listing",
+      "url": "https://s3.amazonaws.com/tripdata/?prefix=202609&max-keys=20",
+      "http_status": 200,
+      "response_bytes": 558,
+      "sha256": "d703e83cdc34557f74b08bd9e76e3da582af3f2f19ac41c65d935a671a53b627",
+      "summary": {
+        "is_truncated": "false",
+        "objects": [
+          {
+            "key": "202609-citibike-tripdata.zip",
+            "bytes": "972151835",
+            "last_modified": "2026-10-05T19:43:04.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mta_live_alert_decode",
+      "url": "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fall-alerts",
+      "summary": {
+        "decoder": "gtfs-realtime-bindings in isolated uv environment",
+        "feed_timestamp": 1792106423,
+        "entities": 480,
+        "sample_entity_id": "lmm:alert:272023:26",
+        "sample_agency_id": "MTASBWY",
+        "observed_fields": [
+          "active_period.start",
+          "active_period.end (optional)",
+          "informed_entity.agency_id",
+          "informed_entity.route_id",
+          "informed_entity.stop_id (optional)"
+        ],
+        "interpretation": "Successful current snapshot decode; no historical archive coverage implied."
+      }
+    }
+  ],
+  "local_paths": [
+    {
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject",
+      "exists": true
+    },
+    {
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed",
+      "exists": true
+    }
+  ],
+  "initial_local_paths": [
+    {
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject",
+      "exists": false
+    },
+    {
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed",
+      "exists": false
+    }
+  ],
+  "local_input_verification": {
+    "planning_date": "2026-10-15",
+    "access": "read-only ledger and Parquet metadata; trip contents not rescanned",
+    "source_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject",
+    "processed_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed",
+    "source_root_exists": true,
+    "processed_root_exists": true,
+    "ledger_totals": [
+      {
+        "dataset": "removed",
+        "files": 3,
+        "rows": 512
+      },
+      {
+        "dataset": "trips",
+        "files": 1145,
+        "rows": 323817126
+      }
+    ],
+    "selected_release_bounds": [
+      "2013-06",
+      "2026-08",
+      159
+    ],
+    "verified_input_window": {
+      "start": "2024-08-01",
+      "end_exclusive": "2026-09-01",
+      "files": 161,
+      "ledger_rows": 96703344,
+      "bytes": 3511899119,
+      "months": 25,
+      "selected_status_and_parquet_metadata_checks": "passed"
+    },
+    "existing_modeling_export_current": "20261011T144948Z-0aa84cfe"
+  },
+  "local_station_snapshot": {
+    "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_snapshots/station_status.json",
+    "bytes": 968279,
+    "sha256": "dded4870431f7a5a25f5f4b7c5c137a97b7c7820091493a1213209b294c477c3",
+    "version": "1.1",
+    "last_updated": 1790641318,
+    "last_updated_utc": "2026-09-29T00:21:58+00:00",
+    "station_rows": 2520,
+    "interpretation": "One snapshot; not historical operation coverage."
+  }
+}

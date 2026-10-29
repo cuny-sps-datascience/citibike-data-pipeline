@@ -1,0 +1,70 @@
+{
+  "schema_version": "public-station-pilot-protocol-v2",
+  "frozen_at_utc": "2026-10-16T19:51:45.047803+00:00",
+  "scope": "Retrospective reconstructed three-hour Manhattan station departures pilot; independent of the live aggregate model",
+  "cohort": "Up to 32 Manhattan stations, lexically sorted by string short_name, with unique UUID/short_name and stable coordinates in April 6/7 information snapshots. No outcome-based selection.",
+  "train_target_local": [
+    "2026-04-08",
+    "2026-05-01"
+  ],
+  "validation_target_local": [
+    "2026-06-16",
+    "2026-07-01"
+  ],
+  "validation_fit_origin_local": "2026-06-16T00:00:00-04:00",
+  "test_target_local": [
+    "2026-09-01",
+    "2026-10-01"
+  ],
+  "test_fit_origin_local": "2026-09-01T00:00:00-04:00",
+  "refit_target_local": [
+    "2026-04-08",
+    "2026-07-01"
+  ],
+  "label_availability": "max(target month end +45 days 00 UTC, every supplying source cohort month end +45 days 00 UTC); strict before fit cutoff",
+  "validation_selection_availability": "Every validation target label must be mature before September fit cutoff; do not use July spillovers that mature September 14",
+  "origin_cutoff_minutes": 5,
+  "horizons": [
+    0,
+    1,
+    2
+  ],
+  "boundary_purge": "All three targets must remain inside the specified target partition",
+  "operation_population": "Hours fully bracketed by observed installed/renting status with provider age <=120 seconds and station report age between -300 and 600 seconds, consecutive polls at most 120 seconds apart, stable identity/coordinates, and complete ledger-selected trip inputs. Bounded interpolation assumption; no proof of uninterrupted operation between polls. Empty inventory remains eligible.",
+  "metadata_availability": "Use previous UTC day's information only after that day ends plus 1 hour, with provider timestamp before cutoff. Exact historical retrieval not retained: this is a declared conservative scenario, not verified first publication. Reject moves >25m and duplicate/missing identifiers.",
+  "geography": "Dated information snapshots matched to versioned MTA GTFS parent stops; archive version must predate cutoff. Radius 500m primary, 250m descriptive sensitivity only.",
+  "weather": "Existing Manhattan ECMWF IFS point proxy; initialization +7h strict before origin cutoff; no actual-weather replacement",
+  "alerts": "Latest archived full snapshot fetched strictly before cutoff; provider age -300..900sec. Preserve full active_periods_json, AND selector restrictions, OR selectors, deduplicate entity per station. Reject unsupported trip restrictions. Missing/stale snapshot is missing, not zero advisories.",
+  "models": [
+    "station/calendar Poisson",
+    "station/calendar/weather Poisson",
+    "station/calendar/weather/advisory Poisson"
+  ],
+  "alphas": [
+    0.1,
+    1.0
+  ],
+  "selection": "Choose alpha separately per family by June common-key validation MAE, persist selections before September metrics, refit selected families on individually mature April-June common-key examples before September cutoff",
+  "primary_metric": "MAE on identical station/origin/horizon keys with supported label operation and fresh weather/advisory inputs",
+  "secondary_metrics": [
+    "RMSE",
+    "Poisson deviance",
+    "bias",
+    "zero-label fraction",
+    "per horizon MAE",
+    "daily paired MAE differences"
+  ],
+  "limitations": [
+    "Reconstructed retrospective evaluation, not forecasts actually issued in 2026",
+    "September aggregate outcomes were inspected previously; station outcomes/ablation not yet evaluated",
+    "Assumed trip-release, weather and information availability",
+    "Observed polling supports a conditional operating-hour population",
+    "Small metadata-selected cohort and one geography/weather proxy",
+    "Matched advisories do not establish actual disruption or causal effect",
+    "Legacy alert partitions cannot establish complete selector/display semantics; exact advisory ablation stays gated without rich training and validation history."
+  ],
+  "production_activation": false,
+  "amended_at_utc": "2026-10-16T20:00:35.975762+00:00",
+  "pre_evaluation_amendment": "April-June archive inspection found legacy alert schema lacking full periods, direction restrictions, incrementality and deletion flags. Reject those snapshots as semantically incomplete. Train calendar/weather station models on their common weather-supported keys; perform the advisory ablation only if release-eligible rich-schema examples exist in every split. No station validation/test metric was viewed before this amendment.",
+  "geographic_diagnostic": "Reject station-months whose retrospective mean trip endpoint differs by more than 100m from the frozen information location; this mean is a consistency diagnostic, not independent geography proof."
+}

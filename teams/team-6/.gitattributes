@@ -1,0 +1,5 @@
+# Preserve generated documents as binary files during diffs and merges.
+*.pdf binary
+*.docx binary
+*.pptx binary
+*.csv text eol=lf

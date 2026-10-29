@@ -1,0 +1,62 @@
+{
+  "schema_version": "station-ensemble-protocol-v1",
+  "frozen_at_utc": "2026-10-20T03:46:09Z",
+  "scope": "Retrospective conditional 32-station departure development comparison; no production activation",
+  "base_protocol": "station_pilot_protocol.json",
+  "base_package_schema": "station-pilot-package-v1",
+  "train_target_local": ["2026-04-08", "2026-05-01"],
+  "validation_target_local": ["2026-06-16", "2026-07-01"],
+  "validation_fit_origin_local": "2026-06-16T00:00:00-04:00",
+  "refit_target_local": ["2026-04-08", "2026-07-01"],
+  "test_target_local": ["2026-09-01", "2026-10-01"],
+  "test_fit_origin_local": "2026-09-01T00:00:00-04:00",
+  "horizons": [0, 1, 2],
+  "feature_arms": ["calendar", "weather"],
+  "tree_categories": ["station_id", "target_local_hour", "target_local_dow", "horizon"],
+  "weather_features": ["temperature", "temperature_squared", "precipitation", "wind", "wet"],
+  "poisson_alphas": [0.1, 1.0],
+  "random_forest": {
+    "n_estimators": 150,
+    "max_depths": [10, 16],
+    "max_leaf_nodes": 256,
+    "min_samples_leaf": 80,
+    "max_features": 0.7,
+    "max_samples": 0.7,
+    "criterion": "poisson",
+    "n_jobs": 4,
+    "random_state": 622
+  },
+  "histogram_boosting": {
+    "loss": "poisson",
+    "max_iter": 60,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 80,
+    "l2_regularization": 1.0,
+    "learning_rate": 0.1,
+    "early_stopping": false,
+    "random_state": 622
+  },
+  "selection": "Choose the lowest pooled June validation MAE within each estimator family and feature arm, persist before refit or September metrics, then identify the overall validation winner. Ties within 1e-9 prefer Poisson, histogram boosting, random forest; alpha 1.0; forest depth 10; lexical candidate ID.",
+  "evaluation": "September is inspected development evidence. Use identical weather-covered keys for all candidates and retain release maturity and three-target boundary purges from the base protocol.",
+  "confirmation": {
+    "earliest_window_local": ["2026-11-01", "2026-12-01"],
+    "status": "pending source coverage and a separate pre-outcome freeze",
+    "departure_label_note": "Under the existing month-end plus 45-day assumption, November outcomes cannot be fully mature before January 2027; later supplying cohorts can delay them further."
+  },
+  "resource_limits": {
+    "threads": 4,
+    "fit_minutes": 15,
+    "process_memory_gb": 3,
+    "serialized_estimator_mb": 100,
+    "batch_scoring_minutes": 2
+  },
+  "production_activation": false,
+  "limitations": [
+    "September station outcomes were previously inspected",
+    "Restricted metadata-selected 32-station cohort with conditional operating-hour support",
+    "Trip publication and historical weather availability use declared reconstruction assumptions",
+    "Exact advisory ablation remains gated by missing rich April-June alert history",
+    "Tree and Poisson representations encode the same calendar information differently",
+    "No departure prediction intervals are produced"
+  ]
+}

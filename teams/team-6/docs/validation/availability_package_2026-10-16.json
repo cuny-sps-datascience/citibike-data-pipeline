@@ -1,0 +1,23 @@
+{
+  "package_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/availability_packages/20261016T205258Z-ce84473b",
+  "manifest_sha256": "649bb03119614ab7ee8e13d83d0316447acce8513baf70e72189d3a9cdf47e8f",
+  "rows": 492270,
+  "checks": {
+    "duplicate_example_keys": 0,
+    "label_key_mismatch": 0,
+    "future_or_stale_input": 0,
+    "future_information": 0,
+    "bad_target_window": 0,
+    "negative_inventory": 0,
+    "invalid_horizon": 0,
+    "future_or_stale_lag_15": 0,
+    "future_or_stale_lag_30": 0,
+    "future_or_stale_lag_60": 0,
+    "input_not_from_actual_poll": 0,
+    "label_not_from_actual_open_poll": 0
+  },
+  "artifact_integrity_checks": 7,
+  "passed": true,
+  "canonical_eligibility_promoted": false,
+  "original_models_changed": false
+}

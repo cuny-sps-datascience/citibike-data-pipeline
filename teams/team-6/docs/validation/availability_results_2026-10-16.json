@@ -1,0 +1,96 @@
+{
+  "result_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/availability_results/20261016T205658Z-53093e33",
+  "report_sha256": "56c607fd4e852d44cd225f709cb79bf465755d8c3a2f17fd699d36e0380b3691",
+  "checks": {
+    "duplicate_keys": 0,
+    "bad_horizon": 0,
+    "invalid_bikes_forecast": 0,
+    "invalid_docks_forecast": 0
+  },
+  "independently_recomputed": [
+    {
+      "target": "bikes",
+      "horizon_minutes": 15,
+      "rows": 20591,
+      "mae": 1.211864797135653,
+      "rmse": 1.9456360367180723,
+      "persistence_mae": 1.075809819824195,
+      "coverage": 0.9035986596085669,
+      "brier": 0.00213055879212654
+    },
+    {
+      "target": "bikes",
+      "horizon_minutes": 30,
+      "rows": 20588,
+      "mae": 1.6321798722961811,
+      "rmse": 2.6544263007119167,
+      "persistence_mae": 1.6128327180882067,
+      "coverage": 0.9046531960365262,
+      "brier": 0.0026943147246804313
+    },
+    {
+      "target": "bikes",
+      "horizon_minutes": 60,
+      "rows": 20559,
+      "mae": 2.2852314049095863,
+      "rmse": 3.667721188201584,
+      "persistence_mae": 2.454934578530084,
+      "coverage": 0.9033999708157011,
+      "brier": 0.0034880708091103475
+    },
+    {
+      "target": "bikes",
+      "horizon_minutes": 180,
+      "rows": 20548,
+      "mae": 3.93245167934983,
+      "rmse": 5.942702481171388,
+      "persistence_mae": 5.041950554798521,
+      "coverage": 0.8967296087210435,
+      "brier": 0.004247025432246444
+    },
+    {
+      "target": "docks",
+      "horizon_minutes": 15,
+      "rows": 20591,
+      "mae": 1.1632254531126975,
+      "rmse": 1.8075370245948903,
+      "persistence_mae": 1.0603176144917683,
+      "coverage": 0.9018503229566316,
+      "brier": 0.03537329385404028
+    },
+    {
+      "target": "docks",
+      "horizon_minutes": 30,
+      "rows": 20588,
+      "mae": 1.5824457186539058,
+      "rmse": 2.5290206733372966,
+      "persistence_mae": 1.5912181853506897,
+      "coverage": 0.9007188653584612,
+      "brier": 0.042723301160664855
+    },
+    {
+      "target": "docks",
+      "horizon_minutes": 60,
+      "rows": 20559,
+      "mae": 2.222424719977672,
+      "rmse": 3.5125810667993265,
+      "persistence_mae": 2.4149520891093923,
+      "coverage": 0.9042754997811178,
+      "brier": 0.05065420010101014
+    },
+    {
+      "target": "docks",
+      "horizon_minutes": 180,
+      "rows": 20548,
+      "mae": 3.858127029243772,
+      "rmse": 5.769017028845758,
+      "persistence_mae": 4.973817403153592,
+      "coverage": 0.8996496009343975,
+      "brier": 0.06283069328877983
+    }
+  ],
+  "passed": true,
+  "save_reload_checked_rows": 100,
+  "save_reload_max_difference": 0.0,
+  "active_departure_model_changed": false
+}
