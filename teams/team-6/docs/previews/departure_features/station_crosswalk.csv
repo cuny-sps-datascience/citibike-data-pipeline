@@ -1,0 +1,2 @@
+station_id,station_uuid,station_name,station_latitude,station_longitude,weather_request_class,dataset_build_id,weather_mapping_distance_km,station_snapshot_cutoff_utc,identity_distance_m,inferred_active_start_utc,inferred_active_end_exclusive_utc,retrospective_geography,inferred_operation_not_verified
+6331.01,66dbe4db-0aca-11e7-82f6-3863bb44ef7c,W 31 St & 7 Ave,40.749156,-73.9916,21,20261023T165211825083Z,3.082077140706763,2026-10-18T02:42:08.995720+00:00,0.0,2025-03-01T05:00:00+00:00,2026-08-11T04:00:00+00:00,True,True

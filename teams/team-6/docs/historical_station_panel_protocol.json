@@ -1,0 +1,30 @@
+{
+  "schema_version": "historical-station-panel-protocol-v1",
+  "decision_date_local": "2026-10-26",
+  "scope": "Retrospective Manhattan station departures; independent of existing frozen experiments",
+  "borough": "Manhattan",
+  "allow_retrospective_geography": true,
+  "panel_mode": "full_with_unknowns",
+  "horizons": [1, 2, 3],
+  "target_intervals": "horizon h covers [T+(h-1) hours,T+h hours)",
+  "issue_cutoff_minutes": 5,
+  "weather_alignment": "Use source origin T-1h, source horizon h and target_hour_utc=T+(h-1)h; require availability strictly before T-5min",
+  "subway_alignment": "Use source origin T-1h; publications remain strictly before that source origin; no retrospective exposure predictors",
+  "splits": [
+    {"name": "train", "start_local": "2025-03-01", "end_exclusive_local": "2026-04-01"},
+    {"name": "validation", "start_local": "2026-04-01", "end_exclusive_local": "2026-06-01"},
+    {"name": "test", "start_local": "2026-06-01", "end_exclusive_local": "2026-08-11"}
+  ],
+  "boundary_purge": "Omit origins whose three target hours extend past the split or study endpoint",
+  "label_policy": "Retain observed positive departures; absent counts remain null unless the original bounded pilot supplies documented operating-hour support. Inventory is not required.",
+  "release_policy": "Conservative maximum of target month and all supplying source releases, each nominal month end +45 days at 00 UTC; assumed, unverified",
+  "geography_policy": "October snapshot cohort and mapping; unique GBFS UUID/short_name and <=25m agreement between pinned references; retrospective geography is not evidence of historical station operation",
+  "evaluation_status": "Retrospective development periods; some earlier results already inspected; unconditional station evaluation and demand-profile means remain gated",
+  "production_activation": false,
+  "user_decisions": [
+    "Manhattan",
+    "Allow explicitly labeled retrospective station geography",
+    "Keep five-minute cutoff and previous hourly subway snapshot",
+    "Build full history with unsupported zeros unknown and model evaluation gated"
+  ]
+}
