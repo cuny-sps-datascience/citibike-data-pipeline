@@ -1,0 +1,151 @@
+{
+  "schema_version": "stockout-onset-validation-v1",
+  "validated_at_utc": "2026-10-21T01:09:03.895739+00:00",
+  "package_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/stockout_onset_packages/20261021T010515Z-v1",
+  "result_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/stockout_onset_results/20261021T010835Z-local-v1",
+  "package_manifest_sha256": "98c7cb72287ecadcfd43935809cd8ee8a5f825f6334fe88a79ed09ab055a61ca",
+  "result_report_sha256": "5bab8a014d361ddf8f3cb712e89da0ce73a1f38c4695a0f5c5bb54b1493d2256",
+  "model_sha256": "97da86549e0e5971e1e69c911911023c958fda9f276d10c34432d7480aebeacd",
+  "package_rows": 106194,
+  "prediction_rows": 17553,
+  "split_rows": {
+    "train": 69762,
+    "validation": 8933,
+    "refit": 78695,
+    "calibration": 9946,
+    "test": 17553
+  },
+  "source_audit": {
+    "candidate_rows": 109531,
+    "accepted_rows": 106194,
+    "bike_events": 807,
+    "dock_events": 7037,
+    "stations": 32,
+    "first_origin_utc": "2026-04-08 04:00:00+00:00",
+    "last_origin_utc": "2026-10-01 03:00:00+00:00",
+    "conflicting_poll_keys": 0,
+    "continuous_observation_required": true,
+    "current_stockouts_excluded": true
+  },
+  "selected": {
+    "bike_onset": "histogram_boosting_15_leaves",
+    "dock_onset": "histogram_boosting_15_leaves"
+  },
+  "validation": {
+    "bike_onset": {
+      "persistence_no_onset": {
+        "rows": 8933,
+        "events": 71,
+        "prevalence": 0.007948057763349378,
+        "brier": 0.007948057763349378,
+        "log_loss": 0.10980746799730155,
+        "average_precision": 0.007948057763349378
+      },
+      "regularized_station_logistic": {
+        "rows": 8933,
+        "events": 71,
+        "prevalence": 0.007948057763349378,
+        "brier": 0.006083750140751005,
+        "log_loss": 0.02279924628811919,
+        "average_precision": 0.340763432134782
+      },
+      "histogram_boosting_15_leaves": {
+        "rows": 8933,
+        "events": 71,
+        "prevalence": 0.007948057763349378,
+        "brier": 0.00557155205161731,
+        "log_loss": 0.020602027451845854,
+        "average_precision": 0.4798464505027089
+      }
+    },
+    "dock_onset": {
+      "persistence_no_onset": {
+        "rows": 8933,
+        "events": 524,
+        "prevalence": 0.058658905183029214,
+        "brier": 0.058658905183029214,
+        "log_loss": 0.8104036652163308,
+        "average_precision": 0.058658905183029214
+      },
+      "regularized_station_logistic": {
+        "rows": 8933,
+        "events": 524,
+        "prevalence": 0.058658905183029214,
+        "brier": 0.03757216680829186,
+        "log_loss": 0.1188742614747294,
+        "average_precision": 0.46946219936734956
+      },
+      "histogram_boosting_15_leaves": {
+        "rows": 8933,
+        "events": 524,
+        "prevalence": 0.058658905183029214,
+        "brier": 0.03445146343520517,
+        "log_loss": 0.10874771059114208,
+        "average_precision": 0.5255451179216831
+      }
+    }
+  },
+  "test": {
+    "bike_onset": {
+      "persistence_no_onset": {
+        "rows": 17553,
+        "events": 108,
+        "prevalence": 0.006152794394120663,
+        "brier": 0.006152794394120663,
+        "log_loss": 0.08500498976065998,
+        "average_precision": 0.006152794394120663
+      },
+      "regularized_station_logistic": {
+        "rows": 17553,
+        "events": 108,
+        "prevalence": 0.006152794394120663,
+        "brier": 0.004583856301388614,
+        "log_loss": 0.017221286246860732,
+        "average_precision": 0.3973238297681426
+      },
+      "histogram_boosting_15_leaves": {
+        "rows": 17553,
+        "events": 108,
+        "prevalence": 0.006152794394120663,
+        "brier": 0.004317351863409186,
+        "log_loss": 0.015555505365116245,
+        "average_precision": 0.4483630297213655
+      }
+    },
+    "dock_onset": {
+      "persistence_no_onset": {
+        "rows": 17553,
+        "events": 1073,
+        "prevalence": 0.06112915171195807,
+        "brier": 0.06112915171195807,
+        "log_loss": 0.8445313797472742,
+        "average_precision": 0.06112915171195807
+      },
+      "regularized_station_logistic": {
+        "rows": 17553,
+        "events": 1073,
+        "prevalence": 0.06112915171195807,
+        "brier": 0.039293019634474576,
+        "log_loss": 0.13102442017766655,
+        "average_precision": 0.49503028690761286
+      },
+      "histogram_boosting_15_leaves": {
+        "rows": 17553,
+        "events": 1073,
+        "prevalence": 0.06112915171195807,
+        "brier": 0.036478489076889296,
+        "log_loss": 0.11712222582285853,
+        "average_precision": 0.5394462734758794
+      }
+    }
+  },
+  "checks": {
+    "artifact_checksums": "passed",
+    "predictor_label_keys": "passed",
+    "chronological_cutoffs": "passed",
+    "selection_frozen_before_test": "passed",
+    "unique_test_keys": "passed",
+    "probabilities_finite_and_bounded": "passed"
+  },
+  "production_activation": false
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "stockout-onset-protocol-v1",
+  "frozen_at_utc": "2026-10-21T01:10:00Z",
+  "scope": "Separate conditional 30-minute new-stockout outcome; development comparison only",
+  "base_availability_protocol": "availability_protocol.json",
+  "origin_grid": "Hourly origins inherited from the availability package",
+  "horizon_minutes": 30,
+  "train_local": ["2026-04-08", "2026-08-01"],
+  "validation_local": ["2026-08-01", "2026-08-15"],
+  "refit_local": ["2026-04-08", "2026-08-15"],
+  "calibration_local": ["2026-08-15", "2026-09-01"],
+  "test_local": ["2026-09-01", "2026-10-01"],
+  "source_freshness_seconds": 120,
+  "maximum_gap_seconds": 120,
+  "endpoint_tolerance_seconds": 120,
+  "metadata_freshness_hours": 49,
+  "population": "Frozen 32-station cohort; fresh installed/renting/returning input, both bikes and docks initially nonzero, stable fresh metadata, every observed poll in the next 30 minutes eligible, first future poll within 120 seconds, no gap over 120 seconds, and a confirming poll from minute 30 through minute 32.",
+  "target_definition": "Separate bike and dock labels equal one when the eligible count first reaches zero anywhere after issue time through issue plus 30 minutes. Current stockouts are excluded rather than labeled as onset.",
+  "features": [
+    "station_index", "horizon_minutes", "current_bikes", "current_docks",
+    "current_ebikes", "disabled_bikes", "disabled_docks", "capacity",
+    "local_hour", "dow", "hour_sin", "hour_cos"
+  ],
+  "candidates": [
+    "persistence_no_onset",
+    "regularized_station_logistic",
+    "histogram_boosting_15_leaves"
+  ],
+  "logistic": {"C": 1.0, "max_iter": 400, "random_state": 622},
+  "boosting": {
+    "iterations": 60,
+    "max_leaf_nodes": 15,
+    "min_samples_leaf": 80,
+    "l2_regularization": 1.0,
+    "random_state": 622
+  },
+  "selection": "Choose the lowest August 1-14 validation Brier score separately for bike and dock onset. Ties within 1e-12 prefer persistence, then logistic, then boosting. Persist the choice before refit, calibration or September metrics.",
+  "calibration": "Refit both learned candidates through August 14 and fit a separate sigmoid calibration per outcome/candidate on August 15-31. Persistence remains the fixed no-onset probability of zero.",
+  "metrics": ["Brier score", "log loss", "average precision", "event prevalence", "calibration bins"],
+  "evaluation": "September outcomes are inspected development evidence. Every candidate is evaluated on identical keys after selection is frozen.",
+  "production_activation": false,
+  "limitations": [
+    "Restricted frozen cohort and hourly origins",
+    "Conditional on dense fresh observations and continued service",
+    "Observed zero inventory is not unmet demand",
+    "September is development evidence rather than untouched confirmation",
+    "Weather and subway features remain excluded"
+  ]
+}
