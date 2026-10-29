@@ -1,0 +1,55 @@
+{
+  "schema_version": "availability-ensemble-protocol-v1",
+  "frozen_at_utc": "2026-10-20T03:46:09Z",
+  "scope": "Retrospective conditional station inventory count comparison with existing risk specification; no production activation",
+  "base_protocol": "availability_protocol.json",
+  "base_package_schema": "availability-package-v1",
+  "train_local": ["2026-04-08", "2026-08-01"],
+  "validation_local": ["2026-08-01", "2026-08-15"],
+  "refit_local": ["2026-04-08", "2026-08-15"],
+  "calibration_local": ["2026-08-15", "2026-09-01"],
+  "test_local": ["2026-09-01", "2026-10-01"],
+  "horizons_minutes": [15, 30, 60, 180],
+  "features": [
+    "station_index", "horizon_minutes", "current_bikes", "current_docks",
+    "current_ebikes", "disabled_bikes", "disabled_docks", "capacity",
+    "local_hour", "dow", "hour_sin", "hour_cos"
+  ],
+  "boosting_iterations": 60,
+  "boosting_leaf_candidates": [15, 31],
+  "random_forest": {
+    "n_estimators": 150,
+    "max_depths": [10, 16],
+    "max_leaf_nodes": 256,
+    "min_samples_leaf": 80,
+    "max_features": 0.7,
+    "max_samples": 0.7,
+    "criterion": "squared_error",
+    "n_jobs": 4,
+    "random_state": 622
+  },
+  "selection": "Train pooled-horizon candidates separately for bikes and docks. Choose the lowest August 1-14 validation MAE separately by outcome and horizon. Ties within 1e-9 prefer persistence, smaller boosting, shallower forest, then lexical candidate ID. Persist routing before refit, calibration or September metrics.",
+  "risk_model": "Retain the fixed 15-leaf histogram boosting classifier and separate sigmoid calibration per outcome/horizon from the completed availability protocol.",
+  "intervals": "After refit through August 14, calibrate 90 percent absolute-residual intervals by outcome/horizon on August 15-31 using the selected routing map. Do not refit after calibration.",
+  "evaluation": "September is inspected development evidence; compare all candidates on identical eligible endpoint keys.",
+  "confirmation": {
+    "earliest_window_local": ["2026-11-01", "2026-12-01"],
+    "status": "pending a separate pre-outcome freeze and continuous source coverage"
+  },
+  "resource_limits": {
+    "threads": 4,
+    "fit_minutes": 15,
+    "process_memory_gb": 3,
+    "serialized_estimator_mb": 100,
+    "batch_scoring_minutes": 2
+  },
+  "production_activation": false,
+  "limitations": [
+    "September outcomes were previously inspected",
+    "Restricted 32-station geography",
+    "Targets are conditional on continued service and fresh endpoint coverage",
+    "Observed inventory includes unidentified operator and maintenance effects",
+    "Predicts inventory rather than attempted demand or optimal movements",
+    "Weather, advisories and optional lag observations remain excluded"
+  ]
+}

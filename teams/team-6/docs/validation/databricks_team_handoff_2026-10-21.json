@@ -1,0 +1,90 @@
+{
+  "schema_version": "databricks-team6-publication-v1",
+  "status": "uploaded_and_validated",
+  "workspace": {
+    "host": "https://dbc-d00cbd4c-c74c.cloud.databricks.com",
+    "catalog": "workspace",
+    "schema": "citibike_3h",
+    "volume": "workspace.citibike_3h.inputs",
+    "warehouse_id": "98dc4ba92c9610f6"
+  },
+  "uploaded_at_utc": "2026-10-21T13:15:25.844817+00:00",
+  "packages": [
+    {
+      "local_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_hour_integrations/20261021T-team6-v2",
+      "remote_root": "/Volumes/workspace/citibike_3h/inputs/station_hour_integrations/20261021T-team6-v2",
+      "files": 4,
+      "bytes": 1058714
+    },
+    {
+      "local_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/weather_handoffs/20261018T033852681910Z",
+      "remote_root": "/Volumes/workspace/citibike_3h/inputs/weather_handoffs/20261018T033852681910Z",
+      "files": 168,
+      "bytes": 28027640
+    }
+  ],
+  "verification": {
+    "objects_uploaded": 172,
+    "bytes_uploaded": 29086354,
+    "remote_downloads_byte_verified": 172,
+    "remote_downloads_sha256_verified": 172,
+    "object_receipt_remote_path": "/Volumes/workspace/citibike_3h/inputs/handoff_receipts/team6_databricks_handoff_2026-10-21.json",
+    "object_receipt_sha256": "daf00010018c2722370a6ff119958756f1db416c84b71c147206df01f1127b6d"
+  },
+  "tables": [
+    {
+      "name": "workspace.citibike_3h.station_hour_features_20261021_team6_v2",
+      "rows": 78049,
+      "stable_view": "workspace.citibike_3h.station_hour_features_current"
+    },
+    {
+      "name": "workspace.citibike_3h.station_hour_labels_20261021_team6_v2",
+      "rows": 78049,
+      "stable_view": "workspace.citibike_3h.station_hour_labels_current"
+    },
+    {
+      "name": "workspace.citibike_3h.station_crosswalk_20261021_team6_v2",
+      "rows": 5554,
+      "stable_view": "workspace.citibike_3h.station_crosswalk_current"
+    },
+    {
+      "name": "workspace.citibike_3h.spatial_weather_classes_20261018",
+      "rows": 2780568,
+      "stable_view": "workspace.citibike_3h.spatial_weather_classes_current"
+    },
+    {
+      "name": "workspace.citibike_3h.station_weather_mapping_20261018",
+      "rows": 2519,
+      "stable_view": "workspace.citibike_3h.station_weather_mapping_current"
+    }
+  ],
+  "access": {
+    "principal": "account users",
+    "active_workspace_users": 4,
+    "catalog": [
+      "USE_CATALOG"
+    ],
+    "schema": [
+      "USE_SCHEMA",
+      "SELECT"
+    ],
+    "volume": [
+      "READ_VOLUME",
+      "WRITE_VOLUME"
+    ],
+    "sql_warehouse": [
+      "CAN_USE"
+    ],
+    "table_select_inherited_from": "workspace.citibike_3h"
+  },
+  "activation": {
+    "model_activated": false,
+    "job_created_or_changed": false,
+    "schedule_created_or_changed": false
+  },
+  "coverage_gates": [
+    "Spatial weather ends 2026-06-30 and has no September test rows.",
+    "Weather station geography is a retrospective 2026-10-18 snapshot, so strict historical as-of eligibility remains zero.",
+    "Complete subway disruption inputs are still absent from the April and June train/validation windows."
+  ]
+}

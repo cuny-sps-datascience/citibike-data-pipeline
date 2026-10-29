@@ -1,0 +1,62 @@
+{
+  "build_id": "20261011T144948Z-0aa84cfe",
+  "build_path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/builds/20261011T144948Z-0aa84cfe",
+  "zip_path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/handoffs/20261011T144948Z-0aa84cfe.zip",
+  "period_start": "2025-01-01",
+  "period_end_exclusive": "2026-09-01",
+  "scope": "all observed stations; borough unknown",
+  "status": "provisional_observed_days",
+  "input_files": 161,
+  "input_parquet_bytes": 3511899119,
+  "parquet_files": 45,
+  "parquet_bytes": 46013253,
+  "zip_bytes": 46159594,
+  "largest_parquet_file_bytes": 21072520,
+  "label_rows": 1290282,
+  "feature_rows": 1290282,
+  "features_arrow_bytes": 260533260,
+  "calendar_and_history_candidate_columns": [
+    "weekday",
+    "month",
+    "day_of_year",
+    "is_weekend",
+    "historical_member_share_known",
+    "historical_electric_share_known",
+    "historical_member_coverage",
+    "historical_bike_coverage"
+  ],
+  "calendar_and_history_candidate_arrow_bytes": 58062752,
+  "model_training_memory_measured": false,
+  "main_evaluation_ready": false,
+  "zip_integrity_verified": true,
+  "checks": {
+    "departure_counts_reconcile": true,
+    "arrival_counts_reconcile": true,
+    "unique_label_keys": true,
+    "feature_label_keys_match": true,
+    "duration_variants_ordered": true,
+    "member_and_bike_counts_reconcile": true,
+    "no_invented_zero_days": true,
+    "historical_release_cutoffs_respected": true
+  },
+  "totals": {
+    "departures_published": 75893264,
+    "departures_ge30": 75888433,
+    "departures_ge60": 75888433,
+    "departures_ge120": 73737803,
+    "uncertain_duration_departures": 4828
+  },
+  "processing_seconds_before_fingerprints_and_zip": 307.58,
+  "peak_export_process_rss_bytes": 1851670528,
+  "missing_required_inputs": [
+    "verified Census profile",
+    "effective-dated station/tract crosswalk",
+    "historical station operation and complete zero-day coverage",
+    "verified historical release availability"
+  ],
+  "tests": {
+    "passed": 184,
+    "seconds": 27.38
+  },
+  "databricks_uploaded": false
+}

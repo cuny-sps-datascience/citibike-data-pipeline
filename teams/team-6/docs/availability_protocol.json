@@ -1,0 +1,73 @@
+{
+  "schema_version": "station-availability-protocol-v1",
+  "cohort": "Frozen 32 stations from station_pilot_packages/20261016T200304Z-7c2377e9/cohort.json; no outcome-based reselection",
+  "origin_grid": "Hourly UTC, forecast issue time is the cutoff; observations strictly before it",
+  "horizons_minutes": [
+    15,
+    30,
+    60,
+    180
+  ],
+  "train_local": [
+    "2026-04-08",
+    "2026-08-01"
+  ],
+  "validation_local": [
+    "2026-08-01",
+    "2026-08-15"
+  ],
+  "refit_local": [
+    "2026-04-08",
+    "2026-08-15"
+  ],
+  "calibration_local": [
+    "2026-08-15",
+    "2026-09-01"
+  ],
+  "test_local": [
+    "2026-09-01",
+    "2026-10-01"
+  ],
+  "boundary_rule": "All four future target observations must precede partition end; origin plus 180 minutes plus 120-second label tolerance is purged at boundaries",
+  "source_freshness_seconds": 120,
+  "station_report_age_seconds": [
+    -300,
+    600
+  ],
+  "provider_age_seconds": [
+    -300,
+    120
+  ],
+  "target_definition": "First actual station poll at or after issue+horizon, no more than 120 seconds later; observed rentable bike and usable dock counts. Point-in-time risk, not risk of any shortage anywhere in the preceding interval.",
+  "population": "Fresh, installed stations accepting both rentals and returns at issue and target; no interpolation through missing endpoint data. Future closures are censored and counted, not labeled empty/full. Conditional on continued service.",
+  "geography": "Previous-day information assumed available after day-end plus one hour; provider timestamp also before issue. UUID/short-name unique; location stable within 25m of prior and frozen cohort. Known missing identities invalidate mappings; metadata expires after 49 hours.",
+  "features": "Station index, current bikes/docks/ebikes/disabled counts, dated capacity, calendar and horizon. Optional lag observations are stored for audit/future work but excluded from this first predictor allowlist so live scoring does not require unavailable historical lags. No future trips, target status or target configuration used as predictors.",
+  "labels_available": "Timestamp of target poll; no monthly trip-release lag because outcomes are directly observed GBFS inventory, not monthly trip counts",
+  "count_candidates": [
+    "persistence",
+    "histogram_boosting_15_leaves",
+    "histogram_boosting_31_leaves"
+  ],
+  "boosting_iterations": 60,
+  "selection": "Count candidate chosen separately for bikes/docks by August 1-14 validation MAE, persisted before September evaluation; selected learners refit through August 14. No post-calibration refit.",
+  "risk_model": "Fixed histogram gradient boosting classifier with 15 leaves; fit through August 14. Predict zero rentable bikes and zero usable docks separately. Sigmoid calibration per outcome and horizon on August 15-31, constant calibrated prevalence if no class variation.",
+  "intervals": "Nominal 90% split-conformal absolute residual intervals per outcome/horizon from August 15-31; lower bound truncated at zero, no unsupported hard capacity clipping. Report September empirical coverage and width. Time dependence and drift prevent unconditional coverage guarantees.",
+  "metrics": [
+    "MAE and RMSE versus persistence by horizon",
+    "Brier score and average precision versus persistence and historical prevalence",
+    "risk calibration bins",
+    "empirical interval coverage and width",
+    "eligible and excluded endpoint counts"
+  ],
+  "deployment": "Separate versioned Free Edition training and manual-refresh dashboard. Snapshot timestamps and stale/offline states visible. No changes to active departure models or existing recurring jobs.",
+  "limitations": [
+    "Retrospective reconstructed observations; exact daily metadata publication is assumed",
+    "Restricted 32-station geography",
+    "Targets conditional on continued station service and fresh endpoint coverage",
+    "Observed inventory includes unidentified operator/maintenance effects",
+    "Predicts inventory, not attempted demand or optimal movements",
+    "Uncertainty calibration may drift outside its historical window",
+    "No weather or subway predictors in this first direct-inventory model"
+  ],
+  "frozen_at_utc": "2026-10-16T20:52:58.970064+00:00"
+}

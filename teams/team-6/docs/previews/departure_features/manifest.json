@@ -1,0 +1,175 @@
+{
+  "schema_version": "departure-feature-preview-v1",
+  "review_date_local": "2026-10-27",
+  "station_id": "6331.01",
+  "origin_utc": "2026-06-15T14:00:00+00:00",
+  "issue_cutoff_utc": "2026-06-15T13:55:00+00:00",
+  "feature_rows": 3,
+  "label_rows": 3,
+  "crosswalk_rows": 1,
+  "map_stations": 689,
+  "map_frames": 3,
+  "preview_only": true,
+  "published_packages_modified": false,
+  "models_trained": false,
+  "schemas": {
+    "features": [
+      "station_id",
+      "station_uuid",
+      "origin_utc",
+      "issue_cutoff_utc",
+      "horizon",
+      "target_start_utc",
+      "target_end_utc",
+      "forecast_temperature_f",
+      "forecast_wind_speed_mph",
+      "forecast_precipitation_in",
+      "forecast_rain_in",
+      "forecast_snowfall_in",
+      "instant_valid_time_utc",
+      "accumulation_start_utc",
+      "accumulation_valid_time_utc",
+      "weather_source_origin_utc",
+      "instant_run_utc",
+      "accumulation_run_utc",
+      "instant_available_utc",
+      "accumulation_available_utc",
+      "subway_source_origin_utc",
+      "recent_event_count",
+      "latest_publication_time_utc",
+      "subway_strategy",
+      "released_profile_mean",
+      "profile_departures",
+      "profile_hours",
+      "profile_window_start_utc",
+      "profile_window_end_exclusive_utc",
+      "profile_included_releases",
+      "profile_latest_input_available_utc",
+      "profile_denominator_assumption"
+    ],
+    "labels": [
+      "station_id",
+      "origin_utc",
+      "horizon",
+      "target_start_utc",
+      "target_end_utc",
+      "target_start_new_york",
+      "departures",
+      "label_basis",
+      "operation_assumed_24h",
+      "operation_verified",
+      "inventory_required",
+      "trip_files_complete"
+    ],
+    "station_crosswalk": [
+      "station_id",
+      "station_uuid",
+      "station_name",
+      "station_latitude",
+      "station_longitude",
+      "weather_request_class",
+      "dataset_build_id",
+      "weather_mapping_distance_km",
+      "station_snapshot_cutoff_utc",
+      "identity_distance_m",
+      "inferred_active_start_utc",
+      "inferred_active_end_exclusive_utc",
+      "retrospective_geography",
+      "inferred_operation_not_verified"
+    ],
+    "timing_alignment": [
+      "horizon",
+      "departure_start_new_york",
+      "departure_end_new_york",
+      "temperature_stamp_new_york",
+      "precipitation_stamp_new_york",
+      "previous_package_precipitation_in",
+      "interval_correct_precipitation_in",
+      "subway_snapshot_new_york",
+      "issue_cutoff_new_york"
+    ]
+  },
+  "inputs": {
+    "observed_manifest_sha256": "19aee745d311267b4addf8e84cb781233b69ca4a8e1104c936e05aa4143059ff",
+    "panel_manifest_sha256": "f8edb71321a95929460e39c52149f649b0cb9a3db5331686d8ecfe442109a9fc",
+    "crosswalk_sha256": "cdaf034c606f075cb2fa792a70d6e9c39ad1597af2244174fbb7006489a394af",
+    "transfer_manifest_sha256": "724e79d8651716ba8049a16405d46ab047bf567e8d374331945d3e28000f7f49",
+    "transfer_audit": {
+      "build_id": "20261023T174914038037Z",
+      "files_verified": 14,
+      "tables": {
+        "weather_classes": {
+          "rows": 3031560,
+          "unique_keys": 3031560
+        },
+        "station_weather_mapping": {
+          "rows": 2519,
+          "unique_keys": 2519
+        },
+        "subway_bridge": {
+          "rows": 331,
+          "unique_keys": 331
+        },
+        "subway_alert_features": {
+          "rows": 5995296,
+          "unique_keys": 5995296
+        },
+        "subway_retrospective": {
+          "rows": 5995296,
+          "unique_keys": 5995296
+        }
+      }
+    },
+    "inventory_report_sha256": "9fdcf4866bd0dcad3dfab4ae935ea482ce3bd026f92e6078c066d7f563ad80bb",
+    "label_month_complete": true,
+    "boundary_sha256": "7aa44d9fb611f2f518a226ff994a6516a261a8ce982ccf1e7b37d663687f443c"
+  },
+  "policies": {
+    "labels": "24h from first to last observed study day; complete files required; explicitly assumed",
+    "profiles": "56-day hour-of-week mean; release-filtered numerator and inferred exposure; assumed month-end +45 days",
+    "weather": "instant at target start; preceding-hour sums at target end",
+    "subway": "show legacy prior-origin aggregate honestly; rebuild current-origin events before changing production inputs"
+  },
+  "artifacts": [
+    {
+      "path": "features.csv",
+      "bytes": 2717,
+      "sha256": "804f889ee5e3e0531d5d785b295c880207b18e8af3ad18a29afbc55d57607f05"
+    },
+    {
+      "path": "labels.csv",
+      "bytes": 649,
+      "sha256": "573d9794aa2807f3718ae98ffe3f9fffdd480f8654859d7f301a462a057a61f0"
+    },
+    {
+      "path": "station_crosswalk.csv",
+      "bytes": 526,
+      "sha256": "2bad9d1ff8fcbdf0e59b91124544a89c5ef01d87f77d292da3ac8d581e87c6e0"
+    },
+    {
+      "path": "timing_alignment.csv",
+      "bytes": 725,
+      "sha256": "e7fe06400fee3f90c6834418317595fea65414b8440bead883c8fb7f4dd1cc99"
+    },
+    {
+      "path": "map_storyboard.png",
+      "bytes": 101407,
+      "sha256": "95edc0a2f03dd443036c6ebdd60b4748bf30d575d7ea8d5001b72a834db0f97f"
+    },
+    {
+      "path": "map_preview.gif",
+      "bytes": 110270,
+      "sha256": "2600d152f4c74787dccc945f9b576bd993e4975e66e155ac1cb0f6d3080bafca"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2967,
+      "sha256": "52c1e93741733f0bb9a60d298c6aaccd052def9c5f22fb32efe8b567f5c906fb"
+    },
+    {
+      "path": "zero_policy_examples.csv",
+      "bytes": 281,
+      "sha256": "6c41dd745a9711dc8e381f0d42433ae2883391e4413ddbe7f36ebe6a8f2d4e8a"
+    }
+  ]
+}

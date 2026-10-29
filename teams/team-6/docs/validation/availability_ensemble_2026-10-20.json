@@ -1,0 +1,51 @@
+{
+  "recorded_at_utc": "2026-10-20T04:46:00Z",
+  "schema_version": "availability-ensemble-validation-v1",
+  "status": "passed",
+  "scope": "Retrospective conditional station inventory ensemble development comparison",
+  "package_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/availability_ensemble_packages/20261020T043000Z-v2",
+  "package_manifest_sha256": "86706dc2913aa64fc854d51c07a02a58e44413dcc9eb91047c7b9e5efe516766",
+  "result_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/availability_ensemble_results/20261020T043356Z-a68e89a4",
+  "cloud_run_id": 757022510974412,
+  "cloud_run_url": "https://dbc-d00cbd4c-c74c.cloud.databricks.com/?o=7474644096185196#job/750503436174345/run/757022510974412",
+  "mlflow_run_id": "fbb3b0c2ace34abaa27f8bab12536b84",
+  "runtime": {"python": "3.12.3", "scikit_learn": "1.7.2", "numpy": "2.1.3"},
+  "split_rows": {"train": 321420, "validation": 39460, "refit": 361128, "calibration": 48116, "test": 82286},
+  "selected_counts_by_horizon": {
+    "bikes": {"15": "persistence", "30": "persistence", "60": "boosting_31", "180": "boosting_31"},
+    "docks": {"15": "persistence", "30": "boosting_31", "60": "boosting_31", "180": "boosting_31"}
+  },
+  "random_forest_routes_selected": 0,
+  "test_mae": {
+    "15": {"bikes": 1.075809819824195, "docks": 1.0603176144917683},
+    "30": {"bikes": 1.6128327180882067, "docks": 1.5824457186539174},
+    "60": {"bikes": 2.285231404909569, "docks": 2.222424719977659},
+    "180": {"bikes": 3.932451679349842, "docks": 3.858127029243777}
+  },
+  "interval_coverage_range": [0.8967296087210435, 0.9302607935505803],
+  "save_reload_max_difference": 0.0,
+  "model_artifact_bytes": 792513,
+  "peak_rss_mb": 1188.578125,
+  "independent_checks": {
+    "base_manifest_changed": 0,
+    "base_features_changed": 0,
+    "base_labels_changed": 0,
+    "future_labels_in_features": 0,
+    "duplicate_example_keys": 0,
+    "label_key_disagreement": 0,
+    "duplicate_predictions": 0,
+    "persisted_metrics_recomputed": true
+  },
+  "artifacts": {
+    "report_sha256": "abe766a4eb8ffb09e4a452f1bafd76b7679e4e4a44b6941c115571754c1b6f22",
+    "selection_sha256": "128bb704b3350350fb3cb036c4145cc6b69a77fa350602229e917e8783744d92",
+    "calibration_sha256": "c77e959d58485ebf317a6f7aed79aae3c96751e195536344a4cf4a94fea859f6",
+    "models_sha256": "e69f3ad30f8b8a3cae06d83e983a8cfc382c379bd31aba3054027b67fc3ba576",
+    "predictions_sha256": "c504c6dcc004d01fe6989630b4e9c1c7f103fab1b52510e8d0377fd0aec556f9"
+  },
+  "development_evaluation": true,
+  "confirmation_pending": true,
+  "production_activation": false,
+  "active_model_changed": false,
+  "stable_tables_changed": false
+}

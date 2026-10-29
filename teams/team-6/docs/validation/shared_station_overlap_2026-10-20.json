@@ -1,0 +1,149 @@
+{
+  "schema_version": "shared-station-overlap-comparison-v1",
+  "upstream_manifest_sha256": "130ec77dd5022e108b93e33622ea8424ebc8ad3024bdbfc67786ad48dfc94958",
+  "ctbk_manifest_sha256": "db75170b3088adb6f71a9a7eb8feda80589644afd37e13cb77b24b35e4b0f51a",
+  "cohort_sha256": "c8c8d2548fe20504a94289a01a05e69e7e15d3c741bfdac2a7c20fb0ae455976",
+  "cohort_stations": 32,
+  "status_comparisons": [
+    {
+      "date": "2026-08-21",
+      "upstream_rows": 1953,
+      "upstream_stations": 31,
+      "reference_rows": 83948,
+      "reference_stations": 31,
+      "paired_rows": 1953,
+      "upstream_rows_considered": 1953,
+      "paired_share": 1.0,
+      "pair_delta_seconds": {
+        "median": 17.47969388961792,
+        "p95": 32.73621057083784,
+        "maximum_allowed": 150
+      },
+      "exact_value_share": {
+        "bikes": 0.9431643625192012,
+        "docks": 0.9452124935995904,
+        "ebikes": 0.9615975422427036,
+        "service_and_disabled": 0.9836149513568868
+      },
+      "gaps": {
+        "upstream": {
+          "median_seconds": 299.7854769229889,
+          "p95_seconds": 305.557673798637,
+          "gaps_over_600_seconds": 62
+        },
+        "reference": {
+          "median_seconds": 66.0,
+          "p95_seconds": 66.0,
+          "gaps_over_600_seconds": 0
+        }
+      }
+    },
+    {
+      "date": "2026-08-22",
+      "upstream_rows": 8928,
+      "upstream_stations": 31,
+      "reference_rows": 87513,
+      "reference_stations": 31,
+      "paired_rows": 8928,
+      "upstream_rows_considered": 8928,
+      "paired_share": 1.0,
+      "pair_delta_seconds": {
+        "median": 26.02975904941559,
+        "p95": 29.679096352938043,
+        "maximum_allowed": 150
+      },
+      "exact_value_share": {
+        "bikes": 0.9330197132616488,
+        "docks": 0.9453405017921147,
+        "ebikes": 0.9574372759856631,
+        "service_and_disabled": 0.9838709677419355
+      },
+      "gaps": {
+        "upstream": {
+          "median_seconds": 300.0552599430084,
+          "p95_seconds": 302.98690203444943,
+          "gaps_over_600_seconds": 0
+        },
+        "reference": {
+          "median_seconds": 60.0,
+          "p95_seconds": 66.0,
+          "gaps_over_600_seconds": 0
+        }
+      }
+    },
+    {
+      "date": "2026-08-23",
+      "upstream_rows": 8928,
+      "upstream_stations": 31,
+      "reference_rows": 89094,
+      "reference_stations": 31,
+      "paired_rows": 8928,
+      "upstream_rows_considered": 8928,
+      "paired_share": 1.0,
+      "pair_delta_seconds": {
+        "median": 21.449665069580078,
+        "p95": 26.65912684076331,
+        "maximum_allowed": 150
+      },
+      "exact_value_share": {
+        "bikes": 0.9588933691756273,
+        "docks": 0.9674059139784946,
+        "ebikes": 0.9736783154121864,
+        "service_and_disabled": 0.984655017921147
+      },
+      "gaps": {
+        "upstream": {
+          "median_seconds": 299.9450628757477,
+          "p95_seconds": 303.40162928517327,
+          "gaps_over_600_seconds": 0
+        },
+        "reference": {
+          "median_seconds": 60.0,
+          "p95_seconds": 60.0,
+          "gaps_over_600_seconds": 0
+        }
+      }
+    },
+    {
+      "date": "2026-08-24",
+      "upstream_rows": 8928,
+      "upstream_stations": 31,
+      "reference_rows": 86397,
+      "reference_stations": 31,
+      "paired_rows": 8928,
+      "upstream_rows_considered": 8928,
+      "paired_share": 1.0,
+      "pair_delta_seconds": {
+        "median": 20.954495429992676,
+        "p95": 28.640614091608676,
+        "maximum_allowed": 150
+      },
+      "exact_value_share": {
+        "bikes": 0.921146953405018,
+        "docks": 0.926747311827957,
+        "ebikes": 0.9429883512544803,
+        "service_and_disabled": 0.978494623655914
+      },
+      "gaps": {
+        "upstream": {
+          "median_seconds": 300.0665581226349,
+          "p95_seconds": 303.23348308350734,
+          "gaps_over_600_seconds": 0
+        },
+        "reference": {
+          "median_seconds": 60.0,
+          "p95_seconds": 82.85872346451009,
+          "gaps_over_600_seconds": 0
+        }
+      }
+    }
+  ],
+  "station_information": {
+    "comparison_date": "2026-08-24",
+    "matched_stations": 31,
+    "short_name_exact": 31,
+    "capacity_exact": 31,
+    "maximum_coordinate_difference_m": 0.0
+  },
+  "decision": "Keep the shared S3 export as a separately versioned candidate source. Expansion beyond the frozen cohort requires the Team 6 freshness and station-eligibility gates; overlap agreement does not establish continuous operation."
+}

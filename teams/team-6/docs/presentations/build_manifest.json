@@ -1,0 +1,20 @@
+{
+  "slides": 3,
+  "source_notes": "docs/public_mvp_demo.md",
+  "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+  "selected_model": "weather_0p1",
+  "test_mae": 761.0007899429173,
+  "test_rows": 6564,
+  "primary_evaluation": "release-aware monthly backtests; previously inspected retrospective months",
+  "rolling_mae": 767.768146460949,
+  "rolling_profile_mae": 1386.485130204358,
+  "rolling_rows": 6552,
+  "health_snapshot_utc": "2026-10-16T17:32:31.296967+00:00",
+  "outputs": [
+    "data622_mvp.pptx",
+    "data622_mvp.pdf",
+    "slide_1.png",
+    "slide_2.png",
+    "slide_3.png"
+  ]
+}

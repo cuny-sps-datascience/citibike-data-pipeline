@@ -1,0 +1,812 @@
+{
+  "recorded_at_utc": "2026-10-16T01:22:17.179883+00:00",
+  "date_new_york": "2026-10-15",
+  "scope": "public-only Manhattan-total three-hour benchmark; original station/alert scope not complete",
+  "class_data_used": false,
+  "class_catalog_publication_completed": false,
+  "citybikes": {
+    "months": 22,
+    "bytes": 1268214271,
+    "records": 145523643,
+    "source_manifest_sha256": "fdfebd1b60ce3904ee74ef8c3bb4fc82bf5a1621e8666670917afc4f152fac49",
+    "conditional_hours": 1123844,
+    "zero_hours": 1655,
+    "main_evaluation_eligible": false,
+    "audit_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/public_exposure/20261016T004849Z-def3dd32",
+    "audit_manifest_sha256": "478eb934cf509360210e75c25ba9ef8c8e9641344f0c4bdb999476099005c806"
+  },
+  "labels": {
+    "root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/borough_labels/20261016T005314Z-99c3d2b9",
+    "manifest_sha256": "adfd917f4ef6887825ee48f0ef0d9e704dba516b1b2fe43b0efe7c8775359c43",
+    "assigned_departures": 60343317,
+    "clock_hours": 18264,
+    "unassignable_repeated_clock_hours": 4,
+    "source_eligible": 96650125,
+    "excluded_dst_departures": 7654,
+    "invalid_coordinate_departures": 0
+  },
+  "features": {
+    "root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/borough_features/20261016T005315Z-35753b1b",
+    "manifest_sha256": "d2c1daae7fa9d8f61c2e277c920dafbd060535ea8c441417aae5a3f994faf19d",
+    "artifacts": [
+      {
+        "path": "features.parquet",
+        "sha256": "f7f0bba26378b98ecdbc49d5aa5ad91c91c7c5107871f3e9ec3c81170597bf95",
+        "rows": 39495,
+        "bytes": 1099926
+      },
+      {
+        "path": "profiles.parquet",
+        "sha256": "0ccd639cf9bc7f91c599c457946dfc0e42a59e5fdaac6b96961279fb07feabed",
+        "rows": 4200,
+        "bytes": 49810
+      },
+      {
+        "path": "weather_runs.parquet",
+        "sha256": "85e73a1e094283203036633d93077c6c03840248da4ca4d6261550b98dfb3320",
+        "rows": 105168,
+        "bytes": 741602
+      }
+    ],
+    "weather_runs": 2191,
+    "weather_failures": [
+      {
+        "run": "2025-08-04 18:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2025-08-05 00:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2025-08-05 06:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2025-08-06 00:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2025-08-07 18:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2025-08-08 00:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2025-08-08 12:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2025-08-09 00:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "run": "2026-06-10 12:00:00",
+        "error": "HTTP Error 400: Bad Request"
+      }
+    ],
+    "exclusions": {
+      "weather_missing": 396,
+      "origin_with_unassignable_target": 2
+    }
+  },
+  "training": {
+    "scope": "Manhattan total departures; not station forecasts",
+    "study": "retrospective model development; validation outcomes were not released at first test origin",
+    "selected_model": "weather_0p1",
+    "fallback_model": "calendar_0p1",
+    "validation": {
+      "profile": {
+        "rows": 4386,
+        "mae": 945.100900175325,
+        "rmse": 1390.407524501941,
+        "poisson_deviance": 423.6009655993084,
+        "mean_bias": -461.86178539431,
+        "actual_mean": 3630.465572275422,
+        "zero_labels": 0
+      },
+      "pooled": {
+        "rows": 4386,
+        "mae": 1211.388525766225,
+        "rmse": 1737.7619465181285,
+        "poisson_deviance": 681.0546101567012,
+        "mean_bias": -459.8096869835552,
+        "actual_mean": 3630.465572275422,
+        "zero_labels": 0
+      },
+      "calendar_0p1": {
+        "rows": 4386,
+        "mae": 908.3405045245188,
+        "rmse": 1377.9516755111704,
+        "poisson_deviance": 417.347308925334,
+        "mean_bias": -489.8447149639392,
+        "actual_mean": 3630.465572275422,
+        "zero_labels": 0
+      },
+      "calendar_1p0": {
+        "rows": 4386,
+        "mae": 908.3937556189454,
+        "rmse": 1378.5462696835784,
+        "poisson_deviance": 417.4175370295254,
+        "mean_bias": -489.86194108153046,
+        "actual_mean": 3630.465572275422,
+        "zero_labels": 0
+      },
+      "weather_0p1": {
+        "rows": 4386,
+        "mae": 558.6271806380814,
+        "rmse": 868.6634431132277,
+        "poisson_deviance": 186.18251059903585,
+        "mean_bias": -196.47248468452082,
+        "actual_mean": 3630.465572275422,
+        "zero_labels": 0
+      },
+      "weather_1p0": {
+        "rows": 4386,
+        "mae": 558.8127138576682,
+        "rmse": 869.5425378668386,
+        "poisson_deviance": 186.3111656423577,
+        "mean_bias": -197.68043781256526,
+        "actual_mean": 3630.465572275422,
+        "zero_labels": 0
+      }
+    },
+    "convergence": {
+      "calendar_0p1": {
+        "iterations": 58,
+        "converged": true
+      },
+      "calendar_1p0": {
+        "iterations": 53,
+        "converged": true
+      },
+      "weather_0p1": {
+        "iterations": 91,
+        "converged": true
+      },
+      "weather_1p0": {
+        "iterations": 82,
+        "converged": true
+      }
+    },
+    "feature_names": [
+      "log_profile",
+      "log_pooled",
+      "hour_sin",
+      "hour_cos",
+      "dow",
+      "month_sin",
+      "month_cos",
+      "horizon",
+      "temperature",
+      "temperature_squared",
+      "precipitation",
+      "wind",
+      "wet"
+    ],
+    "split_rows": {
+      "train": 28149,
+      "validation": 4386,
+      "test": 6564
+    },
+    "all_split_rows": {
+      "train": 28491,
+      "validation": 4386,
+      "test": 6618
+    },
+    "weather_delay_hours": 7,
+    "release_rule": "nominal source month end +45 days at 00:00 UTC, assumed and unverified",
+    "test": {
+      "profile": {
+        "rows": 6564,
+        "mae": 1385.9114677257874,
+        "rmse": 1820.0427654635519,
+        "poisson_deviance": 694.2686182816889,
+        "mean_bias": -1149.5760877872378,
+        "actual_mean": 4310.71617915905,
+        "zero_labels": 0
+      },
+      "pooled": {
+        "rows": 6564,
+        "mae": 1531.5644150190285,
+        "rmse": 2062.7950780604756,
+        "poisson_deviance": 927.8337291092098,
+        "mean_bias": -1144.823098345819,
+        "actual_mean": 4310.71617915905,
+        "zero_labels": 0
+      },
+      "calendar_0p1": {
+        "rows": 6564,
+        "mae": 815.8053016972093,
+        "rmse": 1476.9630077937309,
+        "poisson_deviance": 373.18374590959104,
+        "mean_bias": 385.9271381061566,
+        "actual_mean": 4310.71617915905,
+        "zero_labels": 0
+      },
+      "calendar_1p0": {
+        "rows": 6564,
+        "mae": 815.5461469897901,
+        "rmse": 1475.8035366868828,
+        "poisson_deviance": 373.00972606648185,
+        "mean_bias": 385.350308417644,
+        "actual_mean": 4310.71617915905,
+        "zero_labels": 0
+      },
+      "weather_0p1": {
+        "rows": 6564,
+        "mae": 761.0007899429173,
+        "rmse": 1235.1726783343188,
+        "poisson_deviance": 285.6202137544302,
+        "mean_bias": 18.018136651710947,
+        "actual_mean": 4310.71617915905,
+        "zero_labels": 0
+      },
+      "weather_1p0": {
+        "rows": 6564,
+        "mae": 760.6131634922666,
+        "rmse": 1234.627930985361,
+        "poisson_deviance": 285.4689105246676,
+        "mean_bias": 19.230661819255683,
+        "actual_mean": 4310.71617915905,
+        "zero_labels": 0
+      }
+    },
+    "test_by_horizon": {
+      "1": {
+        "rows": 2188,
+        "mae": 758.2687937057319,
+        "rmse": 1231.7226121591639,
+        "poisson_deviance": 284.5461514451854,
+        "mean_bias": 14.02611181830582,
+        "actual_mean": 4308.289305301645,
+        "zero_labels": 0
+      },
+      "2": {
+        "rows": 2188,
+        "mae": 760.5463951807461,
+        "rmse": 1233.1181484878837,
+        "poisson_deviance": 284.93266969001337,
+        "mean_bias": 17.837280074689815,
+        "actual_mean": 4310.24268738574,
+        "zero_labels": 0
+      },
+      "3": {
+        "rows": 2188,
+        "mae": 764.1871809422745,
+        "rmse": 1240.6585648260932,
+        "poisson_deviance": 287.3818201280918,
+        "mean_bias": 22.19101806213717,
+        "actual_mean": 4313.616544789762,
+        "zero_labels": 0
+      }
+    },
+    "test_by_weather": {
+      "wet": {
+        "rows": 1189,
+        "mae": 1438.9836954274463,
+        "rmse": 1885.820749514111,
+        "poisson_deviance": 672.281292255177,
+        "mean_bias": -534.9775502865954,
+        "actual_mean": 4783.867115222876,
+        "zero_labels": 0
+      },
+      "dry": {
+        "rows": 5375,
+        "mae": 611.0246644320143,
+        "rmse": 1037.5205132727924,
+        "poisson_deviance": 200.08718634282312,
+        "mean_bias": 140.3459267483893,
+        "actual_mean": 4206.0507906976745,
+        "zero_labels": 0
+      }
+    },
+    "reload_max_absolute_error": 0.0,
+    "limitations": [
+      "Borough benchmark is a spatial scope reduction from the station proposal",
+      "Weather is a common Manhattan reference point and early archive includes hindcasts",
+      "Source release dates and seven-hour weather delay are assumptions",
+      "No supported historical alert features; no station-operation interpolation used in this model",
+      "Retrospective model selection, not a historical deployment simulation"
+    ],
+    "mlflow_run_id": "5ab46264c9ea4771a81f8d250e89b8f0",
+    "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+    "model_root": "/Volumes/workspace/citibike_3h/models/borough/20261016T005315Z-35753b1b-9ac3c3ff",
+    "package_root": "/Volumes/workspace/citibike_3h/inputs/borough/20261016T005315Z-35753b1b",
+    "package_manifest_sha256": "d2c1daae7fa9d8f61c2e277c920dafbd060535ea8c441417aae5a3f994faf19d",
+    "runtime_sha256": "7e055089b8c8fdd36a4d3fb55576b3abf91e079a00a3c270596b98c13db48717",
+    "model_sha256": "3d3806dbdc9ff1a284688a8084cf645f09a66771f920ce18f435507b85effab6",
+    "trained_at_utc": "2026-10-16T00:58:04.609956+00:00",
+    "seconds": 42.55
+  },
+  "first_live_run": {
+    "run_id": 562057928115153,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "outputs": {
+      "collect_sources": {
+        "run_id": "20261016T005842Z-e2026892",
+        "seconds": 14.29,
+        "status_rows": 2519,
+        "weather_initialization_utc": "2026-10-15T12:00:00+00:00",
+        "sources": [
+          {
+            "source": "gbfs_discovery",
+            "success": true,
+            "bytes": 3619,
+            "error": null
+          },
+          {
+            "source": "gbfs_station_information",
+            "success": true,
+            "bytes": 1361510,
+            "error": null
+          },
+          {
+            "source": "gbfs_station_status",
+            "success": true,
+            "bytes": 969467,
+            "error": null
+          },
+          {
+            "source": "mta_alerts",
+            "success": true,
+            "bytes": 930774,
+            "error": null
+          },
+          {
+            "source": "weather",
+            "success": true,
+            "bytes": 2510,
+            "error": null
+          }
+        ],
+        "main_forecast_ready": false
+      },
+      "score_borough": {
+        "scope": "Manhattan totals; not station forecasts",
+        "origin_utc": "2026-10-16T01:00:00+00:00",
+        "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+        "prediction_ready_at_utc": "2026-10-16T00:59:11.620935+00:00",
+        "publication_completed_at_utc": "2026-10-16T00:59:19.103790+00:00",
+        "published_before_first_target": true,
+        "predictions": [
+          {
+            "horizon": 1,
+            "prediction": 3806.220288814122,
+            "model": "weather_0p1",
+            "fallback_reason": null,
+            "first_score_run_id": "0efda348889e40f584b0911580ffe3c2",
+            "published_before_target": true
+          },
+          {
+            "horizon": 2,
+            "prediction": 3100.9834702348785,
+            "model": "weather_0p1",
+            "fallback_reason": null,
+            "first_score_run_id": "0efda348889e40f584b0911580ffe3c2",
+            "published_before_target": true
+          },
+          {
+            "horizon": 3,
+            "prediction": 2231.8857083607386,
+            "model": "weather_0p1",
+            "fallback_reason": null,
+            "first_score_run_id": "0efda348889e40f584b0911580ffe3c2",
+            "published_before_target": true
+          }
+        ]
+      }
+    }
+  },
+  "cloud_runs": {
+    "borough_activation": {
+      "run_id": 486811446318974,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "outputs": {
+        "collect_sources": {
+          "run_id": "20261016T010926Z-fd6d5df7",
+          "seconds": 15.99,
+          "status_rows": 2519,
+          "weather_initialization_utc": "2026-10-15T18:00:00+00:00",
+          "sources": [
+            {
+              "source": "gbfs_discovery",
+              "success": true,
+              "bytes": 3619,
+              "error": null
+            },
+            {
+              "source": "gbfs_station_information",
+              "success": true,
+              "bytes": 1361510,
+              "error": null
+            },
+            {
+              "source": "gbfs_station_status",
+              "success": true,
+              "bytes": 969640,
+              "error": null
+            },
+            {
+              "source": "mta_alerts",
+              "success": true,
+              "bytes": 932325,
+              "error": null
+            },
+            {
+              "source": "weather",
+              "success": true,
+              "bytes": 2510,
+              "error": null
+            }
+          ],
+          "main_forecast_ready": false
+        },
+        "score_borough": {
+          "scope": "Manhattan totals; not station forecasts",
+          "origin_utc": "2026-10-16T02:00:00+00:00",
+          "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+          "prediction_ready_at_utc": "2026-10-16T01:10:04.913670+00:00",
+          "publication_completed_at_utc": "2026-10-16T01:10:08.842090+00:00",
+          "published_before_first_target": true,
+          "attempt_publication_completed_at_utc": "2026-10-16T01:10:08.842090+00:00",
+          "attempted_models": [
+            "weather_0p1",
+            "weather_0p1",
+            "weather_0p1"
+          ],
+          "attempted_fallback_reasons": [
+            null,
+            null,
+            null
+          ],
+          "predictions": [
+            {
+              "horizon": 1,
+              "prediction": 3090.7354082122724,
+              "model": "weather_0p1",
+              "fallback_reason": null,
+              "first_score_run_id": "bdbe6c83e42f4e1083445b717527d5cd",
+              "published_before_target": true
+            },
+            {
+              "horizon": 2,
+              "prediction": 2232.454879697851,
+              "model": "weather_0p1",
+              "fallback_reason": null,
+              "first_score_run_id": "bdbe6c83e42f4e1083445b717527d5cd",
+              "published_before_target": true
+            },
+            {
+              "horizon": 3,
+              "prediction": 1365.1435467816543,
+              "model": "weather_0p1",
+              "fallback_reason": null,
+              "first_score_run_id": "bdbe6c83e42f4e1083445b717527d5cd",
+              "published_before_target": true
+            }
+          ]
+        }
+      }
+    },
+    "borough_retry_test": {
+      "run_id": 18273415563828,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "outputs": {
+        "retry_existing_origin": {
+          "scope": "Manhattan totals; not station forecasts",
+          "origin_utc": "2026-10-16T01:00:00+00:00",
+          "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+          "prediction_ready_at_utc": "2026-10-16T00:59:11.620935+00:00",
+          "publication_completed_at_utc": "2026-10-16T00:59:19.103790+00:00",
+          "published_before_first_target": true,
+          "attempt_publication_completed_at_utc": "2026-10-16T01:09:59.562621+00:00",
+          "attempted_models": [
+            "calendar_0p1",
+            "calendar_0p1",
+            "calendar_0p1"
+          ],
+          "attempted_fallback_reasons": [
+            "weather unavailable: stale/unavailable weather initialization",
+            "weather unavailable: stale/unavailable weather initialization",
+            "weather unavailable: stale/unavailable weather initialization"
+          ],
+          "predictions": [
+            {
+              "horizon": 1,
+              "prediction": 3806.220288814122,
+              "model": "weather_0p1",
+              "fallback_reason": null,
+              "first_score_run_id": "0efda348889e40f584b0911580ffe3c2",
+              "published_before_target": true
+            },
+            {
+              "horizon": 2,
+              "prediction": 3100.9834702348785,
+              "model": "weather_0p1",
+              "fallback_reason": null,
+              "first_score_run_id": "0efda348889e40f584b0911580ffe3c2",
+              "published_before_target": true
+            },
+            {
+              "horizon": 3,
+              "prediction": 2231.8857083607386,
+              "model": "weather_0p1",
+              "fallback_reason": null,
+              "first_score_run_id": "0efda348889e40f584b0911580ffe3c2",
+              "published_before_target": true
+            }
+          ]
+        }
+      }
+    },
+    "borough_verify": {
+      "run_id": 128174072528224,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "outputs": {
+        "review": {
+          "status": "passed",
+          "scope": "public-only Manhattan aggregate benchmark",
+          "checks": {
+            "feature_duplicate_keys": 0,
+            "feature_availability_violations": 0,
+            "incomplete_three_horizon_origins": 0,
+            "unsupported_station_main_eligibility": 0,
+            "weather_duplicate_keys": 0,
+            "forecast_duplicate_keys": 0,
+            "forecast_time_or_value_violations": 0,
+            "late_origins_in_main_evaluation": 0,
+            "model_reload_max_difference": 2.3646862246096134e-11,
+            "fallback_test_mae": 815.8053016972095,
+            "first_forecast_rows_preserved": 3
+          },
+          "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+          "versions": {
+            "python": "3.12.3",
+            "sklearn": "1.7.2",
+            "pyarrow": "21.0.0",
+            "numpy": "2.1.3",
+            "joblib": "1.4.2"
+          },
+          "prospective_departure_accuracy_available": false,
+          "class_catalog_publication_completed": false
+        }
+      }
+    },
+    "borough_sensitivity": {
+      "run_id": 466420785166757,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "outputs": {
+        "review": {
+          "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+          "method": "frozen seven-hour model, common keys; no refit or assumption selection",
+          "delays_hours": [
+            6,
+            7,
+            8
+          ],
+          "splits": {
+            "validation": {
+              "original_rows": 4386,
+              "common_rows": 4386,
+              "weather_model": {
+                "6": {
+                  "rows": 4386,
+                  "mae": 557.8888206271348,
+                  "rmse": 865.9428441162751,
+                  "poisson_deviance": 184.6339086648529,
+                  "mean_bias": -197.12442758891316,
+                  "actual_mean": 3630.465572275422,
+                  "zero_labels": 0
+                },
+                "7": {
+                  "rows": 4386,
+                  "mae": 558.6271806380813,
+                  "rmse": 868.6634431132276,
+                  "poisson_deviance": 186.18251059903585,
+                  "mean_bias": -196.47248468452094,
+                  "actual_mean": 3630.465572275422,
+                  "zero_labels": 0
+                },
+                "8": {
+                  "rows": 4386,
+                  "mae": 562.7833667685532,
+                  "rmse": 876.9477205658786,
+                  "poisson_deviance": 190.0928966607406,
+                  "mean_bias": -198.87114327697773,
+                  "actual_mean": 3630.465572275422,
+                  "zero_labels": 0
+                }
+              },
+              "calendar_control": {
+                "rows": 4386,
+                "mae": 908.340504524519,
+                "rmse": 1377.9516755111704,
+                "poisson_deviance": 417.347308925334,
+                "mean_bias": -489.84471496393934,
+                "actual_mean": 3630.465572275422,
+                "zero_labels": 0
+              }
+            },
+            "test": {
+              "original_rows": 6618,
+              "common_rows": 6552,
+              "weather_model": {
+                "6": {
+                  "rows": 6552,
+                  "mae": 759.0656475407068,
+                  "rmse": 1232.2069644541155,
+                  "poisson_deviance": 284.1587005961736,
+                  "mean_bias": 19.419607359634156,
+                  "actual_mean": 4310.18605006105,
+                  "zero_labels": 0
+                },
+                "7": {
+                  "rows": 6552,
+                  "mae": 759.4863744275046,
+                  "rmse": 1233.0097390404358,
+                  "poisson_deviance": 284.20862500589345,
+                  "mean_bias": 20.21030942169368,
+                  "actual_mean": 4310.18605006105,
+                  "zero_labels": 0
+                },
+                "8": {
+                  "rows": 6552,
+                  "mae": 759.2997197392978,
+                  "rmse": 1230.510727009712,
+                  "poisson_deviance": 283.8510208753954,
+                  "mean_bias": 19.963977332216157,
+                  "actual_mean": 4310.18605006105,
+                  "zero_labels": 0
+                }
+              },
+              "calendar_control": {
+                "rows": 6552,
+                "mae": 814.8669963023303,
+                "rmse": 1476.8768274019956,
+                "poisson_deviance": 372.09890956363483,
+                "mean_bias": 386.90117384800755,
+                "actual_mean": 4310.18605006105,
+                "zero_labels": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "borough_actuals": {
+      "run_id": 6861432075851,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "outputs": {
+        "review": {
+          "imported_at_utc": "2026-10-16T01:20:09.971217+00:00",
+          "actual_package": "/Volumes/workspace/citibike_3h/inputs/actuals/20261016T005314Z-99c3d2b9",
+          "actual_hours": 18264,
+          "evaluated_forecasts": 0,
+          "latest_actual_hour_utc": "2026-09-01 03:00:00",
+          "note": "No prospective predictive accuracy is available until matching trip outcomes are published and imported."
+        }
+      }
+    },
+    "borough_weather": {
+      "run_id": 1001170349968590,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "outputs": {
+        "review": {
+          "table": "workspace.citibike_3h.external_weather_reference_20261016t005315z_35753b1b",
+          "rows": 105168,
+          "source_sha256": "85e73a1e094283203036633d93077c6c03840248da4ca4d6261550b98dfb3320"
+        }
+      }
+    },
+    "borough_dashboard": {
+      "run_id": 1100117705932793,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "outputs": {
+        "review": "Manhattan forecast dashboard queries succeeded"
+      }
+    }
+  },
+  "hourly_job": {
+    "job_id": 1072725421467387,
+    "max_concurrent_runs": 1,
+    "timeout_seconds": 600,
+    "schedule": {
+      "pause_status": "UNPAUSED",
+      "quartz_cron_expression": "0 55 * * * ?",
+      "timezone_id": "UTC"
+    },
+    "environments": [
+      {
+        "environment_key": "public_mvp_v5",
+        "spec": {
+          "dependencies": [
+            "scikit-learn==1.7.2"
+          ],
+          "environment_version": "5"
+        }
+      }
+    ],
+    "tasks": [
+      {
+        "task_key": "collect_sources",
+        "environment_key": "public_mvp_v5",
+        "timeout_seconds": 300
+      },
+      {
+        "task_key": "score_borough",
+        "environment_key": "public_mvp_v5",
+        "timeout_seconds": 300
+      }
+    ]
+  },
+  "portable_weather_handoff": {
+    "root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/handoffs/weather_reference_20261016T005315Z-35753b1b",
+    "archive": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/handoffs/weather_reference_20261016T005315Z-35753b1b.zip",
+    "sha256": "c86b383762ab766b34ba97a57be2f9cbc875342873cfe3143058973eaf448fe0",
+    "bytes": 730880,
+    "rows": 105168
+  },
+  "test_plot": {
+    "path": "validation/manhattan_test_final_week_2026-10-15.png",
+    "sha256": "bebcf987f315d7df328842aad60e75ca5f3d97473dafa0f692f4f8d44568427d"
+  },
+  "remaining": [
+    "Original station-level operating exposure and geographic history",
+    "Historical alert coverage/timezone ablation",
+    "Class workspace/catalog transfer",
+    "24\u201348 hour scheduled-run observation and published production outcomes"
+  ],
+  "local_verification": {
+    "tests": 204,
+    "result": "passed",
+    "elapsed_seconds": 32.23,
+    "command": "uv run python scripts/run_tests.py",
+    "runner_sha256": "1b86ef164ed3871e05186556dae72b7a02651c4cee4e8f67dc353a801239811f",
+    "syntax_check": "python -m compileall passed",
+    "git_diff_check": "passed",
+    "portable_zip_checksums": "passed"
+  }
+}

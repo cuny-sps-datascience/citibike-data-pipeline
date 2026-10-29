@@ -1,0 +1,4 @@
+station_id,origin_utc,horizon,target_start_utc,target_end_utc,target_start_new_york,departures,label_basis,operation_assumed_24h,operation_verified,inventory_required,trip_files_complete
+6331.01,2026-06-15T14:00:00+00:00,1,2026-06-15T14:00:00+00:00,2026-06-15T15:00:00+00:00,2026-06-15T10:00:00-04:00,17,observed_trips,True,False,False,True
+6331.01,2026-06-15T14:00:00+00:00,2,2026-06-15T15:00:00+00:00,2026-06-15T16:00:00+00:00,2026-06-15T11:00:00-04:00,14,observed_trips,True,False,False,True
+6331.01,2026-06-15T14:00:00+00:00,3,2026-06-15T16:00:00+00:00,2026-06-15T17:00:00+00:00,2026-06-15T12:00:00-04:00,18,observed_trips,True,False,False,True
