@@ -1,0 +1,24 @@
+{
+  "package_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_packages/20261016T200304Z-7c2377e9",
+  "manifest_sha256": "ce029f69379daf3961f549bc9c47b0cc95bfb8e5190d9a74e0c39073c42c6ff8",
+  "checks": {
+    "duplicate_feature_keys": 0,
+    "future_weather": 0,
+    "future_information": 0,
+    "future_advisory": 0,
+    "stale_advisory": 0,
+    "unknown_advisory_encoded_zero": 0,
+    "negative_counts": 0,
+    "wrong_horizon": 0,
+    "unsupported_target_hours": 0,
+    "label_count_disagreement": 0,
+    "label_release_disagreement": 0
+  },
+  "rows": 234238,
+  "zero_labels": 72110,
+  "advisory_covered_rows": 42792,
+  "artifact_checks_passed": 13,
+  "canonical_station_eligibility_promoted": false,
+  "active_model_changed": false,
+  "passed": true
+}

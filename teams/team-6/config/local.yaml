@@ -1,0 +1,24 @@
+# Local pipeline configuration. Data never lives in the code project.
+schema_version: 2  # 2: padded one-decimal modern station IDs, cross-release duplicate removal
+parser_version: "0.2.0"
+paths:
+  source_root: /Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject
+  processed_root: /Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed
+  # New public releases land here; the original source archive stays read-only.
+  additional_source_roots:
+    - /Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_downloads
+# Directory names never scanned inside source_root (dot-directories are always skipped).
+exclude_dir_names:
+  - citibike-production
+  - __MACOSX
+duckdb:
+  memory_limit: 6GB   # of 16 GiB RAM; spill goes to processed_root/tmp on the RAID
+  threads: 6
+timezone: America/New_York
+batch_rows: 250000
+# A source whose quarantined share exceeds this is not published.
+max_quarantine_fraction: 0.01
+pilot:
+  # 2018-04: three copies in the 2018 ZIP, fractional legacy timestamps.
+  # 2025-03: modern schema, DST spring-forward, inside the recent full year.
+  releases: ["2018-04", "2025-03"]

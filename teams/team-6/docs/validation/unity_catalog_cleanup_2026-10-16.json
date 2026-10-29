@@ -1,0 +1,39 @@
+{
+  "schema_version": "unity-catalog-cleanup-v1",
+  "status": "VERIFIED",
+  "executed_at_utc": "2026-10-16T23:51:38Z",
+  "workspace_schema": "workspace.citibike_3h",
+  "reason": "Keep the Free Edition schema below its fixed 100-table quota.",
+  "before": {
+    "quota_api_count": 83,
+    "quota_limit": 100,
+    "managed_tables": 44,
+    "views": 39
+  },
+  "deleted_managed_tables": [
+    "workspace.citibike_3h.availability_test_predictions_20261016t205658z_53093e33",
+    "workspace.citibike_3h.station_pilot_features_20261016t201856z_d67ba148",
+    "workspace.citibike_3h.station_pilot_mapping_20261016t201856z_d67ba148",
+    "workspace.citibike_3h.station_pilot_predictions_20261016t201856z_d67ba148",
+    "workspace.citibike_3h.external_weather_reference_20261016t005315z_35753b1b",
+    "workspace.citibike_3h.borough_actual_hourly_20261016t005314z_99c3d2b9",
+    "workspace.citibike_3h.borough_actual_hourly_approved_20261016t005314z_99c3d2b9"
+  ],
+  "preserved_artifacts": {
+    "availability_results": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/availability_results/20261016T205658Z-53093e33",
+    "station_pilot_package": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_packages/20261016T200304Z-7c2377e9",
+    "station_pilot_results": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_results/20261016T201856Z-d67ba148",
+    "superseded_weather_handoff": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/handoffs/weather_reference_20261016T005315Z-35753b1b",
+    "superseded_borough_labels": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/borough_labels/20261016T005314Z-99c3d2b9"
+  },
+  "after": {
+    "direct_catalog_inventory_count": 76,
+    "managed_tables": 37,
+    "views": 39,
+    "deleted_candidates_remaining": 0,
+    "active_borough_actual_view_target": "workspace.citibike_3h.borough_actual_hourly_approved_20261016t172924z_8e688cba",
+    "availability_live_predictions_preserved": true,
+    "scheduled_jobs_preserved": true,
+    "quota_api_refresh_note": "The quota endpoint remained at its prior count immediately after deletion; Databricks refreshes this counter asynchronously. Direct catalog inventory returned 76 objects."
+  }
+}
