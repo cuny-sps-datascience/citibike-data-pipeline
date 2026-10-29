@@ -1,0 +1,302 @@
+{
+  "recorded_at_utc": "2026-10-16T14:01:15.173662+00:00",
+  "mapping_package": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_subway_mapping/20261016T135632Z-c198ce44",
+  "mapping_manifest_sha256": "748481f9e34bf7c9ca60eb22626f7711a9433e3127b83712c0a53af363d3e6a0",
+  "mapping_checks": [
+    "all artifact SHA-256 values match",
+    "unique stop/complex/route keys within radius",
+    "distances within configured radius",
+    "250m keys subset of 500m keys",
+    "all bike/radius coverage rows retained",
+    "IDs are strings",
+    "historical validity and station operation remain unverified",
+    "cloud table counts match"
+  ],
+  "coverage": {
+    "250": {
+      "bike_stations": 2518,
+      "with_subway_station": 778,
+      "with_daytime_route": 778
+    },
+    "500": {
+      "bike_stations": 2518,
+      "with_subway_station": 1687,
+      "with_daytime_route": 1687
+    }
+  },
+  "local_table_rows": {
+    "bike_stations": 2518,
+    "station_proximity": 4696,
+    "complex_proximity": 4025,
+    "route_proximity": 6608,
+    "coverage": 5036
+  },
+  "health": {
+    "run_id": 745846210585912,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "report": {
+      "schema_version": "borough-daily-health-v1",
+      "checked_at_utc": "2026-10-16T13:57:34.525560+00:00",
+      "window_start_utc": "2026-10-16T02:00:00+00:00",
+      "monitoring_start_utc": "2026-10-16T02:00:00+00:00",
+      "model_version": "20261016T005315Z-35753b1b-9ac3c3ff",
+      "status": "OK",
+      "expected_origins": 12,
+      "complete_origins": 12,
+      "incomplete_origins": 0,
+      "late_origins": 0,
+      "invalid_prediction_origins": 0,
+      "fallback_rows": 0,
+      "source_failures": 0,
+      "stale_sources": 0,
+      "grace_minutes": 10,
+      "source_stale_after_minutes": 90,
+      "matured_forecasts": 0,
+      "prospective_accuracy_available": false,
+      "origins": [
+        {
+          "origin_utc": "2026-10-16T02:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T03:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T04:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T05:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T06:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T07:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T08:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T09:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T10:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T11:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T12:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        },
+        {
+          "origin_utc": "2026-10-16T13:00:00+00:00",
+          "rows": 3,
+          "complete_three_horizons": true,
+          "published_before_origin": true,
+          "valid_predictions": true,
+          "fallback_rows": 0
+        }
+      ],
+      "sources": [
+        {
+          "source": "gbfs_discovery",
+          "attempts": 18,
+          "failed_attempts": 0,
+          "last_success_utc": "2026-10-16T13:55:43.253586+00:00",
+          "minutes_since_success": 1.85,
+          "stale": false
+        },
+        {
+          "source": "gbfs_station_information",
+          "attempts": 18,
+          "failed_attempts": 0,
+          "last_success_utc": "2026-10-16T13:55:43.447513+00:00",
+          "minutes_since_success": 1.85,
+          "stale": false
+        },
+        {
+          "source": "gbfs_station_status",
+          "attempts": 18,
+          "failed_attempts": 0,
+          "last_success_utc": "2026-10-16T13:55:43.636627+00:00",
+          "minutes_since_success": 1.85,
+          "stale": false
+        },
+        {
+          "source": "mta_alerts",
+          "attempts": 18,
+          "failed_attempts": 0,
+          "last_success_utc": "2026-10-16T13:55:43.925335+00:00",
+          "minutes_since_success": 1.84,
+          "stale": false
+        },
+        {
+          "source": "weather",
+          "attempts": 18,
+          "failed_attempts": 0,
+          "last_success_utc": "2026-10-16T13:55:44.498070+00:00",
+          "minutes_since_success": 1.83,
+          "stale": false
+        }
+      ],
+      "measurement": "Canonical persisted forecasts and collection logs; scheduler attempt/job-state audit is separate.",
+      "freshness_definition": "Successful HTTP retrieval time; does not establish provider payload age or verified forecast availability.",
+      "accuracy_note": "Operational availability is not prediction accuracy. Accuracy waits for matching published trip outcomes.",
+      "monitor_run_id": "20261016T135734Z-80efeefa",
+      "report_path": "/Volumes/workspace/citibike_3h/exports/health/20261016T135734Z-80efeefa/report.json"
+    },
+    "job_id": 899230762229374,
+    "schedule": {
+      "pause_status": "UNPAUSED",
+      "quartz_cron_expression": "0 15 13 * * ?",
+      "timezone_id": "UTC"
+    }
+  },
+  "mapping": {
+    "run_id": 480515673919873,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "report": {
+      "mapping_version": "20261016T135632Z-c198ce44",
+      "available_from_utc": "2026-10-16T13:56:34.249747+00:00",
+      "tables": {
+        "bike_stations": {
+          "table": "workspace.citibike_3h.station_subway_bike_stations_20261016t135632z_c198ce44",
+          "rows": 2518
+        },
+        "station_proximity": {
+          "table": "workspace.citibike_3h.station_subway_station_proximity_20261016t135632z_c198ce44",
+          "rows": 4696
+        },
+        "complex_proximity": {
+          "table": "workspace.citibike_3h.station_subway_complex_proximity_20261016t135632z_c198ce44",
+          "rows": 4025
+        },
+        "route_proximity": {
+          "table": "workspace.citibike_3h.station_subway_route_proximity_20261016t135632z_c198ce44",
+          "rows": 6608
+        },
+        "coverage": {
+          "table": "workspace.citibike_3h.station_subway_coverage_20261016t135632z_c198ce44",
+          "rows": 5036
+        }
+      },
+      "coverage": [
+        {
+          "radius_m": 250,
+          "bike_stations": 2518,
+          "with_subway_station": 778,
+          "with_daytime_route": 778
+        },
+        {
+          "radius_m": 500,
+          "bike_stations": 2518,
+          "with_subway_station": 1687,
+          "with_daytime_route": 1687
+        }
+      ],
+      "historical_validity_verified": false,
+      "package_root": "/Volumes/workspace/citibike_3h/inputs/mapping/20261016T135632Z-c198ce44"
+    }
+  },
+  "dashboard": {
+    "run_id": 894740783083564,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "report": "Manhattan forecast dashboard queries succeeded"
+  },
+  "slides": {
+    "count": 3,
+    "speaker_notes": true,
+    "pdf_pages": 3,
+    "powerpoint_zip_valid": true,
+    "artifacts": [
+      {
+        "path": "docs/presentations/data622_mvp.pptx",
+        "sha256": "d4e85a57d56fb3d2fe25e0f84b880e3298190f6fe21ac27c8b9b6919f79d031f",
+        "bytes": 201877
+      },
+      {
+        "path": "docs/presentations/data622_mvp.pdf",
+        "sha256": "cf90bbbd3633bbfdba70bc480bf6ccb63114204ae31b0a507bd6889b3a425a8f",
+        "bytes": 184730
+      }
+    ]
+  },
+  "local_verification": {
+    "tests_passed": 217,
+    "elapsed_seconds": 30.21,
+    "command": "uv run python scripts/run_tests.py",
+    "syntax_check": "passed",
+    "git_diff_check": "passed",
+    "document_links": "passed",
+    "slide_visual_review": "three PDF previews inspected"
+  }
+}

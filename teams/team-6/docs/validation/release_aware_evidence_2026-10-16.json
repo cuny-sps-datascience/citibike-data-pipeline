@@ -1,0 +1,1164 @@
+{
+  "recorded_at_utc": "2026-10-16T15:46:57.724182+00:00",
+  "recorded_at_new_york": "2026-10-16T11:46:57.724182-04:00",
+  "runs": {
+    "rolling": {
+      "run_id": 478664636894492,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "attempts": [
+        {
+          "task_key": "review",
+          "run_id": 646920736339958,
+          "state": {
+            "life_cycle_state": "TERMINATED",
+            "result_state": "SUCCESS",
+            "state_message": "",
+            "user_cancelled_or_timedout": false
+          },
+          "attempt_number": 0,
+          "execution_duration_ms": 119000,
+          "error": null
+        }
+      ],
+      "outputs": {
+        "review": {
+          "schema_version": "release-aware-rolling-v1",
+          "months": [
+            "2026-06",
+            "2026-07",
+            "2026-08"
+          ],
+          "folds": [
+            {
+              "month": "2026-06",
+              "fit_cutoff_utc": "2026-06-01T03:55:00+00:00",
+              "validation_month": "2026-03",
+              "selected_model": "weather_1p0",
+              "fallback_model": "calendar_0p1",
+              "validation": {
+                "profile": {
+                  "rows": 2223,
+                  "mae": 1033.9401662622747,
+                  "rmse": 1507.7809249570273,
+                  "poisson_deviance": 584.0213497146699,
+                  "mean_bias": 863.6723467908473,
+                  "actual_mean": 2441.9883040935674,
+                  "zero_labels": 0
+                },
+                "pooled": {
+                  "rows": 2223,
+                  "mae": 1176.0131159888313,
+                  "rmse": 1650.0281170459934,
+                  "poisson_deviance": 757.1456408465148,
+                  "mean_bias": 879.5277729435173,
+                  "actual_mean": 2441.9883040935674,
+                  "zero_labels": 0
+                },
+                "calendar_0p1": {
+                  "rows": 2223,
+                  "mae": 715.916929324568,
+                  "rmse": 1215.3975426966988,
+                  "poisson_deviance": 379.27166498741104,
+                  "mean_bias": -281.309988806186,
+                  "actual_mean": 2441.9883040935674,
+                  "zero_labels": 0
+                },
+                "calendar_1p0": {
+                  "rows": 2223,
+                  "mae": 715.9733931598284,
+                  "rmse": 1215.591608397633,
+                  "poisson_deviance": 379.3122564968235,
+                  "mean_bias": -280.9758718630161,
+                  "actual_mean": 2441.9883040935674,
+                  "zero_labels": 0
+                },
+                "weather_0p1": {
+                  "rows": 2223,
+                  "mae": 401.62833615712225,
+                  "rmse": 637.005797704633,
+                  "poisson_deviance": 146.96218245275983,
+                  "mean_bias": 112.90402764791793,
+                  "actual_mean": 2441.9883040935674,
+                  "zero_labels": 0
+                },
+                "weather_1p0": {
+                  "rows": 2223,
+                  "mae": 400.99448082205134,
+                  "rmse": 635.951949562828,
+                  "poisson_deviance": 146.47668035071382,
+                  "mean_bias": 111.22583504669227,
+                  "actual_mean": 2441.9883040935674,
+                  "zero_labels": 0
+                }
+              },
+              "convergence": {
+                "calendar_0p1": {
+                  "iterations": 64,
+                  "converged": true
+                },
+                "calendar_1p0": {
+                  "iterations": 51,
+                  "converged": true
+                },
+                "weather_0p1": {
+                  "iterations": 82,
+                  "converged": true
+                },
+                "weather_1p0": {
+                  "iterations": 86,
+                  "converged": true
+                }
+              },
+              "refit_convergence": {
+                "weather_1p0": {
+                  "iterations": 82,
+                  "converged": true
+                },
+                "calendar_0p1": {
+                  "iterations": 58,
+                  "converged": true
+                }
+              },
+              "partition_rows": {
+                "train": 25923,
+                "validation": 2223,
+                "refit": 28149,
+                "test": 2100
+              },
+              "max_label_available_at_utc": {
+                "train": "2026-05-15T00:00:00+00:00",
+                "validation": "2026-05-15T00:00:00+00:00",
+                "refit": "2026-05-15T00:00:00+00:00"
+              },
+              "latest_refit_target_end_utc": "2026-04-01T04:00:00+00:00",
+              "test": {
+                "profile": {
+                  "rows": 2100,
+                  "mae": 1592.1044820979391,
+                  "rmse": 2013.6661432019882,
+                  "poisson_deviance": 879.6866149961429,
+                  "mean_bias": -1467.6757500746257,
+                  "actual_mean": 4607.495714285715,
+                  "zero_labels": 0
+                },
+                "pooled": {
+                  "rows": 2100,
+                  "mae": 1732.5628717690977,
+                  "rmse": 2266.827522295221,
+                  "poisson_deviance": 1141.0726676729184,
+                  "mean_bias": -1463.1284105605732,
+                  "actual_mean": 4607.495714285715,
+                  "zero_labels": 0
+                },
+                "calendar_0p1": {
+                  "rows": 2100,
+                  "mae": 649.799747259623,
+                  "rmse": 1152.6453718958974,
+                  "poisson_deviance": 282.7388309670034,
+                  "mean_bias": -238.42627008052253,
+                  "actual_mean": 4607.495714285715,
+                  "zero_labels": 0
+                },
+                "weather_1p0": {
+                  "rows": 2100,
+                  "mae": 734.3029044791977,
+                  "rmse": 1213.103897275441,
+                  "poisson_deviance": 300.59004812389213,
+                  "mean_bias": -344.1319937623326,
+                  "actual_mean": 4607.495714285715,
+                  "zero_labels": 0
+                }
+              }
+            },
+            {
+              "month": "2026-07",
+              "fit_cutoff_utc": "2026-07-01T03:55:00+00:00",
+              "validation_month": "2026-04",
+              "selected_model": "weather_0p1",
+              "fallback_model": "profile",
+              "validation": {
+                "profile": {
+                  "rows": 2154,
+                  "mae": 749.6676108587002,
+                  "rmse": 1179.4452742026358,
+                  "poisson_deviance": 320.6604165394535,
+                  "mean_bias": -142.48984242018503,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "pooled": {
+                  "rows": 2154,
+                  "mae": 1031.857365123955,
+                  "rmse": 1538.070258494781,
+                  "poisson_deviance": 558.4485742338671,
+                  "mean_bias": -157.8347772724809,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "calendar_0p1": {
+                  "rows": 2154,
+                  "mae": 936.3841008226428,
+                  "rmse": 1423.4917309461632,
+                  "poisson_deviance": 441.8015169748027,
+                  "mean_bias": -597.9033994247984,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "calendar_1p0": {
+                  "rows": 2154,
+                  "mae": 936.4584079038937,
+                  "rmse": 1424.0105626428106,
+                  "poisson_deviance": 441.8319789943496,
+                  "mean_bias": -597.7738461605779,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "weather_0p1": {
+                  "rows": 2154,
+                  "mae": 512.1658134390523,
+                  "rmse": 769.7857009851277,
+                  "poisson_deviance": 158.81458898204798,
+                  "mean_bias": -156.3769771686835,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "weather_1p0": {
+                  "rows": 2154,
+                  "mae": 512.4778555395618,
+                  "rmse": 770.9186992484518,
+                  "poisson_deviance": 158.94226263133095,
+                  "mean_bias": -158.02431043462906,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                }
+              },
+              "convergence": {
+                "calendar_0p1": {
+                  "iterations": 58,
+                  "converged": true
+                },
+                "calendar_1p0": {
+                  "iterations": 53,
+                  "converged": true
+                },
+                "weather_0p1": {
+                  "iterations": 91,
+                  "converged": true
+                },
+                "weather_1p0": {
+                  "iterations": 82,
+                  "converged": true
+                }
+              },
+              "refit_convergence": {
+                "weather_0p1": {
+                  "iterations": 86,
+                  "converged": true
+                }
+              },
+              "partition_rows": {
+                "train": 28149,
+                "validation": 2154,
+                "refit": 30306,
+                "test": 2226
+              },
+              "max_label_available_at_utc": {
+                "train": "2026-05-15T00:00:00+00:00",
+                "validation": "2026-06-14T00:00:00+00:00",
+                "refit": "2026-06-14T00:00:00+00:00"
+              },
+              "latest_refit_target_end_utc": "2026-05-01T04:00:00+00:00",
+              "test": {
+                "profile": {
+                  "rows": 2226,
+                  "mae": 1260.8754771822025,
+                  "rmse": 1707.5213259811428,
+                  "poisson_deviance": 600.8173881405767,
+                  "mean_bias": -910.5820024769027,
+                  "actual_mean": 4088.404761904762,
+                  "zero_labels": 0
+                },
+                "pooled": {
+                  "rows": 2226,
+                  "mae": 1424.6364981576562,
+                  "rmse": 1927.851272468382,
+                  "poisson_deviance": 798.5178470736798,
+                  "mean_bias": -932.8688124516931,
+                  "actual_mean": 4088.404761904762,
+                  "zero_labels": 0
+                },
+                "weather_0p1": {
+                  "rows": 2226,
+                  "mae": 839.8702198925429,
+                  "rmse": 1326.0632087721613,
+                  "poisson_deviance": 310.762776757309,
+                  "mean_bias": 261.9698598397824,
+                  "actual_mean": 4088.404761904762,
+                  "zero_labels": 0
+                }
+              }
+            },
+            {
+              "month": "2026-08",
+              "fit_cutoff_utc": "2026-08-01T03:55:00+00:00",
+              "validation_month": "2026-04",
+              "selected_model": "weather_0p1",
+              "fallback_model": "profile",
+              "validation": {
+                "profile": {
+                  "rows": 2154,
+                  "mae": 749.6676108587002,
+                  "rmse": 1179.4452742026358,
+                  "poisson_deviance": 320.6604165394535,
+                  "mean_bias": -142.48984242018503,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "pooled": {
+                  "rows": 2154,
+                  "mae": 1031.857365123955,
+                  "rmse": 1538.070258494781,
+                  "poisson_deviance": 558.4485742338671,
+                  "mean_bias": -157.8347772724809,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "calendar_0p1": {
+                  "rows": 2154,
+                  "mae": 936.3841008226428,
+                  "rmse": 1423.4917309461632,
+                  "poisson_deviance": 441.8015169748027,
+                  "mean_bias": -597.9033994247984,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "calendar_1p0": {
+                  "rows": 2154,
+                  "mae": 936.4584079038937,
+                  "rmse": 1424.0105626428106,
+                  "poisson_deviance": 441.8319789943496,
+                  "mean_bias": -597.7738461605779,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "weather_0p1": {
+                  "rows": 2154,
+                  "mae": 512.1658134390523,
+                  "rmse": 769.7857009851277,
+                  "poisson_deviance": 158.81458898204798,
+                  "mean_bias": -156.3769771686835,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                },
+                "weather_1p0": {
+                  "rows": 2154,
+                  "mae": 512.4778555395618,
+                  "rmse": 770.9186992484518,
+                  "poisson_deviance": 158.94226263133095,
+                  "mean_bias": -158.02431043462906,
+                  "actual_mean": 3363.9220055710307,
+                  "zero_labels": 0
+                }
+              },
+              "convergence": {
+                "calendar_0p1": {
+                  "iterations": 58,
+                  "converged": true
+                },
+                "calendar_1p0": {
+                  "iterations": 53,
+                  "converged": true
+                },
+                "weather_0p1": {
+                  "iterations": 91,
+                  "converged": true
+                },
+                "weather_1p0": {
+                  "iterations": 82,
+                  "converged": true
+                }
+              },
+              "refit_convergence": {
+                "weather_0p1": {
+                  "iterations": 95,
+                  "converged": true
+                }
+              },
+              "partition_rows": {
+                "train": 28149,
+                "validation": 2154,
+                "refit": 32496,
+                "test": 2226
+              },
+              "max_label_available_at_utc": {
+                "train": "2026-05-15T00:00:00+00:00",
+                "validation": "2026-06-14T00:00:00+00:00",
+                "refit": "2026-07-15T00:00:00+00:00"
+              },
+              "latest_refit_target_end_utc": "2026-05-31T16:00:00+00:00",
+              "test": {
+                "profile": {
+                  "rows": 2226,
+                  "mae": 1318.1142625721923,
+                  "rmse": 1737.9051740175971,
+                  "poisson_deviance": 612.9224258864513,
+                  "mean_bias": -1088.8906228715252,
+                  "actual_mean": 4262.77628032345,
+                  "zero_labels": 0
+                },
+                "pooled": {
+                  "rows": 2226,
+                  "mae": 1450.3185734187368,
+                  "rmse": 1993.0769758179601,
+                  "poisson_deviance": 854.6042171067937,
+                  "mean_bias": -1055.8519221502866,
+                  "actual_mean": 4262.77628032345,
+                  "zero_labels": 0
+                },
+                "weather_0p1": {
+                  "rows": 2226,
+                  "mae": 727.2370560310071,
+                  "rmse": 1180.2300858002113,
+                  "poisson_deviance": 252.93667319162245,
+                  "mean_bias": 124.24795318991846,
+                  "actual_mean": 4262.77628032345,
+                  "zero_labels": 0
+                }
+              }
+            }
+          ],
+          "selected_pooled_metrics": {
+            "rows": 6552,
+            "mae": 767.768146460949,
+            "rmse": 1241.9085493212865,
+            "poisson_deviance": 287.8562388044101,
+            "mean_bias": 20.916310272163543,
+            "actual_mean": 4314.0216727716725,
+            "zero_labels": 0
+          },
+          "profile_pooled_metrics": {
+            "rows": 6552,
+            "mae": 1386.485130204358,
+            "rmse": 1821.0795101895903,
+            "poisson_deviance": 694.311159572049,
+            "mean_bias": -1149.7169015846025,
+            "actual_mean": 4314.0216727716725,
+            "zero_labels": 0
+          },
+          "design": {
+            "candidates": [
+              "profile",
+              "pooled",
+              "calendar_0p1",
+              "calendar_1p0",
+              "weather_0p1",
+              "weather_1p0"
+            ],
+            "validation": "latest completely matured target month; earlier training targets only",
+            "refit": "selected candidate and fallback on all matured weather-covered rows before fold cutoff",
+            "label_rule": "max(target-month release, all supplying source-cohort releases), strict before fit cutoff",
+            "release_assumption": "source month end +45 days at 00:00 UTC; unverified",
+            "cutoff": "five minutes before first monthly origin in America/New_York",
+            "test_boundary": "all three-target origins wholly inside fold month; original split boundary exclusions retained"
+          },
+          "limitations": [
+            "New retrospective analysis on previously inspected months, not a fresh untouched test set.",
+            "Temporal gates use assumed publication delays and archived weather includes early hindcasts.",
+            "Overlapping horizons are not independent observations; station and alert models remain excluded."
+          ],
+          "active_model_changed": false,
+          "package_root": "/Volumes/workspace/citibike_3h/inputs/rolling/20261016T151919Z-aaf4a8e8",
+          "output_root": "/Volumes/workspace/citibike_3h/exports/rolling_backtests/20261016T152005Z-88b1920f",
+          "active_pointer_sha256": "61e1eaa0f924dfcbf9e8440b9e477477629a18dbc34af4f0f03c344c8c1bff08"
+        }
+      }
+    },
+    "evidence": {
+      "run_id": 719688766598446,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "attempts": [
+        {
+          "task_key": "watch_releases",
+          "run_id": 1089651574171933,
+          "state": {
+            "life_cycle_state": "TERMINATED",
+            "result_state": "SUCCESS",
+            "state_message": "",
+            "user_cancelled_or_timedout": false
+          },
+          "attempt_number": 0,
+          "execution_duration_ms": 42000,
+          "error": null
+        },
+        {
+          "task_key": "evaluate_outcomes",
+          "run_id": 813560171848787,
+          "state": {
+            "life_cycle_state": "TERMINATED",
+            "result_state": "SUCCESS",
+            "state_message": "",
+            "user_cancelled_or_timedout": false
+          },
+          "attempt_number": 0,
+          "execution_duration_ms": 28000,
+          "error": null
+        },
+        {
+          "task_key": "prospective_evidence",
+          "run_id": 904609742919482,
+          "state": {
+            "life_cycle_state": "TERMINATED",
+            "result_state": "SUCCESS",
+            "state_message": "",
+            "user_cancelled_or_timedout": false
+          },
+          "attempt_number": 0,
+          "execution_duration_ms": 50000,
+          "error": null
+        }
+      ],
+      "outputs": {
+        "watch_releases": {
+          "poll_id": "20261016T154053Z-b7cd9b5d",
+          "observed_at_utc": "2026-10-16T15:40:54.715211+00:00",
+          "monthly_objects": 164,
+          "latest_nyc_release": "2026-09",
+          "pending_candidates": [
+            {
+              "object_key": "202609-citibike-tripdata.zip",
+              "object_version": "a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf",
+              "family": "nyc",
+              "nominal_release": "2026-09",
+              "etag": "468907af4bee542cf84202d188ec7e34-57",
+              "bytes": 972151835,
+              "provider_last_modified_utc": "2026-10-05T19:43:04.000Z",
+              "url": "https://s3.amazonaws.com/tripdata/202609-citibike-tripdata.zip",
+              "first_seen_utc": "2026-10-16 15:22:36.106289",
+              "last_seen_utc": "2026-10-16 15:40:54.715211",
+              "sightings": 3,
+              "original_publication_time_verified": false,
+              "archive_complete_verified": false,
+              "readiness": "awaiting_local_ingestion_and_label_validation",
+              "auto_ingestion_approved": false
+            }
+          ],
+          "raw_listing_artifacts": [
+            {
+              "url": "https://s3.amazonaws.com/tripdata/?list-type=2&max-keys=1000",
+              "path": "/Volumes/workspace/citibike_3h/exports/release_watch/20261016T154053Z-b7cd9b5d/listing_000.xml",
+              "sha256": "1cf6a832ce746377335ca7e499bf247774e91d41693758eaefebcd7fbacdb83b",
+              "bytes": 46621
+            }
+          ],
+          "publication_time_verified": false,
+          "bulk_downloaded": false
+        },
+        "evaluate_outcomes": {
+          "run_id": "20261016T154125Z-a3d887c5",
+          "checked_at_utc": "2026-10-16T15:41:25.426608+00:00",
+          "prepared_package": "/Volumes/workspace/citibike_3h/inputs/approved_outcomes/20261016T005314Z-99c3d2b9",
+          "manifest_sha256": "adfd917f4ef6887825ee48f0ef0d9e704dba516b1b2fe43b0efe7c8775359c43",
+          "actual_hours": 18264,
+          "latest_actual_hour_utc": "2026-09-01T03:00:00+00:00",
+          "evaluated_forecasts": 0,
+          "metrics": []
+        },
+        "prospective_evidence": {
+          "batch_id": "20261016T154155Z-2a9b807b",
+          "processing_version": "22ae0c32489ba7d8dfa8fd592488b94a990ca54cbfb86d45e97b1aa4ea7025a5",
+          "publication_completed_at_utc": "2026-10-16T15:42:09.661957+00:00",
+          "processed_inputs": 0,
+          "remaining_inputs": 0,
+          "reference_version": "20261016T153134Z-5401b8c2",
+          "mapping_version": "20261016T135632Z-c198ce44",
+          "artifacts": [
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154155Z-2a9b807b/station_information_observations.parquet",
+              "rows": 0,
+              "sha256": "fb408c75c70e91dc4e96c03f364813c429f8a32c39a891d75af0fb73345d9502"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154155Z-2a9b807b/mta_alert_observations.parquet",
+              "rows": 0,
+              "sha256": "df13f0b2a4d0633df97bde11b28261d6f5f8131f43e06aafcd0dcf9d2de7660c"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154155Z-2a9b807b/mta_alert_selectors.parquet",
+              "rows": 0,
+              "sha256": "89ea65576723db643de07f333817b209b5b38da32751e415d02f975908305305"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154155Z-2a9b807b/station_subway_alert_features.parquet",
+              "rows": 0,
+              "sha256": "d7af93682b3a418f708fe6436f9e7670b36c7337805c5f9212904a7e068b583f"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154155Z-2a9b807b/prospective_source_coverage.parquet",
+              "rows": 0,
+              "sha256": "59161ecbdb07225eef97d37f4afd6f1cd3e55168c0a182c3b66c48bae9865cf6"
+            }
+          ],
+          "batch_rows": {
+            "station_information_observations": 0,
+            "mta_alert_observations": 0,
+            "mta_alert_selectors": 0,
+            "station_subway_alert_features": 0,
+            "prospective_source_coverage": 0
+          },
+          "total_rows": {
+            "station_information_observations": 47858,
+            "mta_alert_observations": 9078,
+            "mta_alert_selectors": 43888,
+            "station_subway_alert_features": 95716,
+            "prospective_source_coverage": 38
+          },
+          "geography_changes": 7,
+          "station_observation_gaps": 0,
+          "source_gaps": 0,
+          "unresolved_subway_selectors": 0,
+          "station_operation_verified": false,
+          "historical_alert_effect_estimated": false,
+          "active_forecast_model_changed": false
+        }
+      }
+    },
+    "verification": {
+      "run_id": 624694898551094,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "attempts": [
+        {
+          "task_key": "replay",
+          "run_id": 305863499816019,
+          "state": {
+            "life_cycle_state": "TERMINATED",
+            "result_state": "SUCCESS",
+            "state_message": "",
+            "user_cancelled_or_timedout": false
+          },
+          "attempt_number": 0,
+          "execution_duration_ms": 72000,
+          "error": null
+        },
+        {
+          "task_key": "verify",
+          "run_id": 762310744256204,
+          "state": {
+            "life_cycle_state": "TERMINATED",
+            "result_state": "SUCCESS",
+            "state_message": "",
+            "user_cancelled_or_timedout": false
+          },
+          "attempt_number": 0,
+          "execution_duration_ms": 35000,
+          "error": null
+        }
+      ],
+      "outputs": {
+        "replay": {
+          "batch_id": "20261016T154440Z-7f8bcc33",
+          "processing_version": "22ae0c32489ba7d8dfa8fd592488b94a990ca54cbfb86d45e97b1aa4ea7025a5",
+          "publication_completed_at_utc": "2026-10-16T15:44:58.057911+00:00",
+          "processed_inputs": 0,
+          "remaining_inputs": 0,
+          "reference_version": "20261016T153134Z-5401b8c2",
+          "mapping_version": "20261016T135632Z-c198ce44",
+          "artifacts": [
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/station_information_observations.parquet",
+              "rows": 0,
+              "sha256": "fb408c75c70e91dc4e96c03f364813c429f8a32c39a891d75af0fb73345d9502"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/mta_alert_observations.parquet",
+              "rows": 0,
+              "sha256": "df13f0b2a4d0633df97bde11b28261d6f5f8131f43e06aafcd0dcf9d2de7660c"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/mta_alert_selectors.parquet",
+              "rows": 0,
+              "sha256": "89ea65576723db643de07f333817b209b5b38da32751e415d02f975908305305"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/station_subway_alert_features.parquet",
+              "rows": 0,
+              "sha256": "d7af93682b3a418f708fe6436f9e7670b36c7337805c5f9212904a7e068b583f"
+            },
+            {
+              "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/prospective_source_coverage.parquet",
+              "rows": 0,
+              "sha256": "59161ecbdb07225eef97d37f4afd6f1cd3e55168c0a182c3b66c48bae9865cf6"
+            }
+          ],
+          "batch_rows": {
+            "station_information_observations": 0,
+            "mta_alert_observations": 0,
+            "mta_alert_selectors": 0,
+            "station_subway_alert_features": 0,
+            "prospective_source_coverage": 0
+          },
+          "total_rows": {
+            "station_information_observations": 47858,
+            "mta_alert_observations": 9078,
+            "mta_alert_selectors": 43888,
+            "station_subway_alert_features": 95716,
+            "prospective_source_coverage": 38
+          },
+          "geography_changes": 7,
+          "station_observation_gaps": 0,
+          "source_gaps": 0,
+          "unresolved_subway_selectors": 0,
+          "station_operation_verified": false,
+          "historical_alert_effect_estimated": false,
+          "active_forecast_model_changed": false
+        },
+        "verify": {
+          "verified_at_utc": "2026-10-16T15:45:52.390740+00:00",
+          "checks": {
+            "rolling_duplicate_keys": 0,
+            "station_duplicate_keys": 0,
+            "alert_duplicate_keys": 0,
+            "feature_duplicate_keys": 0,
+            "non_subway_selectors_resolved": 0,
+            "features_before_publication": 0,
+            "invalid_mapping_has_numeric_counts": 0,
+            "unverified_operation_promoted": 0,
+            "late_forecasts_evaluated": 0
+          },
+          "station_history": {
+            "observations": 47858,
+            "station_ids": 2519,
+            "first_observed_utc": "2026-10-15 23:52:59.202577",
+            "last_observed_utc": "2026-10-16 14:55:44.635352"
+          },
+          "selector_resolution": [
+            {
+              "agency_id": "LI",
+              "resolution": "non_subway_or_missing_agency",
+              "selectors": 575
+            },
+            {
+              "agency_id": "MNR",
+              "resolution": "non_subway_or_missing_agency",
+              "selectors": 424
+            },
+            {
+              "agency_id": "MTA NYCT",
+              "resolution": "non_subway_or_missing_agency",
+              "selectors": 5047
+            },
+            {
+              "agency_id": "MTABC",
+              "resolution": "non_subway_or_missing_agency",
+              "selectors": 1260
+            },
+            {
+              "agency_id": "MTASBWY",
+              "resolution": "resolved",
+              "selectors": 34380
+            },
+            {
+              "agency_id": "MTASBWY",
+              "resolution": "resolved_no_scheduled_match",
+              "selectors": 2202
+            }
+          ],
+          "features": [
+            {
+              "radius_m": 250,
+              "rows": 47858,
+              "usable_rows": 47842,
+              "rows_with_matched_alerts": 6048
+            },
+            {
+              "radius_m": 500,
+              "rows": 47858,
+              "usable_rows": 47842,
+              "rows_with_matched_alerts": 15800
+            }
+          ],
+          "matured_forecasts": 0,
+          "active_pointer_unchanged": true,
+          "rolling_release_gates_passed": true,
+          "prospective_report": {
+            "batch_id": "20261016T154440Z-7f8bcc33",
+            "processing_version": "22ae0c32489ba7d8dfa8fd592488b94a990ca54cbfb86d45e97b1aa4ea7025a5",
+            "publication_completed_at_utc": "2026-10-16T15:44:58.057911+00:00",
+            "processed_inputs": 0,
+            "remaining_inputs": 0,
+            "reference_version": "20261016T153134Z-5401b8c2",
+            "mapping_version": "20261016T135632Z-c198ce44",
+            "artifacts": [
+              {
+                "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/station_information_observations.parquet",
+                "rows": 0,
+                "sha256": "fb408c75c70e91dc4e96c03f364813c429f8a32c39a891d75af0fb73345d9502"
+              },
+              {
+                "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/mta_alert_observations.parquet",
+                "rows": 0,
+                "sha256": "df13f0b2a4d0633df97bde11b28261d6f5f8131f43e06aafcd0dcf9d2de7660c"
+              },
+              {
+                "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/mta_alert_selectors.parquet",
+                "rows": 0,
+                "sha256": "89ea65576723db643de07f333817b209b5b38da32751e415d02f975908305305"
+              },
+              {
+                "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/station_subway_alert_features.parquet",
+                "rows": 0,
+                "sha256": "d7af93682b3a418f708fe6436f9e7670b36c7337805c5f9212904a7e068b583f"
+              },
+              {
+                "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T154440Z-7f8bcc33/prospective_source_coverage.parquet",
+                "rows": 0,
+                "sha256": "59161ecbdb07225eef97d37f4afd6f1cd3e55168c0a182c3b66c48bae9865cf6"
+              }
+            ],
+            "batch_rows": {
+              "station_information_observations": 0,
+              "mta_alert_observations": 0,
+              "mta_alert_selectors": 0,
+              "station_subway_alert_features": 0,
+              "prospective_source_coverage": 0
+            },
+            "total_rows": {
+              "station_information_observations": 47858,
+              "mta_alert_observations": 9078,
+              "mta_alert_selectors": 43888,
+              "station_subway_alert_features": 95716,
+              "prospective_source_coverage": 38
+            },
+            "geography_changes": 7,
+            "station_observation_gaps": 0,
+            "source_gaps": 0,
+            "unresolved_subway_selectors": 0,
+            "station_operation_verified": false,
+            "historical_alert_effect_estimated": false,
+            "active_forecast_model_changed": false
+          }
+        }
+      }
+    },
+    "dashboard": {
+      "run_id": 749053795224467,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "attempts": [
+        {
+          "task_key": "review",
+          "run_id": 759699409975303,
+          "state": {
+            "life_cycle_state": "TERMINATED",
+            "result_state": "SUCCESS",
+            "state_message": "",
+            "user_cancelled_or_timedout": false
+          },
+          "attempt_number": 0,
+          "execution_duration_ms": 56000,
+          "error": null
+        }
+      ],
+      "outputs": {
+        "review": "Manhattan forecast dashboard queries succeeded"
+      }
+    }
+  },
+  "initial_full_evidence_run": {
+    "run_id": 218114468388850,
+    "state": {
+      "life_cycle_state": "TERMINATED",
+      "result_state": "SUCCESS",
+      "state_message": "",
+      "user_cancelled_or_timedout": false
+    },
+    "attempts": [
+      {
+        "task_key": "watch_releases",
+        "run_id": 340336811634312,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "attempt_number": 0,
+        "execution_duration_ms": 41000,
+        "error": null
+      },
+      {
+        "task_key": "evaluate_outcomes",
+        "run_id": 69168210323671,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "attempt_number": 0,
+        "execution_duration_ms": 32000,
+        "error": null
+      },
+      {
+        "task_key": "prospective_evidence",
+        "run_id": 1060811283792522,
+        "state": {
+          "life_cycle_state": "TERMINATED",
+          "result_state": "SUCCESS",
+          "state_message": "",
+          "user_cancelled_or_timedout": false
+        },
+        "attempt_number": 0,
+        "execution_duration_ms": 85000,
+        "error": null
+      }
+    ],
+    "outputs": {
+      "watch_releases": {
+        "poll_id": "20261016T153233Z-a52a0443",
+        "observed_at_utc": "2026-10-16T15:32:34.729975+00:00",
+        "monthly_objects": 164,
+        "latest_nyc_release": "2026-09",
+        "pending_candidates": [
+          {
+            "object_key": "202609-citibike-tripdata.zip",
+            "object_version": "a9098addbdb69a4d7c61a0f1754633b97cdee6e1e367af9c5f1adacea33b16bf",
+            "family": "nyc",
+            "nominal_release": "2026-09",
+            "etag": "468907af4bee542cf84202d188ec7e34-57",
+            "bytes": 972151835,
+            "provider_last_modified_utc": "2026-10-05T19:43:04.000Z",
+            "url": "https://s3.amazonaws.com/tripdata/202609-citibike-tripdata.zip",
+            "first_seen_utc": "2026-10-16 15:22:36.106289",
+            "last_seen_utc": "2026-10-16 15:32:34.729975",
+            "sightings": 2,
+            "original_publication_time_verified": false,
+            "archive_complete_verified": false,
+            "readiness": "awaiting_local_ingestion_and_label_validation",
+            "auto_ingestion_approved": false
+          }
+        ],
+        "raw_listing_artifacts": [
+          {
+            "url": "https://s3.amazonaws.com/tripdata/?list-type=2&max-keys=1000",
+            "path": "/Volumes/workspace/citibike_3h/exports/release_watch/20261016T153233Z-a52a0443/listing_000.xml",
+            "sha256": "1cf6a832ce746377335ca7e499bf247774e91d41693758eaefebcd7fbacdb83b",
+            "bytes": 46621
+          }
+        ],
+        "publication_time_verified": false,
+        "bulk_downloaded": false
+      },
+      "evaluate_outcomes": {
+        "run_id": "20261016T153311Z-eac4b767",
+        "checked_at_utc": "2026-10-16T15:33:11.787536+00:00",
+        "prepared_package": "/Volumes/workspace/citibike_3h/inputs/approved_outcomes/20261016T005314Z-99c3d2b9",
+        "manifest_sha256": "adfd917f4ef6887825ee48f0ef0d9e704dba516b1b2fe43b0efe7c8775359c43",
+        "actual_hours": 18264,
+        "latest_actual_hour_utc": "2026-09-01T03:00:00+00:00",
+        "evaluated_forecasts": 0,
+        "metrics": []
+      },
+      "prospective_evidence": {
+        "batch_id": "20261016T153346Z-ef1e94a0",
+        "processing_version": "22ae0c32489ba7d8dfa8fd592488b94a990ca54cbfb86d45e97b1aa4ea7025a5",
+        "publication_completed_at_utc": "2026-10-16T15:34:21.468536+00:00",
+        "processed_inputs": 38,
+        "remaining_inputs": 0,
+        "reference_version": "20261016T153134Z-5401b8c2",
+        "mapping_version": "20261016T135632Z-c198ce44",
+        "artifacts": [
+          {
+            "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T153346Z-ef1e94a0/station_information_observations.parquet",
+            "rows": 47858,
+            "sha256": "80685ee7cb560a6575ecb98c1b14024624d307dbe7feddd38ddac485c6c6c394"
+          },
+          {
+            "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T153346Z-ef1e94a0/mta_alert_observations.parquet",
+            "rows": 9078,
+            "sha256": "6b8fc338487779dfd3aed8c4ea956bc22926485c40f4ed349f45f7658c86a7df"
+          },
+          {
+            "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T153346Z-ef1e94a0/mta_alert_selectors.parquet",
+            "rows": 43888,
+            "sha256": "8fac51c6e6455bbff462f2e18436a9f0be64046bb5842633ccdee1bf2c2d2a75"
+          },
+          {
+            "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T153346Z-ef1e94a0/station_subway_alert_features.parquet",
+            "rows": 95716,
+            "sha256": "981defee30318f1297240636b8c798694a74a44e281be75d444606c96816d82f"
+          },
+          {
+            "path": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T153346Z-ef1e94a0/prospective_source_coverage.parquet",
+            "rows": 38,
+            "sha256": "8d1e82213faad52f56cda0d2b7cb78ac089cf6b7830ddd5b24ac2badd6bfda4b"
+          }
+        ],
+        "batch_rows": {
+          "station_information_observations": 47858,
+          "mta_alert_observations": 9078,
+          "mta_alert_selectors": 43888,
+          "station_subway_alert_features": 95716,
+          "prospective_source_coverage": 38
+        },
+        "total_rows": {
+          "station_information_observations": 47858,
+          "mta_alert_observations": 9078,
+          "mta_alert_selectors": 43888,
+          "station_subway_alert_features": 95716,
+          "prospective_source_coverage": 38
+        },
+        "geography_changes": 7,
+        "station_observation_gaps": 0,
+        "source_gaps": 0,
+        "unresolved_subway_selectors": 0,
+        "station_operation_verified": false,
+        "historical_alert_effect_estimated": false,
+        "active_forecast_model_changed": false
+      }
+    }
+  },
+  "schedules": {
+    "hourly_forecast": {
+      "job_id": 1072725421467387,
+      "schedule": {
+        "pause_status": "UNPAUSED",
+        "quartz_cron_expression": "0 55 * * * ?",
+        "timezone_id": "UTC"
+      },
+      "max_concurrent_runs": 1,
+      "tasks": [
+        "collect_sources",
+        "score_borough"
+      ]
+    },
+    "daily_health": {
+      "job_id": 899230762229374,
+      "schedule": {
+        "pause_status": "UNPAUSED",
+        "quartz_cron_expression": "0 15 13 * * ?",
+        "timezone_id": "UTC"
+      },
+      "max_concurrent_runs": 1,
+      "tasks": [
+        "daily_health"
+      ]
+    },
+    "daily_evidence": {
+      "job_id": 537646732304684,
+      "schedule": {
+        "pause_status": "UNPAUSED",
+        "quartz_cron_expression": "0 0 13 * * ?",
+        "timezone_id": "UTC"
+      },
+      "max_concurrent_runs": 1,
+      "tasks": [
+        "watch_releases",
+        "evaluate_outcomes",
+        "prospective_evidence"
+      ]
+    }
+  },
+  "station_configuration_audit": {
+    "source": "/Volumes/workspace/citibike_3h/exports/prospective_evidence/20261016T153346Z-ef1e94a0/station_information_observations.parquet",
+    "observations": 47858,
+    "distinct_station_ids": 2519,
+    "configuration_change_events": 7,
+    "changed_field_counts": {
+      "capacity": 7
+    },
+    "changes": [
+      {
+        "station_id": "66dbe848-0aca-11e7-82f6-3863bb44ef7c",
+        "observed_at_utc": "2026-10-16T12:55:44.230302+00:00",
+        "changed_fields": [
+          "capacity"
+        ]
+      },
+      {
+        "station_id": "66dc91b5-0aca-11e7-82f6-3863bb44ef7c",
+        "observed_at_utc": "2026-10-16T14:55:44.635352+00:00",
+        "changed_fields": [
+          "capacity"
+        ]
+      },
+      {
+        "station_id": "66dd42eb-0aca-11e7-82f6-3863bb44ef7c",
+        "observed_at_utc": "2026-10-16T12:55:44.230302+00:00",
+        "changed_fields": [
+          "capacity"
+        ]
+      },
+      {
+        "station_id": "66de5a47-0aca-11e7-82f6-3863bb44ef7c",
+        "observed_at_utc": "2026-10-16T13:55:43.447513+00:00",
+        "changed_fields": [
+          "capacity"
+        ]
+      },
+      {
+        "station_id": "70634bc4-4d90-42d4-8f6a-3f29fa8f7f77",
+        "observed_at_utc": "2026-10-16T12:55:44.230302+00:00",
+        "changed_fields": [
+          "capacity"
+        ]
+      },
+      {
+        "station_id": "2254550579741656756",
+        "observed_at_utc": "2026-10-16T01:09:36.726600+00:00",
+        "changed_fields": [
+          "capacity"
+        ]
+      },
+      {
+        "station_id": "2254550579741656756",
+        "observed_at_utc": "2026-10-16T01:55:40.571856+00:00",
+        "changed_fields": [
+          "capacity"
+        ]
+      }
+    ]
+  },
+  "code_sha256": {
+    "src/citibike_pipeline/model_runtime.py": "4bda047e745aebc4f740e1307b6b9badb55f55c9a7100667406539500ba92f8a",
+    "src/citibike_pipeline/rolling_backtest.py": "cfa1c01987ca127a986cd2cdf324079e948c156bb13c3704a932e5e56b2d1872",
+    "src/citibike_pipeline/release_watch.py": "f85821d1b372b053f2c638d284da242664e7e612ba927a397a58777f0db2540f",
+    "src/citibike_pipeline/prospective_evidence.py": "cf2a7f270856c31449876d5a59853a4c1cc9c4af8480f8d0a97f23174e9fb764",
+    "scripts/deploy_evidence_pipeline.py": "93280411560d9618ba6c62332b308141a544ddc8d422abdf6c2f8948268f3de6",
+    "notebooks/14_release_aware_backtest.py": "17b2690cc176c5449d2ab0cfde99aafc6995915100e7cfd3d420efb23af0dce1",
+    "notebooks/15_watch_trip_releases.py": "5b2992e84ba433a9128e9e73278ed3eedc6bafe7ad62e6d3d3007665428084a8",
+    "notebooks/16_refresh_released_outcomes.py": "e5483811d0528e638de1b628f47fd8ef4e827c6a7d2ad07b857a38e545f0def3",
+    "notebooks/17_build_prospective_evidence.py": "c00ee1e0c8f8a3df275c5ad30ddf3a54d6502332a802978d5b8d742c9c83fe7c",
+    "notebooks/18_verify_evidence.py": "07cf7324efd17997c7381fed52c16aeeb71caa5ade8f889895791dc67645750f"
+  },
+  "local_tests": {
+    "passed": 232,
+    "elapsed_seconds": 32.07,
+    "return_code": 0,
+    "command": "uv run python scripts/run_tests.py",
+    "completed_at_utc": "2026-10-16T15:46:34.146196+00:00"
+  },
+  "scope": "Release-aware retrospective aggregate tests and prospective advisory/geography observations; no historical station-operation or causal-alert claim.",
+  "active_model_unchanged": true,
+  "replay_added_rows": 0,
+  "live_accuracy_available": false,
+  "view_refresh_fix": "Stable view definitions are retained during routine daily appends; the outcome pointer changes only for a different prepared package."
+}

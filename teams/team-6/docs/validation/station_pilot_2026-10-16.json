@@ -1,0 +1,138 @@
+{
+  "recorded_at_utc": "2026-10-16T20:23:33.260714+00:00",
+  "scope": "Conditional historical 32-station calendar/weather pilot; exact alert ablation incomplete",
+  "source_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_sources/20261016T195145Z-57b9a118",
+  "source_manifest_sha256": "db75170b3088adb6f71a9a7eb8feda80589644afd37e13cb77b24b35e4b0f51a",
+  "objects": 534,
+  "bytes": 12784149798,
+  "dates_per_source": 178,
+  "source_rows": {
+    "station_status": 620683413,
+    "subway_alerts": 344159765
+  },
+  "first_complete_alert_schema_date": "2026-08-07",
+  "incomplete_alert_schema_dates": 122,
+  "package_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_packages/20261016T200304Z-7c2377e9",
+  "package_manifest_sha256": "ce029f69379daf3961f549bc9c47b0cc95bfb8e5190d9a74e0c39073c42c6ff8",
+  "result_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_results/20261016T201856Z-d67ba148",
+  "cloud_output_root": "/Volumes/workspace/citibike_3h/exports/station_pilots/20261016T201856Z-d67ba148",
+  "cohort_stations": 32,
+  "test_stations": 31,
+  "cohort_stations_without_test_support": [
+    {
+      "station_id": "5073.07",
+      "name": "Greenwich St & Rector St"
+    }
+  ],
+  "bounded_supported_hours_full_archive": 123148,
+  "unique_station_poll_rows": 7908087,
+  "fresh_renting_empty_inventory_rows": 51505,
+  "unique_label_hours": 78287,
+  "unique_zero_label_hours": 24106,
+  "features": 234238,
+  "zero_label_forecast_rows": 72110,
+  "mapping_rows": 20856,
+  "split_rows": {
+    "train": 50243,
+    "validation": 29806,
+    "refit": 175253,
+    "test": 58965
+  },
+  "test": {
+    "calendar": {
+      "rows": 58965,
+      "mae": 3.6328453079707,
+      "rmse": 5.019744097889989,
+      "poisson_deviance": 4.981864643030649,
+      "bias": -0.1498213829320529,
+      "actual_mean": 4.308996862545578,
+      "zero_labels": 18351
+    },
+    "weather": {
+      "rows": 58965,
+      "mae": 3.480260987718101,
+      "rmse": 4.889231849687803,
+      "poisson_deviance": 4.688454681088203,
+      "bias": -0.15261148580643877,
+      "actual_mean": 4.308996862545578,
+      "zero_labels": 18351
+    }
+  },
+  "weather_mae_reduction_percent": 4.200132604540552,
+  "alert_ablation_ready": false,
+  "alert_ablation_gate": "Semantically complete, release-eligible alert examples are missing in one or more partitions",
+  "rich_schema_rows_by_split": {
+    "train": 0,
+    "validation": 0,
+    "refit": 0,
+    "test": 42792
+  },
+  "run_id": 140677514025666,
+  "task_run_id": 763511303396457,
+  "run_url": "https://dbc-d00cbd4c-c74c.cloud.databricks.com/jobs/runs/140677514025666",
+  "cloud_status": {
+    "life_cycle_state": "TERMINATED",
+    "result_state": "SUCCESS",
+    "state_message": "",
+    "user_cancelled_or_timedout": false
+  },
+  "mlflow_run_id": "3883a342bd6a4027ba34dd1761da2380",
+  "predictions_table": "workspace.citibike_3h.station_pilot_predictions_20261016t201856z_d67ba148",
+  "features_table": "workspace.citibike_3h.station_pilot_features_20261016t201856z_d67ba148",
+  "mapping_table": "workspace.citibike_3h.station_pilot_mapping_20261016t201856z_d67ba148",
+  "model_artifacts": [
+    {
+      "path": "report.json",
+      "sha256": "551901d4449e13901025eb0578119372668a8b9f4b880d039fd401dab0b505ab",
+      "bytes": 10565
+    },
+    {
+      "path": "selection.json",
+      "sha256": "3c218bcaeab92aabb37708d7c908fb778acfaf14de0c38bc0dba78a317388f4a",
+      "bytes": 1746
+    },
+    {
+      "path": "models.joblib",
+      "sha256": "f931c6ffb2c5c4a22e955373718fbe61de5be962ca009f197ff22d089550b6f7",
+      "bytes": 56529
+    },
+    {
+      "path": "predictions.parquet",
+      "sha256": "413c7a2339d68c0ff581803059ca559f73795a59d7a7987389bcc487685710bc",
+      "bytes": 865432
+    }
+  ],
+  "save_reload_checked_rows": 100,
+  "save_reload_max_prediction_difference": 0.0,
+  "independent_checks": {
+    "duplicate_feature_keys": 0,
+    "future_weather": 0,
+    "future_information": 0,
+    "future_advisory": 0,
+    "stale_advisory": 0,
+    "unknown_advisory_encoded_zero": 0,
+    "negative_counts": 0,
+    "wrong_horizon": 0,
+    "unsupported_target_hours": 0,
+    "label_count_disagreement": 0,
+    "label_release_disagreement": 0,
+    "duplicate_predictions": 0,
+    "invalid_predictions": 0
+  },
+  "local_tests_passed": 256,
+  "local_tests_seconds": 29.34,
+  "original_proposal_sha256": "fde305547639fb55442a84d0bb5f737ea5b4a4da7d24cc4988593a1231c2c90d",
+  "active_pointer_sha256": "61e1eaa0f924dfcbf9e8440b9e477477629a18dbc34af4f0f03c344c8c1bff08",
+  "active_model_changed": false,
+  "canonical_station_eligibility_promoted": false,
+  "production_activation": false,
+  "limitations": [
+    "Reconstructed retrospective evaluation, not forecasts actually issued in 2026",
+    "September aggregate outcomes were inspected previously; station outcomes/ablation not yet evaluated",
+    "Assumed trip-release, weather and information availability",
+    "Observed polling supports a conditional operating-hour population",
+    "Small metadata-selected cohort and one geography/weather proxy",
+    "Matched advisories do not establish actual disruption or causal effect",
+    "Legacy alert partitions cannot establish complete selector/display semantics; exact advisory ablation stays gated without rich training and validation history."
+  ]
+}

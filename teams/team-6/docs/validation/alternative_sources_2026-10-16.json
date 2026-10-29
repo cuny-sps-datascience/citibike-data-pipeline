@@ -1,0 +1,626 @@
+{
+  "checked_at_utc": "2026-10-16T18:00:07.415701+00:00",
+  "research_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/source_alternatives/20261016T174506Z-591dfc95",
+  "source_artifacts": [
+    {
+      "url": "https://api.github.com/repos/hudcostreets/ctbk.dev/git/trees/main?recursive=1",
+      "path": "ctbk_tree.json",
+      "sha256": "b28a99cf593cdf7786a2221d5eb21a2643803f39ef8b5c2c6688702677d74a57",
+      "bytes": 853192
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/README.md",
+      "path": "ctbk_README.md",
+      "sha256": "6f7d2554c8c45bb0430373134c4756587ed7e97b73d61d5e284c31cfc88c41da",
+      "bytes": 6465,
+      "retrieved_at_utc": "2026-10-16T17:45:41.612893+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/docs/pipeline.md",
+      "path": "ctbk_docs__pipeline.md",
+      "sha256": "d22336e344f58fa7016f63fd27a2de7d9c2c5e800f88c6817797fe60cfc0dde2",
+      "bytes": 16502,
+      "retrieved_at_utc": "2026-10-16T17:45:41.613347+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/specs/done/gbfs-scraper.md",
+      "path": "ctbk_specs__done__gbfs-scraper.md",
+      "sha256": "821a358a20f1f9edaf14084a2e268429ce76136c3667bfb3b5945c4abfc941fa",
+      "bytes": 2499,
+      "retrieved_at_utc": "2026-10-16T17:45:41.613450+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/gbfs/poll.py",
+      "path": "ctbk_gbfs__poll.py",
+      "sha256": "2504dd769786b5911246c16e8455a42e0fa404df228fecce944283cb12209f1a",
+      "bytes": 6993,
+      "retrieved_at_utc": "2026-10-16T17:45:41.613514+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/gbfs/poller-v11/src/index.ts",
+      "path": "ctbk_gbfs__poller-v11__src__index.ts",
+      "sha256": "dad2d0d92eda5bce2faf4d4d41229213b0daa71294d0c815f0345981f1217c87",
+      "bytes": 8286,
+      "retrieved_at_utc": "2026-10-16T17:45:43.487604+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/gbfs/worker/src/index.ts",
+      "path": "ctbk_gbfs__worker__src__index.ts",
+      "sha256": "f21a7da431d4817e85a0fce0361e0f8d48d67676864e83eaa4be2b13dc43846d",
+      "bytes": 9217,
+      "retrieved_at_utc": "2026-10-16T17:45:43.487831+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/gbfs/api/src/index.ts",
+      "path": "ctbk_gbfs__api__src__index.ts",
+      "sha256": "6313f4ef706da020af1b05334e3ced11bc887aa1db0627d62b109e06467bf1ca",
+      "bytes": 85097,
+      "retrieved_at_utc": "2026-10-16T17:45:43.487920+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/gbfs/api/wrangler.toml",
+      "path": "ctbk_gbfs__api__wrangler.toml",
+      "sha256": "3103dc82880fa99406a4b800f8afb8aa3e3bdbc5c8fad4def885325d89fe674e",
+      "bytes": 5002,
+      "retrieved_at_utc": "2026-10-16T17:45:43.488008+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/ctbk/gbfs_cli.py",
+      "path": "ctbk_ctbk__gbfs_cli.py",
+      "sha256": "08a736dea6a67198e296759a2dc76810619cc5b84d67bced89c59299bc2755d3",
+      "bytes": 134987,
+      "retrieved_at_utc": "2026-10-16T17:45:43.661999+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/gbfs/grid.yaml",
+      "path": "ctbk_gbfs__grid.yaml",
+      "sha256": "22cb96555d6a8ebce57f087bab55964549f8429c58bb51e85b2dd649bfb4ee65",
+      "bytes": 4184,
+      "retrieved_at_utc": "2026-10-16T17:45:43.710543+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/www/gbfs/README.md",
+      "path": "ctbk_www__gbfs__README.md",
+      "sha256": "6997d18e5c5c012c21f292c095eb40ad64c859956f8a50b253d28a6a50ba062c",
+      "bytes": 3857,
+      "retrieved_at_utc": "2026-10-16T17:45:43.775161+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://storage.googleapis.com/parquet.gtfsrt.io/inventory.json",
+      "path": "gtfsrt_inventory.json",
+      "sha256": "53ad92c58e1ba1400c0ac3ea3efd7c6907ac795c02251ea2a89658e5e47317c5",
+      "bytes": 35925,
+      "retrieved_at_utc": "2026-10-16T17:45:43.775270+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://citibikehistory.com/",
+      "path": "citibikehistory.html",
+      "sha256": "e2629fe442580ef55bbe844e4e419145984868c659c8d1768bfda54fed17921d",
+      "bytes": 178063,
+      "retrieved_at_utc": "2026-10-16T17:45:43.805218+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://zenodo.org/api/records/13846868",
+      "path": "zenodo.json",
+      "sha256": "b2611a5f9cf4474d47995f2da6de2da4aa8030c20ac8a7690d0fb86269f173ba",
+      "bytes": 6108,
+      "retrieved_at_utc": "2026-10-16T17:45:43.886221+00:00",
+      "status": 200
+    },
+    {
+      "url": "https://data.ctbk.dev/gbfs/status/2026-06-15.parquet",
+      "path": "ctbk_status_2026-06-15.parquet",
+      "sha256": "f7041619f320a046fa2b68913938fcc008d4a4000bb04d5bd86f231be5b1adc6",
+      "bytes": 13916127,
+      "etag": "\"82579254b9caf1aae51638bf63f8ec30\"",
+      "retrieved_at_utc": "2026-10-16T17:47:00.003169+00:00"
+    },
+    {
+      "url": "https://data.ctbk.dev/gbfs/status/2026-09-15.parquet",
+      "path": "ctbk_status_2026-09-15.parquet",
+      "sha256": "291b8cb81cee0cfe43745874d0e0ea28399cd73b855920e21c56ace97c92d067",
+      "bytes": 20325909,
+      "etag": "\"bf94c7341aff183a221dac096aa03467-3\"",
+      "retrieved_at_utc": "2026-10-16T17:47:00.003746+00:00"
+    },
+    {
+      "url": "https://data.ctbk.dev/gbfs/info/2026-04-06.json",
+      "path": "ctbk_info_2026-04-06.json",
+      "sha256": "514bb114aa2b0d37e6359bdc7e6725c82d617fed7c130f55bac07f6377044730",
+      "bytes": 1201132,
+      "etag": "\"b1fb1a437102442142cb3c3918973f50\"",
+      "retrieved_at_utc": "2026-10-16T17:47:00.003977+00:00"
+    },
+    {
+      "url": "https://data.ctbk.dev/gbfs/info/2026-06-15.json",
+      "path": "ctbk_info_2026-06-15.json",
+      "sha256": "e3f71974f1a39da6e1b6d6351179f89754f95ea46e2c9564efb298647c354c58",
+      "bytes": 1306050,
+      "etag": "\"baaf9eaa2a570dfcfd1239134b1096c3\"",
+      "retrieved_at_utc": "2026-10-16T17:47:00.892967+00:00"
+    },
+    {
+      "url": "https://data.ctbk.dev/gbfs/info/2026-09-15.json",
+      "path": "ctbk_info_2026-09-15.json",
+      "sha256": "44f98706e241d2fb863914faf415f59062cd233f5a5dc5cb7d2d56ebbb254b64",
+      "bytes": 1362064,
+      "etag": "\"8ba6de306252ade729b547d6dd8038ce\"",
+      "retrieved_at_utc": "2026-10-16T17:47:01.461082+00:00"
+    },
+    {
+      "url": "https://storage.googleapis.com/parquet.gtfsrt.io/service_alerts/date=2026-09-15/base64url=aHR0cHM6Ly9hcGktZW5kcG9pbnQubXRhLmluZm8vRGF0YXNlcnZpY2UvbXRhZ3Rmc2ZlZWRzL2NhbXN5cyUyRnN1YndheS1hbGVydHM/data.parquet",
+      "path": "gtfsrt_subway_alerts_2026-09-15.parquet",
+      "sha256": "1ad10827b4135512bbb5ddd5c8ab3583b85ea582313bbddd2ef64c042670a1a2",
+      "bytes": 95707163,
+      "etag": "\"24367f30502c35cd03c1978346a2c2b7\"",
+      "retrieved_at_utc": "2026-10-16T17:47:01.898997+00:00"
+    },
+    {
+      "url": "https://api.github.com/repos/NYCComptroller/citi-bike-gbfs/git/trees/main?recursive=1",
+      "path": "comptroller_tree.json",
+      "sha256": "5908f8bd9acb22c1d253c2ff2ceb1bbb9f77036d09df3af831321c0a18902ebb",
+      "bytes": 4832,
+      "etag": "W/\"5908f8bd9acb22c1d253c2ff2ceb1bbb9f77036d09df3af831321c0a18902ebb\"",
+      "retrieved_at_utc": "2026-10-16T17:47:02.045617+00:00"
+    },
+    {
+      "url": "https://files.mobilitydatabase.org/mdb-516/mdb-516-202602270137/mdb-516-202602270137.zip",
+      "path": "mta_gtfs_202602270137.zip",
+      "bytes": 5566687,
+      "sha256": "f17612e9586f2f621af0e2c1f987d7a8eda01abb52769ee0599a975514ec59a1",
+      "retrieved_at_utc": "2026-10-16T17:49:33.551483+00:00"
+    },
+    {
+      "url": "https://files.mobilitydatabase.org/mdb-516/mdb-516-202605270017/mdb-516-202605270017.zip",
+      "path": "mta_gtfs_202605270017.zip",
+      "bytes": 5614607,
+      "sha256": "c9c3366cdd16a27b3be8f4fcf3de5433bc65ca744c9c91f7c9cb4ec3267a5f40",
+      "retrieved_at_utc": "2026-10-16T17:49:33.808815+00:00"
+    },
+    {
+      "url": "https://files.mobilitydatabase.org/mdb-516/mdb-516-202608280038/mdb-516-202608280038.zip",
+      "path": "mta_gtfs_202608280038.zip",
+      "bytes": 5615228,
+      "sha256": "2c9e69b82ac596a2fe660b56656509570cfba3c2e4c50be75eaf624eee1bc6f8",
+      "retrieved_at_utc": "2026-10-16T17:49:33.551270+00:00"
+    },
+    {
+      "url": "https://data.ctbk.dev/gbfs/status/2026-04-07.parquet",
+      "path": "ctbk_status_2026-04-07.parquet",
+      "bytes": 12083972,
+      "sha256": "5346271cecd7305e26dd3b885fbfc4cf74bf446a33938b4620d37eed6b6ff521",
+      "retrieved_at_utc": "2026-10-16T17:49:34.608203+00:00"
+    },
+    {
+      "url": "https://data.ctbk.dev/gbfs/info/2026-04-07.json",
+      "path": "ctbk_info_2026-04-07.json",
+      "bytes": 1279885,
+      "sha256": "1186a8e105bbb54b9afb983f94448e9af17c72ae00b347a7723c18dd59d737cb",
+      "retrieved_at_utc": "2026-10-16T17:49:34.058274+00:00"
+    },
+    {
+      "url": "https://storage.googleapis.com/protobuf.gtfsrt.io/service_alerts/date=2026-09-15/hour=2026-09-15T00:00:00Z/base64url=aHR0cHM6Ly9hcGktZW5kcG9pbnQubXRhLmluZm8vRGF0YXNlcnZpY2UvbXRhZ3Rmc2ZlZWRzL2NhbXN5cyUyRnN1YndheS1hbGVydHM/2026-09-15T00:00:36.666Z.pb",
+      "path": "gtfsrt_subway_snapshot.pb",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hudcostreets/ctbk.dev/8328e4332e81cd0a1dca5d657b81d8b90823888f/www/src/query/stations.ts",
+      "path": "ctbk_frontend_stations.ts",
+      "bytes": 22593,
+      "sha256": "e9eea269d4951554df3fbd487324d4a32a5ff161ab166bbf789a631fbe4e8b3f",
+      "retrieved_at_utc": "2026-10-16T17:50:48.601066+00:00"
+    },
+    {
+      "url": "https://ctbk-gbfs-api.hccs-ctbk.workers.dev/api/health",
+      "path": "ctbk_api_health.json",
+      "bytes": 334589,
+      "sha256": "8372827cfd30d3558c5d293a8f74858514671cc82e1fcf29db3c30c273aedefc",
+      "retrieved_at_utc": "2026-10-16T17:50:48.991975+00:00"
+    },
+    {
+      "url": "https://api.github.com/repos/JarvusInnovations/gtfs-realtime-archiver/git/trees/main?recursive=1",
+      "path": "gtfsrt_tree.json",
+      "bytes": 48871,
+      "sha256": "02d23ec72d214fe75a2c2f485231ee23edab6329b6d0249adc922f56a54c57b8",
+      "retrieved_at_utc": "2026-10-16T17:50:48.772625+00:00"
+    },
+    {
+      "url": "https://protobuf.gtfsrt.io/service_alerts/date=2026-09-15/hour=2026-09-15T00:00:00Z/base64url=aHR0cHM6Ly9hcGktZW5kcG9pbnQubXRhLmluZm8vRGF0YXNlcnZpY2UvbXRhZ3Rmc2ZlZWRzL2NhbXN5cyUyRnN1YndheS1hbGVydHM/2026-09-15T00:00:36.666Z.pb",
+      "path": "gtfsrt_snapshot_host.pb",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'protobuf.gtfsrt.io'. (_ssl.c:1000)>"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/JarvusInnovations/gtfs-realtime-archiver/64d9d2a33f3b7dd0fc119746aca04f98d8cd1672/src/dagster_pipeline/defs/assets/compaction.py",
+      "path": "gtfsrt_compaction.py",
+      "bytes": 68916,
+      "sha256": "9128b8b6a36037e744d8e84610220be349d0645003fd50b15f639b436c94d6c4",
+      "retrieved_at_utc": "2026-10-16T17:51:20.149558+00:00"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/JarvusInnovations/gtfs-realtime-archiver/64d9d2a33f3b7dd0fc119746aca04f98d8cd1672/src/dagster_pipeline/defs/assets/schemas.py",
+      "path": "gtfsrt_schemas.py",
+      "bytes": 14277,
+      "sha256": "ecc13f2bff4d4a24c0d8a16fbd3871454d4b4925abdcbfc4e41f37e5d16564c8",
+      "retrieved_at_utc": "2026-10-16T17:51:20.149454+00:00"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/JarvusInnovations/gtfs-realtime-archiver/64d9d2a33f3b7dd0fc119746aca04f98d8cd1672/dashboards/proto-parquet-reconciliation/README.md",
+      "path": "gtfsrt_reconciliation.md",
+      "bytes": 3296,
+      "sha256": "542d0e890b66768c1acd3272ee85a97f01fc4a43c67dfabdfd46ecf190eb4a94",
+      "retrieved_at_utc": "2026-10-16T17:51:20.149591+00:00"
+    },
+    {
+      "url": "https://files.mobilitydatabase.org/mdb-516/mdb-516-202605140138/mdb-516-202605140138.zip",
+      "path": "mta_gtfs_202605140138.zip",
+      "bytes": 5793709,
+      "sha256": "bf7a36d35d4707d9981c9b18920ac44e7a83b5192fa513ac092c531312480f12",
+      "retrieved_at_utc": "2026-10-16T17:55:18.661710+00:00"
+    },
+    {
+      "path": "endpoint_heads.json",
+      "sha256": "76314e0f78822b74ee693126ac45cdf13ae9e2c43b8a8af46d0ac47f15022f9a",
+      "bytes": 2945,
+      "kind": "derived research metadata"
+    },
+    {
+      "path": "ctbk_date_probes.json",
+      "sha256": "2ab810bb5f37c32768e428e38a8d88b826e7b025c164b3903d0e9a7fb49b0677",
+      "bytes": 1161,
+      "kind": "derived research metadata"
+    },
+    {
+      "path": "comptroller_sample_tree.json",
+      "sha256": "ad70a442e835e3bb22fe3290328c939b91d2f9833e82b84d2c481edac5d47c91",
+      "bytes": 417960,
+      "kind": "derived research metadata"
+    },
+    {
+      "path": "metadata_history/e43bb1c5b411d78027d567b0a38eb9f49ce7b47a399e307558c1a6ac81d3ee33.json",
+      "sha256": "e43bb1c5b411d78027d567b0a38eb9f49ce7b47a399e307558c1a6ac81d3ee33",
+      "bytes": 208162,
+      "kind": "derived research metadata",
+      "previous_name": "daily_archive_heads.json"
+    },
+    {
+      "path": "metadata_history/fa5f88a393f5feb0861f0fb84b638e6af588a0cf3f6b754cb964b2e1395246d5.json",
+      "sha256": "fa5f88a393f5feb0861f0fb84b638e6af588a0cf3f6b754cb964b2e1395246d5",
+      "bytes": 1105,
+      "kind": "derived research metadata",
+      "previous_name": "daily_archive_coverage_summary.json"
+    },
+    {
+      "path": "daily_archive_heads.json",
+      "sha256": "e43bb1c5b411d78027d567b0a38eb9f49ce7b47a399e307558c1a6ac81d3ee33",
+      "bytes": 208162,
+      "kind": "derived research metadata"
+    },
+    {
+      "path": "daily_archive_coverage_summary.json",
+      "sha256": "b8a32fe2bafb66d8076ae248f7c8db3b4d974b119cd5b020ecf2b866409218c1",
+      "bytes": 1105,
+      "kind": "derived research metadata"
+    }
+  ],
+  "ctbk": [
+    {
+      "rows": 3216680,
+      "stations": 2360,
+      "distinct_feed_times": 1315,
+      "distinct_poll_times": 1363,
+      "observed_utc_minutes": 1363,
+      "first_feed_utc": "2026-04-07 01:15:17+00:00",
+      "last_feed_utc": "2026-04-07 23:58:46+00:00",
+      "first_poll_utc": "2026-04-07 01:16:34+00:00",
+      "last_poll_utc": "2026-04-07 23:59:21+00:00",
+      "median_feed_age_seconds": 62.0,
+      "max_feed_age_seconds": 127,
+      "rows_feed_age_over_120s": 2360,
+      "rows_feed_clock_skew_over_300s": 0,
+      "installed_and_renting_rows": 3142789,
+      "renting_zero_bike_rows": 171382,
+      "invalid_operation_flags": 0,
+      "median_station_report_age_seconds": 112.0,
+      "p99_station_report_age_seconds": 1775472574.0,
+      "station_report_age_over_600s": 69112,
+      "station_report_timestamp_missing_or_zero": 0,
+      "renting_fresh_report_rows": 3142761,
+      "negative_inventory_rows": 0,
+      "date": "2026-04-07",
+      "duplicate_station_feed_keys": 113280,
+      "duplicate_station_poll_keys": 0,
+      "poll_gaps": {
+        "max_seconds": 122,
+        "over_120s": 1,
+        "over_600s": 0
+      },
+      "same_date_information": {
+        "stations": 2360,
+        "unique_ids": 2360,
+        "status_ids_missing_information": [],
+        "with_short_name": 2360,
+        "provider_last_updated_utc": "2026-04-07T00:06:17+00:00",
+        "retrieval_time_embedded": false
+      }
+    },
+    {
+      "rows": 3471840,
+      "stations": 2411,
+      "distinct_feed_times": 1380,
+      "distinct_poll_times": 1440,
+      "observed_utc_minutes": 1440,
+      "first_feed_utc": "2026-06-14 23:59:44+00:00",
+      "last_feed_utc": "2026-06-15 23:57:24+00:00",
+      "first_poll_utc": "2026-06-15 00:00:03+00:00",
+      "last_poll_utc": "2026-06-15 23:59:01+00:00",
+      "median_feed_age_seconds": 18.0,
+      "max_feed_age_seconds": 103,
+      "rows_feed_age_over_120s": 0,
+      "rows_feed_clock_skew_over_300s": 0,
+      "installed_and_renting_rows": 3346463,
+      "renting_zero_bike_rows": 145766,
+      "invalid_operation_flags": 0,
+      "median_station_report_age_seconds": 89.0,
+      "p99_station_report_age_seconds": 1781449023.0,
+      "station_report_age_over_600s": 111925,
+      "station_report_timestamp_missing_or_zero": 0,
+      "renting_fresh_report_rows": 3346397,
+      "negative_inventory_rows": 0,
+      "date": "2026-06-15",
+      "duplicate_station_feed_keys": 144660,
+      "duplicate_station_poll_keys": 0,
+      "poll_gaps": {
+        "max_seconds": 64,
+        "over_120s": 0,
+        "over_600s": 0
+      },
+      "same_date_information": {
+        "stations": 2411,
+        "unique_ids": 2411,
+        "status_ids_missing_information": [],
+        "with_short_name": 2411,
+        "provider_last_updated_utc": "2026-06-14T23:59:45+00:00",
+        "retrieval_time_embedded": false
+      }
+    },
+    {
+      "rows": 3461106,
+      "stations": 2519,
+      "distinct_feed_times": 1374,
+      "distinct_poll_times": 1374,
+      "observed_utc_minutes": 1363,
+      "first_feed_utc": "2026-09-15 00:00:57+00:00",
+      "last_feed_utc": "2026-09-15 23:59:59+00:00",
+      "first_poll_utc": "2026-09-15 00:01:54+00:00",
+      "last_poll_utc": "2026-09-16 00:00:03+00:00",
+      "median_feed_age_seconds": 34.0,
+      "max_feed_age_seconds": 105,
+      "rows_feed_age_over_120s": 0,
+      "rows_feed_clock_skew_over_300s": 0,
+      "installed_and_renting_rows": 3333363,
+      "renting_zero_bike_rows": 179945,
+      "invalid_operation_flags": 0,
+      "median_station_report_age_seconds": 94.0,
+      "p99_station_report_age_seconds": 1789399083.0,
+      "station_report_age_over_600s": 118733,
+      "station_report_timestamp_missing_or_zero": 0,
+      "renting_fresh_report_rows": 3333325,
+      "negative_inventory_rows": 0,
+      "date": "2026-09-15",
+      "duplicate_station_feed_keys": 0,
+      "duplicate_station_poll_keys": 0,
+      "poll_gaps": {
+        "max_seconds": 180,
+        "over_120s": 9,
+        "over_600s": 0
+      },
+      "same_date_information": {
+        "stations": 2519,
+        "unique_ids": 2519,
+        "status_ids_missing_information": [],
+        "with_short_name": 2519,
+        "provider_last_updated_utc": "2026-09-15T00:01:09+00:00",
+        "retrieval_time_embedded": false
+      }
+    }
+  ],
+  "station_operation_eligibility_promoted": false,
+  "gtfsrt": {
+    "flattened_rows": 1883760,
+    "raw_snapshots": 1440,
+    "fetch_times": 1440,
+    "distinct_alert_ids": 247,
+    "first_fetch_utc": "2026-09-15 00:00:36.666099+00:00",
+    "last_fetch_utc": "2026-09-15 23:59:36.667023+00:00",
+    "median_feed_age_seconds": 267.6659269332886,
+    "max_feed_age_seconds": 3651.666421890259,
+    "rows_provider_age_over_900s": 288983,
+    "rows_subway_agency": 1883760,
+    "rows_route_selector": 1883760,
+    "rows_stop_selector": 1862936,
+    "rows_trip_restricted": 0,
+    "rows_differential_or_deleted": 0,
+    "fetch_gaps": {
+      "max_seconds": 61.018036,
+      "over_120s": 0,
+      "over_900s": 0
+    },
+    "stale_fetches_over_900s": 220,
+    "sample_raw_source_file": "service_alerts/date=2026-09-15/hour=2026-09-15T00:00:00Z/base64url=aHR0cHM6Ly9hcGktZW5kcG9pbnQubXRhLmluZm8vRGF0YXNlcnZpY2UvbXRhZ3Rmc2ZlZWRzL2NhbXN5cyUyRnN1YndheS1hbGVydHM/2026-09-15T00:00:36.666Z.pb",
+    "sample_selectors": [
+      {
+        "agency_id": "MTASBWY",
+        "rows": 1883760
+      }
+    ]
+  },
+  "ctbk_date_heads": [
+    {
+      "date": "2026-04-07",
+      "url": "https://data.ctbk.dev/gbfs/status/2026-04-07.parquet",
+      "status": 200,
+      "bytes": "12083972"
+    },
+    {
+      "date": "2026-04-08",
+      "url": "https://data.ctbk.dev/gbfs/status/2026-04-08.parquet",
+      "status": 200,
+      "bytes": "14238633"
+    },
+    {
+      "date": "2026-04-15",
+      "url": "https://data.ctbk.dev/gbfs/status/2026-04-15.parquet",
+      "status": 200,
+      "bytes": "17514668"
+    },
+    {
+      "date": "2026-05-01",
+      "url": "https://data.ctbk.dev/gbfs/status/2026-05-01.parquet",
+      "status": 200,
+      "bytes": "14896929"
+    },
+    {
+      "date": "2026-07-01",
+      "url": "https://data.ctbk.dev/gbfs/status/2026-07-01.parquet",
+      "status": 200,
+      "bytes": "13150059"
+    },
+    {
+      "date": "2026-08-01",
+      "url": "https://data.ctbk.dev/gbfs/status/2026-08-01.parquet",
+      "status": 200,
+      "bytes": "15374628"
+    },
+    {
+      "date": "2026-09-01",
+      "url": "https://data.ctbk.dev/gbfs/status/2026-09-01.parquet",
+      "status": 200,
+      "bytes": "15211462"
+    },
+    {
+      "date": "2025-09-15",
+      "url": "https://data.ctbk.dev/gbfs/status/2025-09-15.parquet",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "gtfsrt_inventory": {
+    "url": "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fsubway-alerts",
+    "base64url": "aHR0cHM6Ly9hcGktZW5kcG9pbnQubXRhLmluZm8vRGF0YXNlcnZpY2UvbXRhZ3Rmc2ZlZWRzL2NhbXN5cyUyRnN1YndheS1hbGVydHM",
+    "agency_id": "mta",
+    "agency_name": "Metropolitan Transportation Authority",
+    "system_id": "subway-alerts",
+    "system_name": "Subway Alerts",
+    "feed_type": "service_alerts",
+    "date_min": "2026-03-01",
+    "date_max": "2026-10-14",
+    "total_records": 390782409,
+    "total_bytes": 12606421883
+  },
+  "comptroller_sample_branch": {
+    "git_sha": "4c36513cf3842efe9a2940a78974bf45cb13fc0b",
+    "status_files": 819,
+    "information_files": 819,
+    "first_filename_timestamp_utc": "2024-03-12T22:23:50+00:00",
+    "last_filename_timestamp_utc": "2024-03-23T14:49:01+00:00",
+    "bytes_status_information": 1679103927,
+    "sample_only_not_downloaded": true
+  },
+  "historical_subway_gtfs": [
+    {
+      "version": "202602270137",
+      "sha256": "f17612e9586f2f621af0e2c1f987d7a8eda01abb52769ee0599a975514ec59a1",
+      "bytes": 5566687,
+      "routes": 29,
+      "stops": 1488,
+      "calendar_start": "20260301",
+      "calendar_end": "20260516",
+      "zip_crcs_passed": true
+    },
+    {
+      "version": "202605140138",
+      "sha256": "bf7a36d35d4707d9981c9b18920ac44e7a83b5192fa513ac092c531312480f12",
+      "bytes": 5793709,
+      "routes": 29,
+      "stops": 1488,
+      "calendar_start": "20260517",
+      "calendar_end": "20260907",
+      "zip_crcs_passed": true
+    },
+    {
+      "version": "202605270017",
+      "sha256": "c9c3366cdd16a27b3be8f4fcf3de5433bc65ca744c9c91f7c9cb4ec3267a5f40",
+      "bytes": 5614607,
+      "routes": 29,
+      "stops": 1488,
+      "calendar_start": "20260526",
+      "calendar_end": "20260907",
+      "zip_crcs_passed": true
+    },
+    {
+      "version": "202608280038",
+      "sha256": "2c9e69b82ac596a2fe660b56656509570cfba3c2e4c50be75eaf624eee1bc6f8",
+      "bytes": 5615228,
+      "routes": 29,
+      "stops": 1488,
+      "calendar_start": "20260526",
+      "calendar_end": "20261031",
+      "zip_crcs_passed": true
+    }
+  ],
+  "gtfsrt_raw_snapshot_access": {
+    "public_gcs_read": "HTTP 403; raw bucket private per publisher reconciliation documentation",
+    "public_hostname_https": "TLS hostname verification failed; verification was not disabled",
+    "public_parquet_download_verified": true,
+    "flattening": "one row per informed entity; deduplicate entities after selector resolution"
+  },
+  "daily_object_coverage": {
+    "checked_at_utc": "2026-10-16T17:59:31.873192+00:00",
+    "start_inclusive": "2026-04-07",
+    "end_exclusive": "2026-10-02",
+    "object_presence_only": true,
+    "sources": {
+      "station_information": {
+        "expected_dates": 178,
+        "accessible_dates": 178,
+        "status_counts": {
+          "200": 178
+        },
+        "unavailable_dates": [],
+        "total_advertised_bytes": 236051584
+      },
+      "station_status": {
+        "expected_dates": 178,
+        "accessible_dates": 178,
+        "status_counts": {
+          "200": 178
+        },
+        "unavailable_dates": [],
+        "total_advertised_bytes": 2694275026
+      },
+      "subway_alerts": {
+        "expected_dates": 178,
+        "accessible_dates": 178,
+        "status_counts": {
+          "200": 178
+        },
+        "unavailable_dates": [],
+        "total_advertised_bytes": 9853823188
+      }
+    },
+    "evidence_path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/source_alternatives/20261016T174506Z-591dfc95/daily_archive_heads.json",
+    "evidence_sha256": "e43bb1c5b411d78027d567b0a38eb9f49ce7b47a399e307558c1a6ac81d3ee33"
+  }
+}

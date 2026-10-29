@@ -1,0 +1,49 @@
+{
+  "migration_date": "2026-10-20",
+  "source": {
+    "repository": "https://github.com/cuny-sps-datascience/team6",
+    "commit": "734af7a",
+    "local_checkout": "/Users/randyhowk/Sites/CUNY/CUNY622FinalProject",
+    "tracked_files_copied": 256,
+    "status_before_copy": "clean"
+  },
+  "target": {
+    "repository": "https://github.com/cuny-sps-datascience/citibike-data-pipeline",
+    "branch": "team-6",
+    "base_commit": "8fc7469",
+    "project_directory": "teams/team-6",
+    "local_project_root": "/Users/randyhowk/Sites/CUNY/citibike-data-pipeline/teams/team-6"
+  },
+  "scope": {
+    "included": [
+      "tracked source code",
+      "configuration",
+      "locked Python environment definition",
+      "tests",
+      "scripts",
+      "notebooks",
+      "documentation",
+      "validation receipts",
+      "presentation artifacts",
+      "two small illustrative CSV files referenced by the documentation"
+    ],
+    "retained_outside_git": [
+      "full source archives on RAID",
+      "processed and modeling datasets on RAID",
+      "ignored local environments and caches",
+      "October 11 local recovery archive",
+      "independent public sample repository"
+    ]
+  },
+  "verification": {
+    "uv_sync_locked": "passed",
+    "citibike_doctor": "passed",
+    "cli_help": "passed",
+    "package_import_root": "/Users/randyhowk/Sites/CUNY/citibike-data-pipeline/teams/team-6/src/citibike_pipeline/__init__.py",
+    "tests": {
+      "command": "uv run --locked python scripts/run_tests.py -q",
+      "passed": 268,
+      "failed": 0
+    }
+  }
+}

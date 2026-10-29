@@ -1,0 +1,821 @@
+{
+  "schema_version": "shared-station-source-audit-v1",
+  "status": "complete",
+  "created_at_utc": "2026-10-21T00:59:28.705018+00:00",
+  "root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/shared_pipeline_sources/20261021T005923Z-s3-overlap-v1",
+  "read_only_source": true,
+  "listing": {
+    "sha256": "4d140ace5e716494799d4ee9c7d5a66f681fff7645933e64f37fcba1e4f5fcf5",
+    "parquet_objects": 59,
+    "first_date": "2026-08-21",
+    "last_date": "2026-10-18"
+  },
+  "requested_dates": [
+    "2026-08-21",
+    "2026-08-22",
+    "2026-08-23",
+    "2026-08-24"
+  ],
+  "objects": [
+    {
+      "key": "exports/station_status/nyc_date=2026-08-21/part-00029-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-186-2.c000.snappy.parquet",
+      "url": "https://cuny-sps-citibike-archive.s3.amazonaws.com/exports/station_status/nyc_date=2026-08-21/part-00029-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-186-2.c000.snappy.parquet",
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/shared_pipeline_sources/20261021T005923Z-s3-overlap-v1/station_status/2026-08-21.parquet",
+      "bytes": 1705698,
+      "sha256": "928a36ac47b360c4ac82c6127486ec6805ade0a5aefe5b908322abe5dfd7c758",
+      "etag": "e70e18f88bb5a6c2f47a4cb2154fb197",
+      "last_modified": "Fri, 02 Oct 2026 04:07:28 GMT",
+      "s3_version_id": "HsMV5SPYkoGCNChRCV7eR.1EfXtL8Kdc",
+      "downloaded_at_utc": "2026-10-21T00:59:24.728895+00:00",
+      "kind": "status",
+      "date": "2026-08-21",
+      "listed": {
+        "key": "exports/station_status/nyc_date=2026-08-21/part-00029-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-186-2.c000.snappy.parquet",
+        "date": "2026-08-21",
+        "etag": "e70e18f88bb5a6c2f47a4cb2154fb197",
+        "last_modified": "2026-10-02T04:07:28.000Z",
+        "bytes": 1705698
+      },
+      "profile": {
+        "rows": 158004,
+        "stations": 2508,
+        "duplicate_keys": 0,
+        "min_fetched_at": "2026-08-21T21:40:37.968250",
+        "max_fetched_at": "2026-08-22T03:56:47.672711",
+        "invalid_rows": 0,
+        "schema": [
+          {
+            "name": "fetched_at_raw",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "fetched_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "poller_version",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "git_sha",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "feed_ts",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "eightd_has_available_keys",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_installed",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_renting",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_returning",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "last_reported",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "legacy_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_ebikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_unavailable",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "station_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "_has_parse_error",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "feed_updated_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "station_reported_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "_last_reported_placeholder",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_required_value_missing",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_has_negative_count",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_ebikes_exceed_total",
+            "type": "bool",
+            "nullable": true
+          }
+        ]
+      }
+    },
+    {
+      "key": "exports/station_status/nyc_date=2026-08-22/part-00038-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-158-1.c000.snappy.parquet",
+      "url": "https://cuny-sps-citibike-archive.s3.amazonaws.com/exports/station_status/nyc_date=2026-08-22/part-00038-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-158-1.c000.snappy.parquet",
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/shared_pipeline_sources/20261021T005923Z-s3-overlap-v1/station_status/2026-08-22.parquet",
+      "bytes": 7396176,
+      "sha256": "b4ad4e28c0b025d30a3ca47ac1c07c09d2847dc0d7db9c5d57ed0f8d1a5aaa80",
+      "etag": "029e789375a297616e30f2dfcd32dba7",
+      "last_modified": "Fri, 02 Oct 2026 04:07:32 GMT",
+      "s3_version_id": "dLav3u9x4nrdR5YsOgJYxoHskXfuOXrX",
+      "downloaded_at_utc": "2026-10-21T00:59:25.767742+00:00",
+      "kind": "status",
+      "date": "2026-08-22",
+      "listed": {
+        "key": "exports/station_status/nyc_date=2026-08-22/part-00038-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-158-1.c000.snappy.parquet",
+        "date": "2026-08-22",
+        "etag": "029e789375a297616e30f2dfcd32dba7",
+        "last_modified": "2026-10-02T04:07:32.000Z",
+        "bytes": 7396176
+      },
+      "profile": {
+        "rows": 722304,
+        "stations": 2508,
+        "duplicate_keys": 0,
+        "min_fetched_at": "2026-08-22T04:01:47.873904",
+        "max_fetched_at": "2026-08-23T03:56:46.598301",
+        "invalid_rows": 0,
+        "schema": [
+          {
+            "name": "fetched_at_raw",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "fetched_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "poller_version",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "git_sha",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "feed_ts",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "eightd_has_available_keys",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_installed",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_renting",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_returning",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "last_reported",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "legacy_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_ebikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_unavailable",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "station_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "_has_parse_error",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "feed_updated_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "station_reported_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "_last_reported_placeholder",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_required_value_missing",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_has_negative_count",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_ebikes_exceed_total",
+            "type": "bool",
+            "nullable": true
+          }
+        ]
+      }
+    },
+    {
+      "key": "exports/station_status/nyc_date=2026-08-23/part-00005-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-164-1.c000.snappy.parquet",
+      "url": "https://cuny-sps-citibike-archive.s3.amazonaws.com/exports/station_status/nyc_date=2026-08-23/part-00005-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-164-1.c000.snappy.parquet",
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/shared_pipeline_sources/20261021T005923Z-s3-overlap-v1/station_status/2026-08-23.parquet",
+      "bytes": 7443695,
+      "sha256": "4bc5e2132589a33da3b689a3188cb4f37f4c35fe3e9d0959606e585b50394b35",
+      "etag": "4fa03679dc218d429ffd6012a4572f24",
+      "last_modified": "Fri, 02 Oct 2026 04:07:02 GMT",
+      "s3_version_id": "RVDpSQHI918I21kJPPvyt1pFnRHFFfNB",
+      "downloaded_at_utc": "2026-10-21T00:59:26.797279+00:00",
+      "kind": "status",
+      "date": "2026-08-23",
+      "listed": {
+        "key": "exports/station_status/nyc_date=2026-08-23/part-00005-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-164-1.c000.snappy.parquet",
+        "date": "2026-08-23",
+        "etag": "4fa03679dc218d429ffd6012a4572f24",
+        "last_modified": "2026-10-02T04:07:02.000Z",
+        "bytes": 7443695
+      },
+      "profile": {
+        "rows": 722304,
+        "stations": 2508,
+        "duplicate_keys": 0,
+        "min_fetched_at": "2026-08-23T04:01:47.608349",
+        "max_fetched_at": "2026-08-24T03:56:48.122425",
+        "invalid_rows": 0,
+        "schema": [
+          {
+            "name": "fetched_at_raw",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "fetched_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "poller_version",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "git_sha",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "feed_ts",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "eightd_has_available_keys",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_installed",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_renting",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_returning",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "last_reported",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "legacy_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_ebikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_unavailable",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "station_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "_has_parse_error",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "feed_updated_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "station_reported_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "_last_reported_placeholder",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_required_value_missing",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_has_negative_count",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_ebikes_exceed_total",
+            "type": "bool",
+            "nullable": true
+          }
+        ]
+      }
+    },
+    {
+      "key": "exports/station_status/nyc_date=2026-08-24/part-00022-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-179-1.c000.snappy.parquet",
+      "url": "https://cuny-sps-citibike-archive.s3.amazonaws.com/exports/station_status/nyc_date=2026-08-24/part-00022-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-179-1.c000.snappy.parquet",
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/shared_pipeline_sources/20261021T005923Z-s3-overlap-v1/station_status/2026-08-24.parquet",
+      "bytes": 7449483,
+      "sha256": "140e8b90e8ec325f098a84e98e2271694dea37932d6fbc59b17190e5c395f717",
+      "etag": "2ddf5c4d81e9958562f5707323afb7ac",
+      "last_modified": "Fri, 02 Oct 2026 04:07:01 GMT",
+      "s3_version_id": "WStojJhfrGM6KobVdfF1DUe.p5X0RaXF",
+      "downloaded_at_utc": "2026-10-21T00:59:27.860254+00:00",
+      "kind": "status",
+      "date": "2026-08-24",
+      "listed": {
+        "key": "exports/station_status/nyc_date=2026-08-24/part-00022-tid-6904995139006545167-cc481743-7908-4d80-ba0a-6d198b24f0e2-179-1.c000.snappy.parquet",
+        "date": "2026-08-24",
+        "etag": "2ddf5c4d81e9958562f5707323afb7ac",
+        "last_modified": "2026-10-02T04:07:01.000Z",
+        "bytes": 7449483
+      },
+      "profile": {
+        "rows": 722416,
+        "stations": 2509,
+        "duplicate_keys": 0,
+        "min_fetched_at": "2026-08-24T04:01:49.600684",
+        "max_fetched_at": "2026-08-25T03:56:47.716735",
+        "invalid_rows": 0,
+        "schema": [
+          {
+            "name": "fetched_at_raw",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "fetched_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "poller_version",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "git_sha",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "feed_ts",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "eightd_has_available_keys",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_installed",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_renting",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "is_returning",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "last_reported",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "legacy_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_bikes_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_docks_disabled",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_ebikes_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_available",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "num_scooters_unavailable",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "station_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "_has_parse_error",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "feed_updated_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "station_reported_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "_last_reported_placeholder",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_required_value_missing",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_has_negative_count",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_ebikes_exceed_total",
+            "type": "bool",
+            "nullable": true
+          }
+        ]
+      }
+    },
+    {
+      "key": "exports/station_info.parquet",
+      "url": "https://cuny-sps-citibike-archive.s3.amazonaws.com/exports/station_info.parquet",
+      "path": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/shared_pipeline_sources/20261021T005923Z-s3-overlap-v1/station_information/station_info.parquet",
+      "bytes": 1622555,
+      "sha256": "c01df1ab3a746239598bbdfb5dd2b4605c262932484a50e71aa07b58f3884d1d",
+      "etag": "3660cafd4db3d356e9c7d8bd914dddad",
+      "last_modified": "Mon, 19 Oct 2026 08:01:28 GMT",
+      "s3_version_id": "1.sqZ.Wn63vHEnAMiyAZ.98CB8n3t8cc",
+      "downloaded_at_utc": "2026-10-21T00:59:28.667744+00:00",
+      "kind": "information",
+      "profile": {
+        "rows": 138282,
+        "stations": 2526,
+        "duplicate_keys": 0,
+        "min_fetched_at": "2026-08-21T22:42:03.322032",
+        "max_fetched_at": "2026-10-12T01:43:24.142498",
+        "min_snapshot_date": "2026-08-21",
+        "max_snapshot_date": "2026-10-12",
+        "invalid_rows": 0,
+        "schema": [
+          {
+            "name": "fetched_at_raw",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "fetched_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "feed_ts",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "poller_version",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "git_sha",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "capacity",
+            "type": "int32",
+            "nullable": true
+          },
+          {
+            "name": "eightd_has_key_dispenser",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "eightd_station_services",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "electric_bike_surcharge_waiver",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "external_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "has_kiosk",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "lat",
+            "type": "double",
+            "nullable": true
+          },
+          {
+            "name": "lon",
+            "type": "double",
+            "nullable": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "region_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "rental_methods",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "rental_uris",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "short_name",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "station_id",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "station_type",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "snapshot_date",
+            "type": "date32[day]",
+            "nullable": true
+          },
+          {
+            "name": "_has_parse_error",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "feed_updated_at",
+            "type": "timestamp[ns]",
+            "nullable": true
+          },
+          {
+            "name": "_required_value_missing",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_has_negative_capacity",
+            "type": "bool",
+            "nullable": true
+          },
+          {
+            "name": "_has_invalid_coordinates",
+            "type": "bool",
+            "nullable": true
+          }
+        ]
+      }
+    }
+  ],
+  "station_information_freshness": {
+    "latest_fetched_at": "2026-10-12T01:43:24.142498+00:00",
+    "freshness_hours": 49,
+    "valid_through_exclusive_utc": "2026-10-14T02:43:24.142498+00:00",
+    "policy": "Reject capacity, location and normalized-count predictors at or after the validity cutoff unless a newer independently audited information snapshot exists."
+  }
+}

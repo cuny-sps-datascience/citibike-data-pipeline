@@ -1,0 +1,2767 @@
+{
+  "checked_at_utc": "2026-10-16T20:14:12.234239+00:00",
+  "source_root": "/Volumes/BigRaid/RandyFiles/Cuny/622/FinalProject_processed/modeling_exports/three_hour/station_pilot_sources/20261016T195145Z-57b9a118",
+  "manifest_sha256": "db75170b3088adb6f71a9a7eb8feda80589644afd37e13cb77b24b35e4b0f51a",
+  "objects": 534,
+  "counts_by_source": {
+    "station_information": 178,
+    "station_status": 178,
+    "subway_alerts": 178
+  },
+  "bytes_by_source": {
+    "station_information": 236051584,
+    "station_status": 2694275026,
+    "subway_alerts": 9853823188
+  },
+  "rows_by_source": {
+    "station_status": 620683413,
+    "subway_alerts": 344159765
+  },
+  "references": [
+    {
+      "path": "references/mta_gtfs_202602270137.zip",
+      "sha256": "f17612e9586f2f621af0e2c1f987d7a8eda01abb52769ee0599a975514ec59a1",
+      "bytes": 5566687
+    },
+    {
+      "path": "references/mta_gtfs_202608280038.zip",
+      "sha256": "2c9e69b82ac596a2fe660b56656509570cfba3c2e4c50be75eaf624eee1bc6f8",
+      "bytes": 5615228
+    },
+    {
+      "path": "references/mta_gtfs_202605140138.zip",
+      "sha256": "bf7a36d35d4707d9981c9b18920ac44e7a83b5192fa513ac092c531312480f12",
+      "bytes": 5793709
+    },
+    {
+      "path": "references/mta_gtfs_202605270017.zip",
+      "sha256": "c9c3366cdd16a27b3be8f4fcf3de5433bc65ca744c9c91f7c9cb4ec3267a5f40",
+      "bytes": 5614607
+    },
+    {
+      "path": "references/ctbk_info_2026-04-06.json",
+      "sha256": "514bb114aa2b0d37e6359bdc7e6725c82d617fed7c130f55bac07f6377044730",
+      "bytes": 1201132
+    }
+  ],
+  "all_sha256_checks_passed": true,
+  "complete_alert_schema_dates": 56,
+  "incomplete_alert_schema_dates": 122,
+  "first_complete_alert_schema_date": "2026-08-07",
+  "last_incomplete_alert_schema_date": "2026-08-06",
+  "alert_daily_schemas": [
+    {
+      "date": "2026-04-07",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "ba50c407d08b0005f19b3a7686650e2e8a6789d0fd9a6ec96aef8a2a30cf3661",
+      "rows": 365797
+    },
+    {
+      "date": "2026-04-08",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f26948a21ad7f2d0f402c518d01305c19336a2733ecdfc4fc8e85184635ffdec",
+      "rows": 382981
+    },
+    {
+      "date": "2026-04-09",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "87b30d307b12b6285baa8adf22032c4943cfcde949ca342aba17e4f68dfb1594",
+      "rows": 419807
+    },
+    {
+      "date": "2026-04-10",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "a5f10c3c25d355b6d5aee1f36185f250d78d717b09a166175b0770ba8c1019c7",
+      "rows": 348741
+    },
+    {
+      "date": "2026-04-11",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "9addd5d4569057e8a06350a2cc212ceddef03f358f2f2cd1504e0f3ffd375b6e",
+      "rows": 343711
+    },
+    {
+      "date": "2026-04-12",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "031800fb567faa2ce0a057158098eef57edf558c94ca785cfd50d3fc9c6a34b9",
+      "rows": 339307
+    },
+    {
+      "date": "2026-04-13",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "52bbdc98025cdf3841f7535ee761a19a7c4ae2afc9a8fc10c784c1360084e8a5",
+      "rows": 326091
+    },
+    {
+      "date": "2026-04-14",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f72daa6aa3d9f64cb1be59a2bb6ea6c635a8cedf08f995bde86ae162e70f507b",
+      "rows": 319038
+    },
+    {
+      "date": "2026-04-15",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "6f002cbea5357fa0fc17da4b391c3aa2c81aa3d9e38cdaa06c11cf84a9c13d46",
+      "rows": 325901
+    },
+    {
+      "date": "2026-04-16",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "b2b7d5440d995364e9115df1bf7eda02c2254dd7fc7b65a8744a5272c90727c9",
+      "rows": 327431
+    },
+    {
+      "date": "2026-04-17",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f7ede763e4be745114f73f0b68aaacbb4509129ea44a2a0fa7b9d6cec3c64281",
+      "rows": 363629
+    },
+    {
+      "date": "2026-04-18",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "9fd956447afb3ebf3ef80e5e5bf1c32993ce7ff36a3895ecb9f4236887cf7bc4",
+      "rows": 383927
+    },
+    {
+      "date": "2026-04-19",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "d306f4140fc6837c691b0d091e79e604fdfb33264a0ff52f209c132fd4f71a51",
+      "rows": 272151
+    },
+    {
+      "date": "2026-04-20",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "5ac63084eb301249f32c1e4f9fbb97e561eabbc2c757ff510105dace410afcc3",
+      "rows": 238991
+    },
+    {
+      "date": "2026-04-21",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "8ffef67f3726fa99421485e37fa9b5db78143633f27135eb699867f93f68417b",
+      "rows": 341971
+    },
+    {
+      "date": "2026-04-22",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "80958a2a6e463da90db2eb2d671d6e0e7b4f65570e2d42c3231954356188f9ff",
+      "rows": 328092
+    },
+    {
+      "date": "2026-04-23",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "a0a36a375aa5392f06198ef349d4e4ab3642f574d329c2ca6cd675c28484333a",
+      "rows": 323742
+    },
+    {
+      "date": "2026-04-24",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "73a8b7d12d9901811f08656ca41ee10f9086b3a085c5bdec2dce49e7926988f3",
+      "rows": 336769
+    },
+    {
+      "date": "2026-04-25",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "807ed64479dfc6c617057266d3352d866aa3717652482130b5b303ae6d832856",
+      "rows": 307092
+    },
+    {
+      "date": "2026-04-26",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "0922b1c1b6e89dc93d611b0401151722b19d2387fd2003b2845db11b747a1d29",
+      "rows": 333698
+    },
+    {
+      "date": "2026-04-27",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "75a38a17be30265e037d98175e3f53536d30070b3b8e0616f8cf0a35eefb3b58",
+      "rows": 291471
+    },
+    {
+      "date": "2026-04-28",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "303ca781d6ca3f0d1893d45c2c2570617869dc04738a7486ea12e2ff167c3372",
+      "rows": 305122
+    },
+    {
+      "date": "2026-04-29",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "8e28a5bcc38a73376ab71caad07722af38438c701f2f5a75c77d44716b074f91",
+      "rows": 306601
+    },
+    {
+      "date": "2026-04-30",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "37292506d1f71534417506f35d704d818c7e110721b9730f645c9df0dd2a84cc",
+      "rows": 275860
+    },
+    {
+      "date": "2026-05-01",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "1d33526d5159f3f15159b6cd74000073b5f682c324e717e7be8027c9ec2d8a27",
+      "rows": 323074
+    },
+    {
+      "date": "2026-05-02",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "b86cbb3fe315a7657f2d2a61583eddefff53158f20df4ffcf654a66079948284",
+      "rows": 318907
+    },
+    {
+      "date": "2026-05-03",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c05dc3f375533d2bd0b505aad79c563351aefe7e78d5dd195600720abac6b759",
+      "rows": 315415
+    },
+    {
+      "date": "2026-05-04",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "0075382b5dfe8d109d7a94972d0aa9889b1745b2940dc944619992cbadaaea6b",
+      "rows": 1021378
+    },
+    {
+      "date": "2026-05-05",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "fd4f8a8da45c6045dea3b00c774ba37904ec456dca361ef1c977baa46a37e038",
+      "rows": 2188466
+    },
+    {
+      "date": "2026-05-06",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "46d5e5be09e0148b4d9e301c033a3328a3cfc9701719a34cd1c945076eb17e8a",
+      "rows": 2114684
+    },
+    {
+      "date": "2026-05-07",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "0a48b718e92b63bf737b13e5160408c0dc37137d3098d4db3ce6dbbe32e75d57",
+      "rows": 2212969
+    },
+    {
+      "date": "2026-05-08",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "b50a874b0bb13bb10c091aa0c112352b214576ed563ac941416874a96a1fc180",
+      "rows": 2582918
+    },
+    {
+      "date": "2026-05-09",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "fc6e020d30f7cc16d68d952f4f99f0002e9c92fdea79a0ba97bb13df728c272d",
+      "rows": 2672939
+    },
+    {
+      "date": "2026-05-10",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "1b1cda5f43e852e78ef99b3f99262cb8d523bbc2c86d04150be63ddf6ae8a81c",
+      "rows": 2670899
+    },
+    {
+      "date": "2026-05-11",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "b6e203ca488a2617b395e34fbccb6c3f7d0393283e8e1dcbf4e65d8a2d84fe8f",
+      "rows": 2515804
+    },
+    {
+      "date": "2026-05-12",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "17190b3aa74c4ad9f792966b74ab47ab8914df3ea00ae402ff072efccc5e6a68",
+      "rows": 2443786
+    },
+    {
+      "date": "2026-05-13",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "1fc6ac4adca2bdef52cf3c43017b323a26fc041c59a53be209c0f61a4c8fd7df",
+      "rows": 2397430
+    },
+    {
+      "date": "2026-05-14",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "ce4d659ead9fa76dd86c0eaed340e89a0caaed98511f23239198e236c0b7d0a6",
+      "rows": 2479161
+    },
+    {
+      "date": "2026-05-15",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "18ccd5459aa3f7a24cb929b1e51d98cdaa28754438d944f57af7946a6ba2c7ed",
+      "rows": 2615518
+    },
+    {
+      "date": "2026-05-16",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f1dbbe79b189cf2b43d32b766039a65f5577b8e3a8f2d290e44e9a4204daaf01",
+      "rows": 2582259
+    },
+    {
+      "date": "2026-05-17",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "918daaa87b9f44d1055efc970550a04259604fe70913b2edfa2ced90dbc7dd61",
+      "rows": 2555620
+    },
+    {
+      "date": "2026-05-18",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c91823da14039588248e323b0872987e4b6836064b940e1996e88a6af778dece",
+      "rows": 2324563
+    },
+    {
+      "date": "2026-05-19",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "62b1b42b3c224456a6d11d46034a9adb63df1b036e41c5f9e7ce82b3e4956ab0",
+      "rows": 2242657
+    },
+    {
+      "date": "2026-05-20",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "61135a39b8f4b06f64a9682a3106fdba2f4bd097eb03395d7a82989c45ef1e7a",
+      "rows": 2288914
+    },
+    {
+      "date": "2026-05-21",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "5311cba82b5097b899f05065265ccbb132c688b028c312b550c441c6a81d7f62",
+      "rows": 2564040
+    },
+    {
+      "date": "2026-05-22",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "cda3f7c8be244fe2d1470dffe30d5f3e819d7ff0a3ec08439e99be7f2598fe31",
+      "rows": 2669158
+    },
+    {
+      "date": "2026-05-23",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "84fda827bf029090907154b73231ebbce9b72920bfb0f5e0904089125cd6dc5b",
+      "rows": 2548598
+    },
+    {
+      "date": "2026-05-24",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "5c41ee4507f0ec7b985bce2b251b63189b462d4b99a7cf7b1c3099ee87ee5559",
+      "rows": 2532502
+    },
+    {
+      "date": "2026-05-25",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "d8782ba6cca5ef09e458178d682d84d95b964df478b174938501e475ea3d1edd",
+      "rows": 2431852
+    },
+    {
+      "date": "2026-05-26",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "9ba234c814d7df35e8394c27dcab68dae47898bb559c2bd1c6b79d546ce078d3",
+      "rows": 1743093
+    },
+    {
+      "date": "2026-05-27",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "3a95ad1fd0a1fbe33827a53c92e9a763e6e78fe0a5994680e34067da7448c610",
+      "rows": 1759404
+    },
+    {
+      "date": "2026-05-28",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "9de54e820847fc8812d21714c78b26d8a4b8d0ec6392bdb7d05f0fbad140120e",
+      "rows": 971045
+    },
+    {
+      "date": "2026-05-29",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f258623918d0e811fbe7e1f8a17808952ea6f06bef5cb52983d685b016230940",
+      "rows": 2346589
+    },
+    {
+      "date": "2026-05-30",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "d180a8b3a89ff12e5c2209c361ce5abc64110bfdc9b7968a36658fea95572480",
+      "rows": 2225309
+    },
+    {
+      "date": "2026-05-31",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "34c08853a31bd2b5158c43b2d5ee27222cee4d0a9dd4769e2bd277db9b32ef80",
+      "rows": 2212556
+    },
+    {
+      "date": "2026-06-01",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c7b343656b2d20250740b4d3e1396edc46657a468ff7af9e2083bd475f0037cf",
+      "rows": 1622356
+    },
+    {
+      "date": "2026-06-02",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "ea74ce1ce2fd3bffc3ac6dcb36b469ab6c97d35c03086c7c31e6a538eac713f5",
+      "rows": 1440138
+    },
+    {
+      "date": "2026-06-03",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "7876ae2b6f764793b93b3b7bcbfb33820e961f7a32803f1b2e8a6cf01246ff58",
+      "rows": 1959509
+    },
+    {
+      "date": "2026-06-04",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "fda1f62a19cb86520d20ce5d1076bb43505ac7eecda06490641d0ccf34674bf9",
+      "rows": 2122900
+    },
+    {
+      "date": "2026-06-05",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c72ee22945f25b9198604cbdc31d5e8d1051226bebeaadb0a38f8aaee9adf5ca",
+      "rows": 2119297
+    },
+    {
+      "date": "2026-06-06",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c76c8861a8351e5f464cb03aec27f7033746a1ec5441bb530b1f336067ad67f7",
+      "rows": 2041136
+    },
+    {
+      "date": "2026-06-07",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "43805c11f36e7e0846bfba7b716a16827aad25bdbcc7c7ced519dbf3fbc2e60f",
+      "rows": 2036764
+    },
+    {
+      "date": "2026-06-08",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "99d8d166d5bcf4cd028c05a79df4901450b8ace8f9707f382d64bfd96c4e8438",
+      "rows": 1842150
+    },
+    {
+      "date": "2026-06-09",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "cd38dba45e19e58425c1eb589ee4195fdd9fc9f7446c735f4cf3391f4502e086",
+      "rows": 1770484
+    },
+    {
+      "date": "2026-06-10",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "05aac0f70265cfaf3c289933c5362efceea415c11700ab6b52878205bfb6ea29",
+      "rows": 1722709
+    },
+    {
+      "date": "2026-06-11",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "51f3d7777ee85dd3be67a3ab5ad682f1ec98c669f2c9b4e8c87a79724ad9c22a",
+      "rows": 2061378
+    },
+    {
+      "date": "2026-06-12",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "880b1468ade15586216420121188351c9223b1603241a28b1e7cc240be29a9e8",
+      "rows": 2371459
+    },
+    {
+      "date": "2026-06-13",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "e021bea038ccf5463a6b50a4357ca70147613884878427f4afa9c6203d5fbadc",
+      "rows": 1924340
+    },
+    {
+      "date": "2026-06-14",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "3e1c69c00e9c71f78c593dafb7f26fac8a4f5cf55e328ae7085a67bf8f528a4d",
+      "rows": 1651499
+    },
+    {
+      "date": "2026-06-15",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "e05ae1feac181bb1f4af95ab00b2f6b0d840075b673fb3ea185eab4e8eb63636",
+      "rows": 1915452
+    },
+    {
+      "date": "2026-06-16",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "23db4d7ef300597073934ef1ef928774cea9f48cd698fc627f409574dfc2d17c",
+      "rows": 1926179
+    },
+    {
+      "date": "2026-06-17",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "09f59c32517aa83f3bc7fa703cbf8051ce3c73ed943da2a7148eba9355da45c3",
+      "rows": 1940245
+    },
+    {
+      "date": "2026-06-18",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c397e7293d04f1a43239d31d497e3965e8d56c908b866bdea69288b9e0ab3c16",
+      "rows": 2187253
+    },
+    {
+      "date": "2026-06-19",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "b8094bc86bf06255b7936d1ea0dd694e88b35b60ab8f6ff0e3a538ff01ac204c",
+      "rows": 2067376
+    },
+    {
+      "date": "2026-06-20",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c3266853d8b7b1d2409d7f6bd05cd37d8267ec159ab5fc23a3782826b670bcc7",
+      "rows": 2039974
+    },
+    {
+      "date": "2026-06-21",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "3880804e8f2714084c3dbba573d65575c5530bf8af7f4216a84fb34f6aff2ba5",
+      "rows": 2030195
+    },
+    {
+      "date": "2026-06-22",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "1cc532ec515b9cc5b145d20f8e4ad652a06170516dafa5832f41130d3fa9b1d2",
+      "rows": 1986152
+    },
+    {
+      "date": "2026-06-23",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "e6727b00d8b51add046f2bcaf069b0ccfbd6b5d6782a6d97004287f942bf3d20",
+      "rows": 2138601
+    },
+    {
+      "date": "2026-06-24",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "df3490a3af3209b97b26149844f2da75ea931f37e01d2d75fce604cece98005f",
+      "rows": 2135727
+    },
+    {
+      "date": "2026-06-25",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "479aa29a97b4dd19019f1e97916a69c4fa1b17bc5b27d94e469276635b28b2e1",
+      "rows": 2204897
+    },
+    {
+      "date": "2026-06-26",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "b2416d1c88646048fe6a60abb1122d9176522f01001f964a504820161c1ce1d4",
+      "rows": 2182433
+    },
+    {
+      "date": "2026-06-27",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "7625fd797416a437a89035b553e69fe2431d42fe8cdb113432c56e80c50519b9",
+      "rows": 2054140
+    },
+    {
+      "date": "2026-06-28",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "87add9f4719c93fb44b543a1d58de0f7baa14e6a767d738ea2cb39281526a08d",
+      "rows": 1981786
+    },
+    {
+      "date": "2026-06-29",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "ac743a8b14d0ff910b8a7f2b84e3d0d6f75adbdecf1e6849ede25afe0546a0da",
+      "rows": 1876956
+    },
+    {
+      "date": "2026-06-30",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "23633e258b23c97f21a0a0dee7dc1ea4e13ee246b8f3c69a37010833886e4f91",
+      "rows": 1882188
+    },
+    {
+      "date": "2026-07-01",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "7ecdd374d3bb317a145a3a28bf5a1e7640121df763e280ccda64868419a4acc8",
+      "rows": 1883349
+    },
+    {
+      "date": "2026-07-02",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "a2227d810656331ee42017d5104054d8f3b0020a398f5f2becf39c1134e44428",
+      "rows": 1968707
+    },
+    {
+      "date": "2026-07-03",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "285389a828292b4491c0c1cdfffd024ccd686f1b727926ae54bb183e643fc2bc",
+      "rows": 2041692
+    },
+    {
+      "date": "2026-07-04",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "532036e0e463387ecefdca144be2da95d3e0262271a9db291cfd2456997e897b",
+      "rows": 1978891
+    },
+    {
+      "date": "2026-07-05",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "cf46b2a51cb3707c5ffda4c089a873f817bac81889a549d0e0575d60d26afa4d",
+      "rows": 1913644
+    },
+    {
+      "date": "2026-07-06",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "9f764d251b152a6a931d701c1c3520d7854c190cc3de233dbd3b5c6e1f07452b",
+      "rows": 1793771
+    },
+    {
+      "date": "2026-07-07",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "77064623784941ab82ca3430e9e26be3457026453c6fb2255fa1ccc7abfd8776",
+      "rows": 1714522
+    },
+    {
+      "date": "2026-07-08",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "3447878edb6130c77e68e2fb24627f6a773ba0d475845dde84a2d19ecc6fee8b",
+      "rows": 1675365
+    },
+    {
+      "date": "2026-07-09",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "aa4740774b469c6d55657f7fa171fe0544529faf1a925a45e161b2d121620750",
+      "rows": 2076505
+    },
+    {
+      "date": "2026-07-10",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "ae807fe6dcc8cac69815dbecdeeb93be0be071f5fe2532475949f41a7a800568",
+      "rows": 2397782
+    },
+    {
+      "date": "2026-07-11",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "cccf6b0ba070dd9086abebdc2276fee37b48352f5807dec32d344a02e40c2a45",
+      "rows": 2491656
+    },
+    {
+      "date": "2026-07-12",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "a0dd046ccb4a81d6154261eb8d101745ecea8fb8a19770664053550f9246ffa9",
+      "rows": 2474269
+    },
+    {
+      "date": "2026-07-13",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "1cb02918fdaa860cac22e5a4c7e7c2490c68d5bbf03f656c73e1615d8b00be64",
+      "rows": 2388504
+    },
+    {
+      "date": "2026-07-14",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "a732ad476d17e5683ad4b885d18cfea82eba270395911bb203b3e756d528b70d",
+      "rows": 2415035
+    },
+    {
+      "date": "2026-07-15",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "66b46613bfad4d246c550b99d5b0ffda99cc3e820270902368ac94f3d469bbdd",
+      "rows": 2314097
+    },
+    {
+      "date": "2026-07-16",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f3b7309cf3df8923b9584bbb56645633bf797da300c078c1f623db974cd65184",
+      "rows": 2468769
+    },
+    {
+      "date": "2026-07-17",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "da36fbe5d6dcfa2a20b98ed4c3c32d8409525f6c1c3212e7c4ff9473d9385d0f",
+      "rows": 2464921
+    },
+    {
+      "date": "2026-07-18",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "6cc6466e00410c3b7b0b45e0be7aef823fc38bdd2e8562a35ae6c5c4387becc9",
+      "rows": 2349628
+    },
+    {
+      "date": "2026-07-19",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "b760e65507add4bcc34d1393acc958613e2b40b892a389094407919d88e6bfd6",
+      "rows": 2325269
+    },
+    {
+      "date": "2026-07-20",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c1305aada9894f17c5511060cb96a2215d415a7d84dd93f7f64c23731909805b",
+      "rows": 2105729
+    },
+    {
+      "date": "2026-07-21",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f7287af02f0f36fd19dce529fb9bfa070bcd2cc8615c51388400a82e0686ed98",
+      "rows": 2059590
+    },
+    {
+      "date": "2026-07-22",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "6058149bb7e75251014ae96d3cb3083138666a799b023355478105efeeaba9c6",
+      "rows": 2077063
+    },
+    {
+      "date": "2026-07-23",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "5bd2e6eab5176303ffb5cf644e608be9602ecbc423d095c5bbfc6187cc597c96",
+      "rows": 1961932
+    },
+    {
+      "date": "2026-07-24",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "df8982d95a5ced2cac23ca2dd0f05b47f14b01bb61a943810ccc2cf4aa118cce",
+      "rows": 2124378
+    },
+    {
+      "date": "2026-07-25",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "8cb58a12f5e32b1a04243262fa61115e5cc38de57eaea0b5fa137e80434d5faf",
+      "rows": 1948684
+    },
+    {
+      "date": "2026-07-26",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "37566ec79c835e2d602ed824bbc580740c9767c0235ab5d17dc9e4fc361c1f5d",
+      "rows": 1941627
+    },
+    {
+      "date": "2026-07-27",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "65227f15a19f02cd43eb0861efae5f28ede145296796eb5a3236166dd1446c5e",
+      "rows": 1931669
+    },
+    {
+      "date": "2026-07-28",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "8e01a85e6ef7793d79a16b4fd94daca45c82143639833a42faaa04b00ecebbb7",
+      "rows": 1958625
+    },
+    {
+      "date": "2026-07-29",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "880395a1d03864d84b297001b5f339df93708447b481193ea6ab5e67aa96515a",
+      "rows": 2000666
+    },
+    {
+      "date": "2026-07-30",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "f082dd86d6727b08b532591fa739d7b47d5f4f39150c1b2c3ac71b9bb36c9f18",
+      "rows": 2003429
+    },
+    {
+      "date": "2026-07-31",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "c5779c47c41e6ba631c19cf9033d3718a5af7dcb9880d3950c82ed9636566a04",
+      "rows": 1858968
+    },
+    {
+      "date": "2026-08-01",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "97d76557e4de787f98255171e83eb0fa54662bd7e0e59a8d827ec39f38b6fdfb",
+      "rows": 2227648
+    },
+    {
+      "date": "2026-08-02",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "851fbd3f92883636b04cff08845012ded05149a5b5edf583c5c04b9e96bdfa69",
+      "rows": 2222104
+    },
+    {
+      "date": "2026-08-03",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "e1905c5674b6f86c367437463bc23b1e98c3071af625b855ebf79577d21f65f8",
+      "rows": 2140291
+    },
+    {
+      "date": "2026-08-04",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "96da35cf4900f95109554a38e675c8e76b25b61eeacfaf29e08c5f0970ac8370",
+      "rows": 2142031
+    },
+    {
+      "date": "2026-08-05",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "165d0e533710f8a5beb180406bcfd0d62b042433296779c5426fccb09e9a3abd",
+      "rows": 2081981
+    },
+    {
+      "date": "2026-08-06",
+      "missing_columns": [
+        "active_periods_json",
+        "direction_id",
+        "incrementality",
+        "is_deleted",
+        "trip_modified_trip_affected_trip_id",
+        "trip_modified_trip_modifications_id",
+        "trip_modified_trip_start_date",
+        "trip_modified_trip_start_time",
+        "trip_schedule_relationship",
+        "trip_start_date",
+        "trip_start_time"
+      ],
+      "complete_selector_schema": false,
+      "sha256": "514dfd12d2b93fd7f454ffc6d096862d9a87e3e7525c0a38d33c366f4ea9f86b",
+      "rows": 2346725
+    },
+    {
+      "date": "2026-08-07",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "3b07d382ee837e42bbd2576d9dff7e83a4552a46b7fcdd3b9d2bdb1dd770f4c9",
+      "rows": 2619029
+    },
+    {
+      "date": "2026-08-08",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "2114b14a395da99b12d7839fbce139d9be662e19fd78aae915c78ce751801496",
+      "rows": 2482503
+    },
+    {
+      "date": "2026-08-09",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "a68e252b6c3385d6d3263f1fca851d9e65003b180aa67afc83cb38180d487652",
+      "rows": 2488034
+    },
+    {
+      "date": "2026-08-10",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "6773576be4553ac690804fafc4fe2f89a2a2374658ee4e55074ded935bf716e4",
+      "rows": 2426546
+    },
+    {
+      "date": "2026-08-11",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "5809b2754ec3e87d7e8cc383f78d38bfa216dd2e4272a7ec4bc8e2fde1918f87",
+      "rows": 2478966
+    },
+    {
+      "date": "2026-08-12",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "ac18c7d1a9625c8e278a2693b5dc721010d7b388014c99e52940e63b2ba10427",
+      "rows": 2520304
+    },
+    {
+      "date": "2026-08-13",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "49b433e5ceccd3f8a90d9fb903309370989857ceee1bb6ecbcbeeabe66192018",
+      "rows": 2801971
+    },
+    {
+      "date": "2026-08-14",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "9842c4658a8364098c0073e428be1ab122547accb51077448fc8cf8a8f265069",
+      "rows": 2939078
+    },
+    {
+      "date": "2026-08-15",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "fb00960f5e047949c7cb44bc2ca0764eb86c1bee46cf433bd746a51131a9c2a0",
+      "rows": 2929111
+    },
+    {
+      "date": "2026-08-16",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "a8f722e7a1094a846fe96431dd6231f3aeedd4ef0a058fbf62c82fc68f2ede2d",
+      "rows": 2920752
+    },
+    {
+      "date": "2026-08-17",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "32e34c26cc905b6912a88de0630d2ba2ba8c1c28842a2494d3c27422cb242f96",
+      "rows": 2676559
+    },
+    {
+      "date": "2026-08-18",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "150a4b504bca3ac3ed875b1b803425c840ae1fa50cc89b6e9d90ec127c701789",
+      "rows": 2555389
+    },
+    {
+      "date": "2026-08-19",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "cd5af0302e1295b7b60b9ffa9893b753b4fe44114b7cd3207458024855079f73",
+      "rows": 2539579
+    },
+    {
+      "date": "2026-08-20",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "436510839145703457f76a471424d8913b758cbcba8d08154f60b20b0a855dd1",
+      "rows": 2781311
+    },
+    {
+      "date": "2026-08-21",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "c7c37dca8f9a9ca47fc181f8162fed3270b124987bfcc2c71621a8bb7c997f80",
+      "rows": 2687277
+    },
+    {
+      "date": "2026-08-22",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "8f5d2284d9943d50c4a10e50085c83016a1914cffdf2951c10ebebc8d0abc629",
+      "rows": 2553391
+    },
+    {
+      "date": "2026-08-23",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "b50360d0a2f73ec4402a575323395fdbaabace41c7e34679af537c244897d65d",
+      "rows": 2550202
+    },
+    {
+      "date": "2026-08-24",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "031c8769ab9955266d5d5ec88bdfcd6516b5d2b75046f0bdd3c5119240ebbab8",
+      "rows": 2533171
+    },
+    {
+      "date": "2026-08-25",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "78b12c8cfb8d8c6c7491c03a5c7d1f8b8cef2b2d1dec6871ac010c1cd8100260",
+      "rows": 2601593
+    },
+    {
+      "date": "2026-08-26",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "1b213c386578a8210ddbac85aea31212bed4d98f0f6099943b525fe95bdb6614",
+      "rows": 2736172
+    },
+    {
+      "date": "2026-08-27",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "93ca025bb963cf712611205b79d09acdf87e481e70fbccdacab05cc1fde11288",
+      "rows": 2964634
+    },
+    {
+      "date": "2026-08-28",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "98677ab0bfab3bda7f7aa694b27061bff4220ed5bef3cd4074233558ec0becaf",
+      "rows": 3203155
+    },
+    {
+      "date": "2026-08-29",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "58df10fe85db032d48d46adbe030f0736079a7c0e360cc96f8478d7c8d5e6e86",
+      "rows": 2851311
+    },
+    {
+      "date": "2026-08-30",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "dc97e6a017aa4a1a1ac90dd43b0a9b4c1034026b151c8844d161059a25801f27",
+      "rows": 2838699
+    },
+    {
+      "date": "2026-08-31",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "80382220ad152b5d5bbe9314ea81cdc0cf918d69e08a311f0f3a15014a6df02f",
+      "rows": 2646853
+    },
+    {
+      "date": "2026-09-01",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "ab52c83d2684f69f8f1fd51a83a75f0ad664c91e304516a54704a0accba9155d",
+      "rows": 2688717
+    },
+    {
+      "date": "2026-09-02",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "a399f9abfb3557c7eab93f8d937089531e9634463e943a8a75c454583cd5da89",
+      "rows": 2728466
+    },
+    {
+      "date": "2026-09-03",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "30dab5aedcebcbe526b58c613929606089047004c7faacbdc4031f05350a1a8f",
+      "rows": 2794939
+    },
+    {
+      "date": "2026-09-04",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "d788d0c6bc21545b778ab3daea00202b7ccfa06b6641da52308813565922918d",
+      "rows": 2620166
+    },
+    {
+      "date": "2026-09-05",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "3c2fd7e5044865ff177bb527175c2fe38fdb5ab432fbe11a11a6447800dd6bab",
+      "rows": 2574639
+    },
+    {
+      "date": "2026-09-06",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "1b07a67dd07940ccf4caba935314a4b85e71a8f92744264bb52da3fad8347649",
+      "rows": 2570102
+    },
+    {
+      "date": "2026-09-07",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "a2d2e94a1f83837b03cef2737d07299cbf254254e4f43849f170dec8653ac962",
+      "rows": 2520160
+    },
+    {
+      "date": "2026-09-08",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "6ca23b12d16886c427ce4052d193f7bef0b8b8633e6a68962a1f08e2a017c12a",
+      "rows": 2237716
+    },
+    {
+      "date": "2026-09-09",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "3b9d8f20c7850df99926835595cd619f53cca23e5f4db497081abf9a507bc727",
+      "rows": 2191654
+    },
+    {
+      "date": "2026-09-10",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "b8a911ba7664412f82cbd0d3f5982336772c779fe4a45f25d0dd656c690aeabb",
+      "rows": 2368541
+    },
+    {
+      "date": "2026-09-11",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "92a82ad29a989833840ea8fc6ead974460607ab9881ef64f96c07de8a850e2e6",
+      "rows": 2286195
+    },
+    {
+      "date": "2026-09-12",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "9e8b71d1bb068c522f450de1be0f4098353eaa8dd5b55711088c0063294d9e49",
+      "rows": 2208427
+    },
+    {
+      "date": "2026-09-13",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "ebe841b1a50c931255248ed1719352cfb8cdc5326e25c526a17d3f02eb2f5032",
+      "rows": 2146371
+    },
+    {
+      "date": "2026-09-14",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "a1ed80bb3081bc1cc75342ad314118e5cb02f903d44ff6e3a50a467c64776ed0",
+      "rows": 1940646
+    },
+    {
+      "date": "2026-09-15",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "1ad10827b4135512bbb5ddd5c8ab3583b85ea582313bbddd2ef64c042670a1a2",
+      "rows": 1883760
+    },
+    {
+      "date": "2026-09-16",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "a7e07993d012363e6b4cfa255328f3d6dcdec6c31e82469abbeabe81149cc783",
+      "rows": 1963018
+    },
+    {
+      "date": "2026-09-17",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "e84b5e962d5bbfb9db7e4ff57d46442e073befc488cf5adaf86f0af3a0cfb5b7",
+      "rows": 2290376
+    },
+    {
+      "date": "2026-09-18",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "0c6049bac0b9b65d50a225348ac2ad8363b7ab27d6e89f8e2962286a9b5cfba3",
+      "rows": 2097453
+    },
+    {
+      "date": "2026-09-19",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "1ea7f2b7a1060a797e77af22bb543b1190c180c7e22dd8dd43a814b0968e0c67",
+      "rows": 1912479
+    },
+    {
+      "date": "2026-09-20",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "a149722df5cb95812b968ba1929959e48aeb231682c59ff3863d78cc4f7803c4",
+      "rows": 1893686
+    },
+    {
+      "date": "2026-09-21",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "9efe7fdc541ff67500f301e1e13d473cc895bc9ce503a8ff8ed80312fa2d4052",
+      "rows": 1723967
+    },
+    {
+      "date": "2026-09-22",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "ad50865b9d9d7bd13e6d3a1e93df4fa063279e36353459b91a3770c3b05b5a0c",
+      "rows": 1639915
+    },
+    {
+      "date": "2026-09-23",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "ec99b2e68ea69f0affe438b64daa22624fa9358ae8a73633572abd0fcba639d0",
+      "rows": 1725343
+    },
+    {
+      "date": "2026-09-24",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "9313e44ab07537a1b787969fe2c935bfe1ee6d35c9496c44290abb6e9898c331",
+      "rows": 1966263
+    },
+    {
+      "date": "2026-09-25",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "b628a96af3913202efd92f7a0172062051bb59865c1b33f8bc77a5fa0391050e",
+      "rows": 1916657
+    },
+    {
+      "date": "2026-09-26",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "7cd097602b0a618746c2dede829a3fe229539c81a276375e31adf82a7f218e22",
+      "rows": 1992414
+    },
+    {
+      "date": "2026-09-27",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "3937b3dc0342e59c0a4fe1c0047e9e25d939874290841a07974fe2d92df9c39c",
+      "rows": 1990606
+    },
+    {
+      "date": "2026-09-28",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "abec23a79668a1b58bbae25ed860f7ddc4555f6bf2a8bf72fa1f923914b8defa",
+      "rows": 1861657
+    },
+    {
+      "date": "2026-09-29",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "d9d77e4942d7b2be478d17ad32ffb8108300647b10e450a3b3563e93991e6dde",
+      "rows": 1816503
+    },
+    {
+      "date": "2026-09-30",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "3f273f2c5749d0e33bb8b4cfa92e83130364e49fdf3efd0aa02209d77635c4d8",
+      "rows": 1871084
+    },
+    {
+      "date": "2026-10-01",
+      "missing_columns": [],
+      "complete_selector_schema": true,
+      "sha256": "e127212bcb1f606daf42f725e776412095086e0004fcb51180743e5f1d315776",
+      "rows": 2127638
+    }
+  ],
+  "publisher_schema_issue": "https://github.com/JarvusInnovations/gtfs-realtime-archiver/issues/91",
+  "original_2025_scope_supported": false,
+  "canonical_station_eligibility_promoted": false
+}
