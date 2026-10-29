@@ -1,0 +1,7 @@
+{
+  "BudgetName": "citibike-s3-budget",
+  "BudgetLimit": { "Amount": "75", "Unit": "USD" },
+  "BudgetType": "COST",
+  "TimeUnit": "MONTHLY",
+  "CostFilters": { "Service": ["Amazon Simple Storage Service"] }
+}
