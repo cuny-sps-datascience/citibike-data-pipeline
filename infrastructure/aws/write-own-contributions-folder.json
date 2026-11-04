@@ -23,6 +23,18 @@
           "s3:prefix": ["contributions/", "contributions/*"]
         }
       }
+    },
+    {
+      "Sid": "ListTopLevelFolders",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::cuny-sps-citibike-archive",
+      "Condition": {
+        "StringEquals": {
+          "s3:prefix": "",
+          "s3:delimiter": "/"
+        }
+      }
     }
   ]
 }
