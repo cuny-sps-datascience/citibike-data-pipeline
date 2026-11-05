@@ -30,10 +30,8 @@
       "Action": "s3:ListBucket",
       "Resource": "arn:aws:s3:::cuny-sps-citibike-archive",
       "Condition": {
-        "StringEquals": {
-          "s3:prefix": "",
-          "s3:delimiter": "/"
-        }
+        "StringEquals": { "s3:delimiter": "/" },
+        "StringEqualsIfExists": { "s3:prefix": "" }
       }
     }
   ]
