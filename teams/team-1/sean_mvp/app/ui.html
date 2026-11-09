@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citi Bike Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --bg: #f6f1e7; --card: #ffffff; --ink: #1f2328; --muted: #6b6f76; --line: #e6dfd2;
+    --dark: #1f2a30;
+    --empty: #c8423b; --full: #8a4fb8; --watch: #d68a1e; --ok: #1f8a70; --off: #6b7280;
+    --emptynow: #6e1d18; --fullnow: #3f2459;
+    --radius: 14px;
+    font-family: "Nunito Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-size: 15px; }
+  .wrap { padding: 2px 4px 8px; height: 100vh; display: flex; flex-direction: column; gap: 10px; }
+
+  /* Status pills */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+          border: 1px solid var(--line); background: var(--card); cursor: pointer; font-weight: 700;
+          font-size: 14px; color: var(--ink); user-select: none; }
+  .pill:hover { border-color: #cfc6b5; }
+  .pill.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+  .pill .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .pill .count { background: #efe9dd; color: var(--ink); border-radius: 999px; padding: 1px 8px;
+                 font-size: 12.5px; font-weight: 800; }
+  .pill.active .count { background: #3a464d; color: #fff; }
+
+  /* Search / sort / toggles */
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .controls input[type=search], .controls select {
+    height: 42px; border: 1px solid #d9d1c2; border-radius: 10px; background: #fff; padding: 0 14px;
+    font: inherit; color: var(--ink); }
+  .controls input[type=search] { width: 280px; }
+  .controls label { display: inline-flex; align-items: center; gap: 7px; color: #3b3f45; cursor: pointer; }
+  .model { margin-left: auto; color: var(--muted); font-size: 13px; text-align: right; line-height: 1.35; }
+  .model b { color: var(--ink); }
+
+  /* Playback bar */
+  .playbar { display: flex; align-items: center; gap: 12px; background: var(--card);
+             border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 14px; }
+  .playbar button { width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--dark);
+                    color: #fff; font-size: 14px; cursor: pointer; }
+  .playbar input[type=range] { flex: 1; accent-color: var(--dark); }
+  .playbar .time { min-width: 210px; font-weight: 800; }
+  .playbar select { height: 32px; border-radius: 8px; border: 1px solid #d9d1c2; background: #fff; }
+
+  /* List + map */
+  .main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(340px, 1fr) minmax(360px, 1fr); gap: 18px; }
+  .list { overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 10px; }
+  .card { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 12px;
+          background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+          padding: 14px 16px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
+  .card:hover { border-color: #cfc6b5; }
+  .card.sel { border-color: var(--dark); box-shadow: 0 0 0 2px var(--dark) inset; }
+  .code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-weight: 700; color: #4b5057;
+          font-size: 13px; letter-spacing: .02em; overflow: hidden; text-overflow: ellipsis; }
+  .title { font-weight: 800; font-size: 16px; line-height: 1.25; }
+  .sub { color: var(--muted); font-size: 14px; margin-top: 3px; }
+  .right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .tag { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px; border-radius: 999px;
+         background: #f1ebdf; font-weight: 700; font-size: 13.5px; white-space: nowrap; }
+  .tag .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .when { color: var(--muted); font-size: 13.5px; }
+  .hit { color: var(--ok); font-weight: 700; } .miss { color: var(--empty); font-weight: 700; }
+  .more { color: var(--muted); text-align: center; padding: 8px; font-size: 13.5px; }
+  .empty-list { color: var(--muted); padding: 30px 10px; text-align: center; }
+
+  .mapbox { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
+            box-shadow: 0 2px 8px rgba(0,0,0,.06); min-height: 300px; }
+  #map { position: absolute; inset: 0; background: #e8e4da; }
+  .legend { position: absolute; left: 12px; bottom: 26px; z-index: 500; background: rgba(255,255,255,.95);
+            border-radius: 10px; padding: 7px 12px; display: flex; flex-wrap: wrap; gap: 6px 14px;
+            font-size: 13px; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .bar { height: 7px; background: #eee6d8; border-radius: 4px; overflow: hidden; margin: 2px 0 6px; }
+  .bar > div { height: 100%; }
+  .leaflet-popup-content { font-family: inherit; font-size: 13.5px; min-width: 210px; }
+  .demo { display: inline-block; margin-top: 4px; background: #fff4d6; border: 1px solid #f0d58c; color: #6b5300; padding: 6px 12px;
+          border-radius: 10px; font-size: 13px; }
+
+  @media (max-width: 860px) {
+    .wrap { height: auto; }
+    .main { grid-template-columns: 1fr; }
+    .mapbox { height: 380px; order: -1; }
+    .list { overflow: visible; }
+    .controls input[type=search] { width: 100%; }
+    .model { margin-left: 0; text-align: left; }
+    .playbar { flex-wrap: wrap; }
+    .playbar .time { min-width: 0; order: 3; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="pills" id="pills"></div>
+  <div class="controls">
+    <input type="search" id="q" placeholder="Search name, station code…">
+    <select id="sort">
+      <option value="risk">Sort: most at risk</option>
+      <option value="bikes">Sort: fewest bikes</option>
+      <option value="docks">Sort: fewest docks</option>
+      <option value="name">Sort: name</option>
+    </select>
+    <label><input type="checkbox" id="hidenow" checked> Hide stations already empty/full</label>
+    <label id="outcomeWrap"><input type="checkbox" id="outcome" checked> Show what happened 15 min later</label>
+    <div class="model" id="model"></div>
+  </div>
+  <div class="playbar" id="playbar">
+    <button id="play" title="Play / pause">▶</button>
+    <input type="range" id="slider" min="0" value="0">
+    <span class="time" id="time"></span>
+    <select id="speed" title="Playback speed">
+      <option value="900">1×</option><option value="400" selected>2×</option><option value="150">5×</option>
+    </select>
+  </div>
+  <div class="main">
+    <div class="list" id="list"></div>
+    <div class="mapbox"><div id="map"></div><div class="legend" id="legend"></div></div>
+  </div>
+</div>
+
+<script>
+const DATA = __PAYLOAD__;
+
+// ---------------------------------------------------------------------------
+// Status codes (from app.py). "." = no data at this time.
+// ---------------------------------------------------------------------------
+const STATUS = {
+  E: { label: "Empty risk", hex: "#c8423b" },
+  F: { label: "Full risk",  hex: "#8a4fb8" },
+  W: { label: "Watch",      hex: "#d68a1e" },
+  O: { label: "OK",         hex: "#1f8a70" },
+  e: { label: "Empty now",  hex: "#6e1d18" },
+  f: { label: "Full now",   hex: "#3f2459" },
+  X: { label: "Offline",    hex: "#9aa0a8" },
+};
+const PILLS = [
+  { key: "risk", label: "At risk", match: s => s === "E" || s === "F" },
+  { key: "E", label: "Empty risk", match: s => s === "E" },
+  { key: "F", label: "Full risk", match: s => s === "F" },
+  { key: "W", label: "Watch", match: s => s === "W" },
+  { key: "O", label: "OK", match: s => s === "O" },
+  { key: "e", label: "Empty now", match: s => s === "e" },
+  { key: "f", label: "Full now", match: s => s === "f" },
+  { key: "X", label: "Offline", match: s => s === "X" },
+  { key: "all", label: "All", match: s => s !== "." },
+];
+const LIST_LIMIT = 200;
+
+const state = { idx: DATA.times.length - 1, pill: "risk", q: "", sort: "risk",
+                hideNow: true, outcome: true, selected: null, timer: null };
+if (DATA.mode === "playback") state.idx = defaultPlaybackIndex();
+
+const $ = id => document.getElementById(id);
+const fmtTime = iso => new Date(iso).toLocaleString("en-US", {
+  timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric",
+  hour: "numeric", minute: "2-digit" }) + " ET";
+const pct = p => p == null ? "–" : p + "%";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+// Start playback at 8:00 AM New York time (morning rush) when available.
+function defaultPlaybackIndex() {
+  const hourFmt = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "numeric", hourCycle: "h23" });
+  const i = DATA.times.findIndex(t => parseInt(hourFmt.format(new Date(t)), 10) === 8);
+  return i >= 0 ? i : 0;
+}
+
+function at(st) {
+  const i = state.idx;
+  return { s: st.s[i] || ".", pb: st.pb[i], pd: st.pd[i], b: st.b[i], d: st.d[i], tb: st.tb[i], td: st.td[i] };
+}
+function riskScore(v) {   // probability relative to its warning threshold
+  const tb = DATA.model.bike?.threshold || 50, td = DATA.model.dock?.threshold || 50;
+  if (v.s === "e" || v.s === "f") return 1e6;
+  return Math.max((v.pb ?? 0) / tb, (v.pd ?? 0) / td);
+}
+
+// ---------------------------------------------------------------------------
+// Map
+// ---------------------------------------------------------------------------
+const map = L.map("map", { zoomControl: true, preferCanvas: true });
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+const markers = {};
+for (const st of DATA.stations) {
+  markers[st.id] = L.circleMarker([st.lat, st.lon], { radius: 5, weight: 1, color: "#fff", fillOpacity: 0.95 })
+    .addTo(map).on("click", () => select(st.id, false));
+}
+if (DATA.stations.length) map.fitBounds(L.latLngBounds(DATA.stations.map(s => [s.lat, s.lon])).pad(0.03));
+$("legend").innerHTML = Object.values(STATUS)
+  .map(s => `<span><i style="background:${s.hex}"></i>${s.label}</span>`).join("");
+
+function outcomeText(v) {
+  // Targets only exist for stations that weren't already out (and were fully observed).
+  const parts = [];
+  if (v.tb != null) parts.push(v.tb === 1 ? "ran out of bikes" : "kept bikes");
+  if (v.td != null) parts.push(v.td === 1 ? "filled up" : "kept docks");
+  return parts.length ? parts.join(", ") : null;
+}
+
+function popupHtml(st, v) {
+  const s = STATUS[v.s];
+  const bar = (p, color) => `<div class="bar"><div style="width:${Math.min(p ?? 0, 100)}%;background:${color}"></div></div>`;
+  const out = DATA.mode === "playback" ? outcomeText(v) : null;
+  return `<div style="font-weight:800;font-size:15px">${esc(st.name)}</div>
+    <div style="color:#6b6f76;margin-bottom:6px">${s ? s.label : "No data"}</div>
+    <div>${v.b ?? "–"} bikes · ${v.d ?? "–"} docks${st.cap ? " · " + st.cap + " capacity" : ""}</div>
+    <div style="margin-top:6px">Runs out of bikes in 15 min: <b>${pct(v.pb)}</b></div>${bar(v.pb, "#c8423b")}
+    <div>Runs out of docks in 15 min: <b>${pct(v.pd)}</b></div>${bar(v.pd, "#8a4fb8")}
+    ${out ? `<div style="margin-top:4px">What happened: <b>${out}</b></div>` : ""}`;
+}
+
+// ---------------------------------------------------------------------------
+// Render
+// ---------------------------------------------------------------------------
+function visibleStations() {
+  const pill = PILLS.find(p => p.key === state.pill);
+  const q = state.q.trim().toLowerCase();
+  const rows = DATA.stations.map(st => ({ st, v: at(st) })).filter(({ st, v }) =>
+    pill.match(v.s) &&
+    (!q || st.name.toLowerCase().includes(q) || st.id.toLowerCase().includes(q)) &&
+    (!state.hideNow || state.pill === "e" || state.pill === "f" || (v.s !== "e" && v.s !== "f")));
+  const key = { risk: r => -riskScore(r.v), bikes: r => r.v.b ?? 1e9, docks: r => r.v.d ?? 1e9, name: r => r.st.name };
+  const f = key[state.sort];
+  rows.sort((a, b) => { const x = f(a), y = f(b); return x < y ? -1 : x > y ? 1 : a.st.name.localeCompare(b.st.name); });
+  return rows;
+}
+
+function renderPills() {
+  const cur = DATA.stations.map(st => st.s[state.idx] || ".");
+  $("pills").innerHTML = PILLS.map(p => {
+    const n = cur.filter(p.match).length;
+    const color = STATUS[p.key]?.hex;
+    return `<span class="pill ${state.pill === p.key ? "active" : ""}" data-k="${p.key}">
+      ${color ? `<span class="dot" style="background:${color}"></span>` : ""}${p.label}
+      <span class="count">${n.toLocaleString()}</span></span>`;
+  }).join("");
+  document.querySelectorAll(".pill").forEach(el => el.onclick = () => { state.pill = el.dataset.k; render(); });
+}
+
+function outcomeHtml(v) {
+  if (DATA.mode !== "playback" || !state.outcome) return "";
+  // Grade the warning: did the predicted event happen within 15 minutes?
+  if (v.s === "E" && v.tb != null) return `<span class="when">+15 min: <span class="${v.tb ? "hit" : "miss"}">${v.tb ? "ran out ✓" : "didn't run out"}</span></span>`;
+  if (v.s === "F" && v.td != null) return `<span class="when">+15 min: <span class="${v.td ? "hit" : "miss"}">${v.td ? "filled up ✓" : "didn't fill"}</span></span>`;
+  if ((v.s === "O" || v.s === "W") && (v.tb === 1 || v.td === 1)) return `<span class="when">+15 min: <span class="miss">${v.tb === 1 ? "ran out — missed" : "filled — missed"}</span></span>`;
+  const out = outcomeText(v);
+  return out ? `<span class="when">+15 min: ${out}</span>` : "";
+}
+
+function whenHtml() {
+  if (DATA.mode === "playback") return "";
+  const mins = Math.round((Date.now() - new Date(DATA.times[state.idx])) / 60000);
+  return `<span class="when">${mins <= 1 ? "just now" : mins + " min ago"}</span>`;
+}
+
+function renderList(rows) {
+  if (!rows.length) { $("list").innerHTML = `<div class="empty-list">No stations match.</div>`; return; }
+  const shown = rows.slice(0, LIST_LIMIT);
+  $("list").innerHTML = shown.map(({ st, v }) => {
+    const s = STATUS[v.s];
+    const p = v.s === "F" ? v.pd : v.s === "E" ? v.pb : Math.max(v.pb ?? 0, v.pd ?? 0);
+    const showP = v.s === "E" || v.s === "F" || v.s === "W" || v.s === "O";
+    const tag = s ? `<span class="tag"><span class="dot" style="background:${s.hex}"></span>${s.label}${showP ? " · " + pct(p) : ""}</span>`
+                  : `<span class="tag">No data</span>`;
+    return `<div class="card ${state.selected === st.id ? "sel" : ""}" data-id="${esc(st.id)}">
+      <div class="code">${esc(st.cap ? st.cap + " docks" : "")}</div>
+      <div><div class="title">${esc(st.name)}</div>
+        <div class="sub">${v.b ?? "–"} bikes · ${v.d ?? "–"} open docks</div></div>
+      <div class="right">${tag}${outcomeHtml(v) || whenHtml()}</div></div>`;
+  }).join("") + (rows.length > LIST_LIMIT ? `<div class="more">Showing ${LIST_LIMIT} of ${rows.length.toLocaleString()} — search or pick a filter to narrow</div>` : "");
+  document.querySelectorAll(".card").forEach(el => el.onclick = () => select(el.dataset.id, true));
+}
+
+function renderMarkers(rows) {
+  const shown = new Set(rows.map(r => r.st.id));
+  for (const st of DATA.stations) {
+    const v = at(st), m = markers[st.id], sel = state.selected === st.id, vis = shown.has(st.id);
+    const hex = STATUS[v.s]?.hex || "#cfc8bb";
+    const big = v.s === "E" || v.s === "F";
+    m.setStyle({ fillColor: hex, radius: sel ? 10 : big ? 6.5 : 4.5, color: sel ? "#1f2a30" : "#fff",
+                 weight: sel ? 3 : 1, opacity: vis ? 1 : 0.15, fillOpacity: vis ? 0.95 : 0.15 });
+    if (sel || (vis && big)) m.bringToFront();
+    if (m.isPopupOpen()) m.setPopupContent(popupHtml(st, v));
+  }
+}
+
+function render() {
+  const rows = visibleStations();
+  renderPills(); renderList(rows); renderMarkers(rows);
+  $("time").textContent = DATA.times.length ? fmtTime(DATA.times[state.idx]) : "";
+  $("slider").value = state.idx;
+}
+
+function select(id, fromList) {
+  state.selected = id;
+  const st = DATA.stations.find(s => s.id === id);
+  const m = markers[id];
+  m.bindPopup(popupHtml(st, at(st))).openPopup();
+  if (fromList) map.setView(m.getLatLng(), Math.max(map.getZoom(), 14));
+  render();
+  if (!fromList) document.querySelector(`.card[data-id="${CSS.escape(id)}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+// ---------------------------------------------------------------------------
+// Controls
+// ---------------------------------------------------------------------------
+$("q").oninput = e => { state.q = e.target.value; render(); };
+$("sort").onchange = e => { state.sort = e.target.value; render(); };
+$("hidenow").onchange = e => { state.hideNow = e.target.checked; render(); };
+$("outcome").onchange = e => { state.outcome = e.target.checked; render(); };
+$("slider").max = Math.max(0, DATA.times.length - 1);
+$("slider").oninput = e => { state.idx = +e.target.value; render(); };
+
+function stop() { clearInterval(state.timer); state.timer = null; $("play").textContent = "▶"; }
+function play() {
+  stop(); $("play").textContent = "❚❚";
+  state.timer = setInterval(() => {
+    if (state.idx >= DATA.times.length - 1) return stop();
+    state.idx++; render();
+  }, +$("speed").value);
+}
+$("play").onclick = () => state.timer ? stop() : play();
+$("speed").onchange = () => { if (state.timer) play(); };
+
+if (DATA.mode !== "playback") $("outcomeWrap").style.display = "none";
+if (DATA.times.length <= 1) $("playbar").style.display = "none";
+
+const mb = DATA.model.bike, md = DATA.model.dock;
+const ver = m => m.version ? " v" + m.version : "";
+$("model").innerHTML = (mb && md ? `<div>Test-week PR-AUC · bikes <b>${mb.pr_auc}</b> (${mb.type}${ver(mb)}) · docks <b>${md.pr_auc}</b> (${md.type}${ver(md)})</div>` +
+  `<div>history baseline ${mb.history_pr_auc} / ${md.history_pr_auc} · event rate ${mb.base_rate}% / ${md.base_rate}%</div>` : "") +
+  (DATA.demo ? `<div class="demo">Demo data — not real stations</div>` : "");
+
+render();
+</script>
+</body>
+</html>
