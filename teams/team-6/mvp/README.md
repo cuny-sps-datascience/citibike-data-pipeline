@@ -40,6 +40,13 @@ Beats baseline at all 6 stations (4–17%). Horizons 1–3 score identically —
 "now", so this is expected and will change once weather and recent-count lags enter. Per-station / per-horizon
 metrics in `model1/report.json`; every test prediction in `model1/predictions.parquet`.
 
+## Play with it
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jamilton08/citibike-data-pipeline/blob/jonathan/mvp-6-stations-model1/teams/team-6/mvp/play_model1.ipynb)
+
+`play_model1.ipynb` — pick a station/week and see predicted vs actual, error by hour of day, the worst-missed days,
+ask the model about any date/hour, and retrain with features switched off. Runs in Colab with nothing installed,
+or locally with `pip install -r requirements.txt && jupyter lab`.
+
 ## Next
 Model 2 (+ weather) and model 3 (+ weather + subway) from the team-6 weather/subway release, same splits, same table.
 Runs unchanged in a Databricks notebook once the hourly parquet is uploaded to a volume.
