@@ -20,20 +20,27 @@ Reliability screening of all 689 panel stations is in `data/station_reliability_
 ## Data
 `scripts/fetch_trips.py` downloads the public monthly trip files Jan 2024 → Aug 2026, keeps trips
 touching the 6 stations, and writes `data/trips_6stations_hourly.parquet`: station × UTC hour, `departures`,
-`returns`, zeros filled (140,262 rows). Trip timestamps are NYC local; the two ambiguous/nonexistent DST hours
-per year are dropped rather than guessed. All 6 stations are active every month, longest dead stretch 75 h.
+`returns` (140,262 rows). Hours with no trips are real zeros. Trip timestamps are NYC local: trips at an
+ambiguous (fall-back) or nonexistent (spring-forward) local time can't be placed in a UTC hour, so the repeated
+fall-back hour is stored as **unknown (null), not zero** — 24 station-hours — and excluded from training and
+scoring (same rule as `historical_station_panel.py`). All 6 stations are active every month, longest dead
+stretch 75 h. Rebuild the hourly table from already-downloaded trips with
+`python3 scripts/fetch_trips.py --aggregate-only <trips_6stations_raw.parquet>`.
 
 ## Splits (by target local date)
-train 2024-01-01 → 2025-12-31 (two winters) · validation 2026-01-01 → 2026-02-28 · test 2026-03-01 → 2026-08-31 (6-month simulation, touched once).
+train 2024-01-01 → 2025-12-31 (two winters) · validation 2026-01-01 → 2026-02-28 · test 2026-03-01 → 2026-08-31 (6-month simulation).
+Validation is used for early stopping and for any feature experiments (including the notebook's). Test is only used to
+report the final model of each stage. Rows, splits and features are defined once in `scripts/mvp_data.py`, which both
+`scripts/train_mvp.py` and the notebook import, so they score identical rows.
 Horizons 1–3 = target hour at origin + (h−1), same convention as the 689-station panel.
 
-## Model 1 — calendar only (`scripts/train_mvp.py`)
+## Model 1 — calendar only (`scripts/train_mvp.py`, runs from any directory)
 LightGBM, Poisson objective, features: station, horizon, target hour / weekday / month / day-of-year / weekend / US holiday.
 Baseline: station × hour × weekday mean from train.
 
 | MAE (dep/hr) | LightGBM | baseline |
 |---|---|---|
-| validation | 3.16 | 5.98 |
+| validation | 3.17 | 5.98 |
 | test | **3.84** | 4.36 |
 
 Beats baseline at all 6 stations (4–17%). Horizons 1–3 score identically — a calendar model has no information about
@@ -48,5 +55,10 @@ ask the model about any date/hour, and retrain with features switched off. Runs 
 or locally with `pip install -r requirements.txt && jupyter lab`.
 
 ## Next
+Before model 2: the weather archive labels horizons as target = origin + h, while this MVP (and the 689-station panel)
+uses origin + (h − 1). Weather will be joined on **target hour**, not on the horizon number. Weather coverage starts
+2024-08-10 and subway coverage ends 2026-08-10, so models 1–3 will be compared on the common window
+(train 2024-08-10 → 2025-12-31, test through 2026-08-10), with model 1 re-scored on that window.
+
 Model 2 (+ weather) and model 3 (+ weather + subway) from the team-6 weather/subway release, same splits, same table.
 Runs unchanged in a Databricks notebook once the hourly parquet is uploaded to a volume.
