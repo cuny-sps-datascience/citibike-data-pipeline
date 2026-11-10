@@ -1,0 +1,317 @@
+{
+  "splits": {
+    "train": [
+      "2024-01-01",
+      "2025-12-31"
+    ],
+    "validation": [
+      "2026-01-01",
+      "2026-02-28"
+    ],
+    "test": [
+      "2026-03-01",
+      "2026-08-31"
+    ]
+  },
+  "features": [
+    "station_id",
+    "horizon",
+    "t_hour",
+    "t_dow",
+    "t_month",
+    "t_doy",
+    "t_weekend",
+    "t_holiday"
+  ],
+  "best_iteration": 474,
+  "metrics": {
+    "validation": {
+      "lightgbm_calendar": {
+        "mae": 3.16,
+        "rmse": 5.084,
+        "poisson_deviance": 3.2936,
+        "rows": 25488
+      },
+      "baseline_station_hour_dow": {
+        "mae": 5.981,
+        "rmse": 8.865,
+        "poisson_deviance": 6.7666,
+        "rows": 25488
+      },
+      "by_horizon": {
+        "1": {
+          "lightgbm": {
+            "mae": 3.16,
+            "rmse": 5.084,
+            "poisson_deviance": 3.2936,
+            "rows": 8496
+          },
+          "baseline": {
+            "mae": 5.981,
+            "rmse": 8.865,
+            "poisson_deviance": 6.7666,
+            "rows": 8496
+          }
+        },
+        "2": {
+          "lightgbm": {
+            "mae": 3.16,
+            "rmse": 5.084,
+            "poisson_deviance": 3.2936,
+            "rows": 8496
+          },
+          "baseline": {
+            "mae": 5.981,
+            "rmse": 8.865,
+            "poisson_deviance": 6.7666,
+            "rows": 8496
+          }
+        },
+        "3": {
+          "lightgbm": {
+            "mae": 3.16,
+            "rmse": 5.084,
+            "poisson_deviance": 3.2936,
+            "rows": 8496
+          },
+          "baseline": {
+            "mae": 5.981,
+            "rmse": 8.865,
+            "poisson_deviance": 6.7666,
+            "rows": 8496
+          }
+        }
+      },
+      "by_station": {
+        "Amsterdam Ave & W 73 St": {
+          "lightgbm": {
+            "mae": 3.356,
+            "rmse": 4.696,
+            "poisson_deviance": 3.4156,
+            "rows": 4248
+          },
+          "baseline": {
+            "mae": 6.265,
+            "rmse": 8.115,
+            "poisson_deviance": 6.9573,
+            "rows": 4248
+          }
+        },
+        "Broadway & E 14 St": {
+          "lightgbm": {
+            "mae": 4.307,
+            "rmse": 6.303,
+            "poisson_deviance": 4.0874,
+            "rows": 4248
+          },
+          "baseline": {
+            "mae": 8.554,
+            "rmse": 11.283,
+            "poisson_deviance": 8.9191,
+            "rows": 4248
+          }
+        },
+        "Fulton St & William St": {
+          "lightgbm": {
+            "mae": 1.868,
+            "rmse": 2.564,
+            "poisson_deviance": 2.1704,
+            "rows": 4248
+          },
+          "baseline": {
+            "mae": 3.487,
+            "rmse": 4.441,
+            "poisson_deviance": 4.2209,
+            "rows": 4248
+          }
+        },
+        "Liberty St & Broadway": {
+          "lightgbm": {
+            "mae": 2.165,
+            "rmse": 3.357,
+            "poisson_deviance": 2.7973,
+            "rows": 4248
+          },
+          "baseline": {
+            "mae": 4.154,
+            "rmse": 6.284,
+            "poisson_deviance": 5.6038,
+            "rows": 4248
+          }
+        },
+        "Little West St & 1 Pl": {
+          "lightgbm": {
+            "mae": 1.649,
+            "rmse": 2.35,
+            "poisson_deviance": 2.148,
+            "rows": 4248
+          },
+          "baseline": {
+            "mae": 3.575,
+            "rmse": 4.87,
+            "poisson_deviance": 4.9798,
+            "rows": 4248
+          }
+        },
+        "W 21 St & 6 Ave": {
+          "lightgbm": {
+            "mae": 5.616,
+            "rmse": 8.363,
+            "poisson_deviance": 5.143,
+            "rows": 4248
+          },
+          "baseline": {
+            "mae": 9.851,
+            "rmse": 13.98,
+            "poisson_deviance": 9.9187,
+            "rows": 4248
+          }
+        }
+      }
+    },
+    "test": {
+      "lightgbm_calendar": {
+        "mae": 3.835,
+        "rmse": 6.167,
+        "poisson_deviance": 2.5642,
+        "rows": 79038
+      },
+      "baseline_station_hour_dow": {
+        "mae": 4.362,
+        "rmse": 6.962,
+        "poisson_deviance": 3.177,
+        "rows": 79038
+      },
+      "by_horizon": {
+        "1": {
+          "lightgbm": {
+            "mae": 3.835,
+            "rmse": 6.167,
+            "poisson_deviance": 2.5642,
+            "rows": 26346
+          },
+          "baseline": {
+            "mae": 4.362,
+            "rmse": 6.962,
+            "poisson_deviance": 3.177,
+            "rows": 26346
+          }
+        },
+        "2": {
+          "lightgbm": {
+            "mae": 3.835,
+            "rmse": 6.167,
+            "poisson_deviance": 2.5642,
+            "rows": 26346
+          },
+          "baseline": {
+            "mae": 4.362,
+            "rmse": 6.962,
+            "poisson_deviance": 3.177,
+            "rows": 26346
+          }
+        },
+        "3": {
+          "lightgbm": {
+            "mae": 3.835,
+            "rmse": 6.167,
+            "poisson_deviance": 2.5642,
+            "rows": 26346
+          },
+          "baseline": {
+            "mae": 4.362,
+            "rmse": 6.962,
+            "poisson_deviance": 3.177,
+            "rows": 26346
+          }
+        }
+      },
+      "by_station": {
+        "Amsterdam Ave & W 73 St": {
+          "lightgbm": {
+            "mae": 3.852,
+            "rmse": 5.673,
+            "poisson_deviance": 2.6219,
+            "rows": 13173
+          },
+          "baseline": {
+            "mae": 4.194,
+            "rmse": 6.047,
+            "poisson_deviance": 2.9802,
+            "rows": 13173
+          }
+        },
+        "Broadway & E 14 St": {
+          "lightgbm": {
+            "mae": 5.397,
+            "rmse": 8.28,
+            "poisson_deviance": 3.1521,
+            "rows": 13173
+          },
+          "baseline": {
+            "mae": 6.292,
+            "rmse": 9.434,
+            "poisson_deviance": 4.0822,
+            "rows": 13173
+          }
+        },
+        "Fulton St & William St": {
+          "lightgbm": {
+            "mae": 2.461,
+            "rmse": 3.48,
+            "poisson_deviance": 1.8144,
+            "rows": 13173
+          },
+          "baseline": {
+            "mae": 2.557,
+            "rmse": 3.614,
+            "poisson_deviance": 2.0253,
+            "rows": 13173
+          }
+        },
+        "Liberty St & Broadway": {
+          "lightgbm": {
+            "mae": 2.881,
+            "rmse": 4.763,
+            "poisson_deviance": 2.347,
+            "rows": 13173
+          },
+          "baseline": {
+            "mae": 3.208,
+            "rmse": 5.168,
+            "poisson_deviance": 2.7925,
+            "rows": 13173
+          }
+        },
+        "Little West St & 1 Pl": {
+          "lightgbm": {
+            "mae": 2.944,
+            "rmse": 4.61,
+            "poisson_deviance": 2.6056,
+            "rows": 13173
+          },
+          "baseline": {
+            "mae": 3.357,
+            "rmse": 5.252,
+            "poisson_deviance": 3.461,
+            "rows": 13173
+          }
+        },
+        "W 21 St & 6 Ave": {
+          "lightgbm": {
+            "mae": 5.475,
+            "rmse": 8.451,
+            "poisson_deviance": 2.844,
+            "rows": 13173
+          },
+          "baseline": {
+            "mae": 6.561,
+            "rmse": 9.894,
+            "poisson_deviance": 3.721,
+            "rows": 13173
+          }
+        }
+      }
+    }
+  }
+}
