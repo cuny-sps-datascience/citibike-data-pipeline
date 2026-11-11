@@ -1,0 +1,14 @@
+station_id,name,area,tier,capacity,mean_hourly_known,daytime_positive_share,null_share,max_gap_days,winter_share
+5303.08,Canal St & Rutgers St,Downtown,high (10+/hr),45.0,12.502,0.985,0.099,1.6,0.071
+7682.01,Park Ave & E 124 St,Harlem,mid (7-10/hr),36.0,7.669,0.964,0.208,1.5,0.095
+5492.05,Cleveland Pl & Spring St,LES / SoHo,high (10+/hr),33.0,15.705,0.98,0.121,1.5,0.064
+6948.10,Broadway & W 58 St,Midtown N,high (10+/hr),79.0,17.256,0.974,0.121,1.9,0.072
+6140.05,W 21 St & 6 Ave,Midtown S / Chelsea,high (10+/hr),74.0,21.625,0.991,0.106,1.5,0.087
+7260.09,Amsterdam Ave & W 73 St,UWS/UES,high (10+/hr),54.0,12.094,0.985,0.144,1.5,0.079
+5905.12,Broadway & E 14 St,Village / Gramercy,high (10+/hr),114.0,17.143,0.992,0.085,1.5,0.084
+6339.06,W 25 St & 9 Ave,Midtown S / Chelsea,mid (7-10/hr),68.0,9.361,0.976,0.138,1.5,0.09
+5863.07,E 15 St & 3 Ave,Village / Gramercy,mid (7-10/hr),78.0,9.484,0.977,0.127,1.6,0.094
+5484.09,Allen St & Stanton St,LES / SoHo,mid (7-10/hr),49.0,9.206,0.967,0.129,1.6,0.071
+6297.07,8 Ave & W 27 St,Midtown S / Chelsea,low (5-7/hr),49.0,6.961,0.967,0.14,1.6,0.079
+5755.01,Washington Pl & Broadway,Village / Gramercy,low (5-7/hr),27.0,6.331,0.938,0.221,1.5,0.086
+5584.04,E 6 St & Ave B,LES / SoHo,low (5-7/hr),95.0,6.993,0.963,0.168,1.6,0.082
