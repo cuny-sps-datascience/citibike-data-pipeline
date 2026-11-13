@@ -1,0 +1,16 @@
+[
+  {
+    "Notification": { "NotificationType": "ACTUAL", "ComparisonOperator": "GREATER_THAN", "Threshold": 50, "ThresholdType": "PERCENTAGE" },
+    "Subscribers": [
+      { "SubscriptionType": "EMAIL", "Address": "georgehagstrom@gmail.com" },
+      { "SubscriptionType": "EMAIL", "Address": "george.hagstrom@cuny.edu" }
+    ]
+  },
+  {
+    "Notification": { "NotificationType": "FORECASTED", "ComparisonOperator": "GREATER_THAN", "Threshold": 100, "ThresholdType": "PERCENTAGE" },
+    "Subscribers": [
+      { "SubscriptionType": "EMAIL", "Address": "georgehagstrom@gmail.com" },
+      { "SubscriptionType": "EMAIL", "Address": "george.hagstrom@cuny.edu" }
+    ]
+  }
+]

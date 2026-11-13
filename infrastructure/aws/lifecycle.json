@@ -1,0 +1,10 @@
+{
+  "Rules": [
+    {
+      "ID": "expire-contributions",
+      "Filter": { "Prefix": "contributions/" },
+      "Status": "Enabled",
+      "Expiration": { "Days": 120 }
+    }
+  ]
+}
