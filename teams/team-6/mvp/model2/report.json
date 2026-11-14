@@ -1,0 +1,607 @@
+{
+  "splits": {
+    "train": [
+      "2024-08-11",
+      "2025-12-31"
+    ],
+    "validation": [
+      "2026-01-01",
+      "2026-02-28"
+    ],
+    "test": [
+      "2026-03-01",
+      "2026-08-10"
+    ]
+  },
+  "rows": {
+    "train": 217242,
+    "validation": 25488,
+    "test": 70074
+  },
+  "seeds": [
+    622,
+    1,
+    2,
+    3,
+    4
+  ],
+  "features": {
+    "model1_calendar": [
+      "station_id",
+      "horizon",
+      "t_hour",
+      "t_dow",
+      "t_month",
+      "t_doy",
+      "t_weekend",
+      "t_holiday"
+    ],
+    "model2_calendar_weather": [
+      "station_id",
+      "horizon",
+      "t_hour",
+      "t_dow",
+      "t_month",
+      "t_doy",
+      "t_weekend",
+      "t_holiday",
+      "forecast_temperature_f",
+      "forecast_precipitation_in",
+      "forecast_rain_in",
+      "forecast_snowfall_in",
+      "forecast_wind_speed_mph"
+    ]
+  },
+  "wet_threshold_in": 0.005,
+  "best_iteration": {
+    "model1_calendar": 423,
+    "model2_calendar_weather": 853
+  },
+  "seed_summary": {
+    "model1_calendar": {
+      "validation": {
+        "mae": {
+          "mean": 3.2014,
+          "std": 0.0045
+        },
+        "rmse": {
+          "mean": 5.1781,
+          "std": 0.0104
+        }
+      },
+      "test": {
+        "mae": {
+          "mean": 3.8598,
+          "std": 0.0049
+        },
+        "rmse": {
+          "mean": 6.1537,
+          "std": 0.007
+        }
+      }
+    },
+    "model2_calendar_weather": {
+      "validation": {
+        "mae": {
+          "mean": 2.3547,
+          "std": 0.0106
+        },
+        "rmse": {
+          "mean": 3.8215,
+          "std": 0.0102
+        }
+      },
+      "test": {
+        "mae": {
+          "mean": 3.4013,
+          "std": 0.0038
+        },
+        "rmse": {
+          "mean": 5.3819,
+          "std": 0.0096
+        }
+      }
+    }
+  },
+  "metrics": {
+    "validation": {
+      "all": {
+        "baseline": {
+          "mae": 6.296,
+          "rmse": 9.2876,
+          "poisson_deviance": 7.157,
+          "rows": 25488
+        },
+        "model1_calendar": {
+          "mae": 3.2068,
+          "rmse": 5.1925,
+          "poisson_deviance": 3.3536,
+          "rows": 25488
+        },
+        "model2_calendar_weather": {
+          "mae": 2.3505,
+          "rmse": 3.8049,
+          "poisson_deviance": 2.1906,
+          "rows": 25488
+        }
+      },
+      "wet_hours": {
+        "baseline": {
+          "mae": 8.9296,
+          "rmse": 11.832,
+          "poisson_deviance": 13.7566,
+          "rows": 2156
+        },
+        "model1_calendar": {
+          "mae": 4.6237,
+          "rmse": 6.7261,
+          "poisson_deviance": 6.9047,
+          "rows": 2156
+        },
+        "model2_calendar_weather": {
+          "mae": 1.8672,
+          "rmse": 2.6989,
+          "poisson_deviance": 2.5726,
+          "rows": 2156
+        }
+      },
+      "dry_hours": {
+        "baseline": {
+          "mae": 6.0526,
+          "rmse": 9.0163,
+          "poisson_deviance": 6.5471,
+          "rows": 23332
+        },
+        "model1_calendar": {
+          "mae": 3.0758,
+          "rmse": 5.0273,
+          "poisson_deviance": 3.0254,
+          "rows": 23332
+        },
+        "model2_calendar_weather": {
+          "mae": 2.3952,
+          "rmse": 3.8913,
+          "poisson_deviance": 2.1553,
+          "rows": 23332
+        }
+      },
+      "horizon_1": {
+        "baseline": {
+          "mae": 6.296,
+          "rmse": 9.2876,
+          "poisson_deviance": 7.157,
+          "rows": 8496
+        },
+        "model1_calendar": {
+          "mae": 3.2068,
+          "rmse": 5.1925,
+          "poisson_deviance": 3.3536,
+          "rows": 8496
+        },
+        "model2_calendar_weather": {
+          "mae": 2.3535,
+          "rmse": 3.8074,
+          "poisson_deviance": 2.193,
+          "rows": 8496
+        }
+      },
+      "horizon_2": {
+        "baseline": {
+          "mae": 6.296,
+          "rmse": 9.2876,
+          "poisson_deviance": 7.157,
+          "rows": 8496
+        },
+        "model1_calendar": {
+          "mae": 3.2068,
+          "rmse": 5.1925,
+          "poisson_deviance": 3.3536,
+          "rows": 8496
+        },
+        "model2_calendar_weather": {
+          "mae": 2.3487,
+          "rmse": 3.8019,
+          "poisson_deviance": 2.1883,
+          "rows": 8496
+        }
+      },
+      "horizon_3": {
+        "baseline": {
+          "mae": 6.296,
+          "rmse": 9.2876,
+          "poisson_deviance": 7.157,
+          "rows": 8496
+        },
+        "model1_calendar": {
+          "mae": 3.2068,
+          "rmse": 5.1925,
+          "poisson_deviance": 3.3536,
+          "rows": 8496
+        },
+        "model2_calendar_weather": {
+          "mae": 2.3494,
+          "rmse": 3.8054,
+          "poisson_deviance": 2.1906,
+          "rows": 8496
+        }
+      },
+      "station::Amsterdam Ave & W 73 St": {
+        "baseline": {
+          "mae": 6.3386,
+          "rmse": 8.2105,
+          "poisson_deviance": 7.0598,
+          "rows": 4248
+        },
+        "model1_calendar": {
+          "mae": 3.0951,
+          "rmse": 4.3626,
+          "poisson_deviance": 3.0959,
+          "rows": 4248
+        },
+        "model2_calendar_weather": {
+          "mae": 2.3427,
+          "rmse": 3.3425,
+          "poisson_deviance": 2.0418,
+          "rows": 4248
+        }
+      },
+      "station::Broadway & E 14 St": {
+        "baseline": {
+          "mae": 9.4114,
+          "rmse": 12.2812,
+          "poisson_deviance": 9.9472,
+          "rows": 4248
+        },
+        "model1_calendar": {
+          "mae": 4.6579,
+          "rmse": 6.7751,
+          "poisson_deviance": 4.4776,
+          "rows": 4248
+        },
+        "model2_calendar_weather": {
+          "mae": 3.4283,
+          "rmse": 5.023,
+          "poisson_deviance": 2.8276,
+          "rows": 4248
+        }
+      },
+      "station::Fulton St & William St": {
+        "baseline": {
+          "mae": 3.7731,
+          "rmse": 4.7628,
+          "poisson_deviance": 4.5945,
+          "rows": 4248
+        },
+        "model1_calendar": {
+          "mae": 1.9603,
+          "rmse": 2.6787,
+          "poisson_deviance": 2.275,
+          "rows": 4248
+        },
+        "model2_calendar_weather": {
+          "mae": 1.5579,
+          "rmse": 2.1661,
+          "poisson_deviance": 1.6904,
+          "rows": 4248
+        }
+      },
+      "station::Liberty St & Broadway": {
+        "baseline": {
+          "mae": 4.2646,
+          "rmse": 6.4281,
+          "poisson_deviance": 5.7695,
+          "rows": 4248
+        },
+        "model1_calendar": {
+          "mae": 2.106,
+          "rmse": 3.2777,
+          "poisson_deviance": 2.7427,
+          "rows": 4248
+        },
+        "model2_calendar_weather": {
+          "mae": 1.5881,
+          "rmse": 2.5252,
+          "poisson_deviance": 1.8983,
+          "rows": 4248
+        }
+      },
+      "station::Little West St & 1 Pl": {
+        "baseline": {
+          "mae": 3.6778,
+          "rmse": 4.9937,
+          "poisson_deviance": 5.1307,
+          "rows": 4248
+        },
+        "model1_calendar": {
+          "mae": 1.7133,
+          "rmse": 2.4143,
+          "poisson_deviance": 2.2417,
+          "rows": 4248
+        },
+        "model2_calendar_weather": {
+          "mae": 1.285,
+          "rmse": 1.8811,
+          "poisson_deviance": 1.5571,
+          "rows": 4248
+        }
+      },
+      "station::W 21 St & 6 Ave": {
+        "baseline": {
+          "mae": 10.3104,
+          "rmse": 14.5044,
+          "poisson_deviance": 10.4401,
+          "rows": 4248
+        },
+        "model1_calendar": {
+          "mae": 5.708,
+          "rmse": 8.5494,
+          "poisson_deviance": 5.2885,
+          "rows": 4248
+        },
+        "model2_calendar_weather": {
+          "mae": 3.9013,
+          "rmse": 5.9879,
+          "poisson_deviance": 3.1286,
+          "rows": 4248
+        }
+      }
+    },
+    "test": {
+      "all": {
+        "baseline": {
+          "mae": 4.2856,
+          "rmse": 6.765,
+          "poisson_deviance": 3.0839,
+          "rows": 70074
+        },
+        "model1_calendar": {
+          "mae": 3.8622,
+          "rmse": 6.1572,
+          "poisson_deviance": 2.5929,
+          "rows": 70074
+        },
+        "model2_calendar_weather": {
+          "mae": 3.3961,
+          "rmse": 5.3712,
+          "poisson_deviance": 2.0627,
+          "rows": 70074
+        }
+      },
+      "wet_hours": {
+        "baseline": {
+          "mae": 6.3275,
+          "rmse": 9.5767,
+          "poisson_deviance": 5.8959,
+          "rows": 7929
+        },
+        "model1_calendar": {
+          "mae": 6.2417,
+          "rmse": 9.3,
+          "poisson_deviance": 5.7019,
+          "rows": 7929
+        },
+        "model2_calendar_weather": {
+          "mae": 4.3867,
+          "rmse": 7.2494,
+          "poisson_deviance": 3.3554,
+          "rows": 7929
+        }
+      },
+      "dry_hours": {
+        "baseline": {
+          "mae": 4.0251,
+          "rmse": 6.3168,
+          "poisson_deviance": 2.7251,
+          "rows": 62145
+        },
+        "model1_calendar": {
+          "mae": 3.5586,
+          "rmse": 5.6314,
+          "poisson_deviance": 2.1962,
+          "rows": 62145
+        },
+        "model2_calendar_weather": {
+          "mae": 3.2698,
+          "rmse": 5.0819,
+          "poisson_deviance": 1.8978,
+          "rows": 62145
+        }
+      },
+      "horizon_1": {
+        "baseline": {
+          "mae": 4.2875,
+          "rmse": 6.7674,
+          "poisson_deviance": 3.0845,
+          "rows": 23358
+        },
+        "model1_calendar": {
+          "mae": 3.8624,
+          "rmse": 6.1574,
+          "poisson_deviance": 2.5923,
+          "rows": 23358
+        },
+        "model2_calendar_weather": {
+          "mae": 3.3919,
+          "rmse": 5.3601,
+          "poisson_deviance": 2.058,
+          "rows": 23358
+        }
+      },
+      "horizon_2": {
+        "baseline": {
+          "mae": 4.286,
+          "rmse": 6.766,
+          "poisson_deviance": 3.084,
+          "rows": 23358
+        },
+        "model1_calendar": {
+          "mae": 3.8624,
+          "rmse": 6.1574,
+          "poisson_deviance": 2.5929,
+          "rows": 23358
+        },
+        "model2_calendar_weather": {
+          "mae": 3.3982,
+          "rmse": 5.3717,
+          "poisson_deviance": 2.0631,
+          "rows": 23358
+        }
+      },
+      "horizon_3": {
+        "baseline": {
+          "mae": 4.2834,
+          "rmse": 6.7615,
+          "poisson_deviance": 3.0832,
+          "rows": 23358
+        },
+        "model1_calendar": {
+          "mae": 3.8617,
+          "rmse": 6.1568,
+          "poisson_deviance": 2.5936,
+          "rows": 23358
+        },
+        "model2_calendar_weather": {
+          "mae": 3.3983,
+          "rmse": 5.3818,
+          "poisson_deviance": 2.0671,
+          "rows": 23358
+        }
+      },
+      "station::Amsterdam Ave & W 73 St": {
+        "baseline": {
+          "mae": 4.1869,
+          "rmse": 6.0263,
+          "poisson_deviance": 2.9018,
+          "rows": 11679
+        },
+        "model1_calendar": {
+          "mae": 3.8381,
+          "rmse": 5.605,
+          "poisson_deviance": 2.5221,
+          "rows": 11679
+        },
+        "model2_calendar_weather": {
+          "mae": 3.4001,
+          "rmse": 4.9602,
+          "poisson_deviance": 1.9968,
+          "rows": 11679
+        }
+      },
+      "station::Broadway & E 14 St": {
+        "baseline": {
+          "mae": 6.012,
+          "rmse": 8.8265,
+          "poisson_deviance": 3.737,
+          "rows": 11679
+        },
+        "model1_calendar": {
+          "mae": 5.1999,
+          "rmse": 7.9257,
+          "poisson_deviance": 3.0041,
+          "rows": 11679
+        },
+        "model2_calendar_weather": {
+          "mae": 4.5351,
+          "rmse": 6.9238,
+          "poisson_deviance": 2.32,
+          "rows": 11679
+        }
+      },
+      "station::Fulton St & William St": {
+        "baseline": {
+          "mae": 2.595,
+          "rmse": 3.6405,
+          "poisson_deviance": 2.0661,
+          "rows": 11679
+        },
+        "model1_calendar": {
+          "mae": 2.5802,
+          "rmse": 3.6112,
+          "poisson_deviance": 1.9452,
+          "rows": 11679
+        },
+        "model2_calendar_weather": {
+          "mae": 2.3983,
+          "rmse": 3.3441,
+          "poisson_deviance": 1.685,
+          "rows": 11679
+        }
+      },
+      "station::Liberty St & Broadway": {
+        "baseline": {
+          "mae": 3.2039,
+          "rmse": 5.143,
+          "poisson_deviance": 2.8004,
+          "rows": 11679
+        },
+        "model1_calendar": {
+          "mae": 2.9315,
+          "rmse": 4.7522,
+          "poisson_deviance": 2.4035,
+          "rows": 11679
+        },
+        "model2_calendar_weather": {
+          "mae": 2.6519,
+          "rmse": 4.3221,
+          "poisson_deviance": 2.0638,
+          "rows": 11679
+        }
+      },
+      "station::Little West St & 1 Pl": {
+        "baseline": {
+          "mae": 3.3077,
+          "rmse": 5.1915,
+          "poisson_deviance": 3.392,
+          "rows": 11679
+        },
+        "model1_calendar": {
+          "mae": 2.9922,
+          "rmse": 4.6666,
+          "poisson_deviance": 2.6946,
+          "rows": 11679
+        },
+        "model2_calendar_weather": {
+          "mae": 2.5747,
+          "rmse": 4.0673,
+          "poisson_deviance": 2.0991,
+          "rows": 11679
+        }
+      },
+      "station::W 21 St & 6 Ave": {
+        "baseline": {
+          "mae": 6.4083,
+          "rmse": 9.6804,
+          "poisson_deviance": 3.606,
+          "rows": 11679
+        },
+        "model1_calendar": {
+          "mae": 5.6312,
+          "rmse": 8.7082,
+          "poisson_deviance": 2.988,
+          "rows": 11679
+        },
+        "model2_calendar_weather": {
+          "mae": 4.8168,
+          "rmse": 7.3587,
+          "poisson_deviance": 2.2119,
+          "rows": 11679
+        }
+      }
+    }
+  },
+  "model2_gain_importance": {
+    "t_hour": 0.5404,
+    "station_id": 0.2577,
+    "forecast_temperature_f": 0.0955,
+    "t_dow": 0.0419,
+    "t_doy": 0.0317,
+    "forecast_rain_in": 0.0098,
+    "forecast_precipitation_in": 0.0085,
+    "t_holiday": 0.0052,
+    "forecast_wind_speed_mph": 0.0035,
+    "t_weekend": 0.0033,
+    "t_month": 0.002,
+    "forecast_snowfall_in": 0.0005,
+    "horizon": 0.0
+  }
+}
