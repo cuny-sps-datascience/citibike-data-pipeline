@@ -13,6 +13,13 @@ Scope agreed 11/6: few stations, deep history, departures as the target, three m
 | 5905.12 | Broadway & E 14 St | Union Sq, ~17 dep/hr |
 | 7260.09 | Amsterdam Ave & W 73 St | UWS, ~12 dep/hr, higher zero share |
 
+**How the stations were chosen.** This is a retrospectively selected case study: the first reliability screen
+(`data/station_reliability_named.csv`) used the whole March 2025 – August 2026 panel, which includes the validation
+and test periods. To check that the choice does not depend on those periods, the screen was rerun using only
+training-period data (March – December 2025, `data/station_reliability_train_period.csv`): all 6 stations pass the
+strict screen on training data alone (253 of 689 stations do; every station that passes on the full period also
+passes on the training period). In our own 24-month trip data all 6 are active in every month of 2024 and 2025.
+
 Reliability screening of all 689 panel stations is in `data/station_reliability_named.csv`
 (`pass_basic`: existed Mar 2025–Aug 2026 with no gap > 7 days — 502 stations;
 `pass_strict`: + active every month, ≥ 5 dep/hr, trip in ≥ 90% of daytime hours, never dark > 2 days — 170).
@@ -38,29 +45,48 @@ Horizons 1–3 = target hour at origin + (h−1), same convention as the 689-sta
 LightGBM, Poisson objective, features: station, horizon, target hour / weekday / month / day-of-year / weekend / US holiday.
 Baseline: station × hour × weekday mean from train.
 
-| MAE (dep/hr) | LightGBM | baseline |
+| MAE / RMSE (dep/hr) | LightGBM | baseline |
 |---|---|---|
-| validation | 3.17 | 5.98 |
-| test | **3.84** | 4.36 |
+| validation | 3.17 / 5.08 | 5.98 / 8.87 |
+| test | **3.84 / 6.18** | 4.36 / 6.96 |
+
+This full-history run (train from January 2024) is kept as a **separate benchmark**. It is not the model 1 used in
+the model 1 vs 2 comparison below; that one is retrained on the common window.
 
 Beats baseline at all 6 stations (4–17%). Horizons 1–3 score identically — a calendar model has no information about
 "now", so this is expected and will change once weather and recent-count lags enter. Per-station / per-horizon
 metrics in `model1/report.json`; every test prediction in `model1/predictions.parquet`.
+"Recent-count lags" are not planned: the team ruled them out because trip counts are not available live.
 
 ## Play with it
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jamilton08/citibike-data-pipeline/blob/jonathan/mvp-6-stations-model1/teams/team-6/mvp/play_model1.ipynb)
+Two notebooks, both run in Colab with nothing installed (or locally: `pip install -r requirements.txt && jupyter lab`).
 
-`play_model1.ipynb` — pick a station/week and see predicted vs actual, error by hour of day, the worst-missed days,
-ask the model about any date/hour, and retrain with features switched off. Runs in Colab with nothing installed,
-or locally with `pip install -r requirements.txt && jupyter lab`.
+**Model 1** — [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jamilton08/citibike-data-pipeline/blob/jonathan/mvp-6-stations-model1/teams/team-6/mvp/play_model1.ipynb)
+`play_model1.ipynb`: pick a station/week and see predicted vs actual, error by hour of day, the worst-missed days,
+ask the model about any date/hour, and retrain with features switched off.
+
+**Model 2** — [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jamilton08/citibike-data-pipeline/blob/jonathan/mvp-6-stations-model1/teams/team-6/mvp/play_model2.ipynb)
+`play_model2.ipynb`: model 1 vs model 2 for any station/week with the weather forecast underneath, rainy vs dry hours,
+whether model 2 fixed the days model 1 missed worst, a what-if (same hour, different weather), and retraining with
+weather features switched off.
 
 ## Model 2 — calendar + forecast weather (`scripts/train_compare.py`)
-Model 1 and model 2 are trained and scored on **identical rows**, so the only difference is the weather columns.
+Model 1 is **retrained** (not re-scored) on the common window, and models 1 and 2 are trained and scored on
+**identical rows**: same stations, same horizons, same splits. Both use the same fixed LightGBM settings, the same
+early-stopping rule on validation and the same 5 seeds; neither was tuned. The only difference is the weather columns.
 
 **Common window** (weather archive starts 2024-08-10, subway archive ends 2026-08-10):
 train 2024-08-11 → 2025-12-31 · validation 2026-01-01 → 2026-02-28 · test 2026-03-01 → 2026-08-10.
-A row is kept only if its label is known and its weather forecast is usable (99.2% of rows); rows without usable
-weather are dropped from **both** models.
+A row is kept only if its label is known and its weather forecast is usable; rows without usable weather are
+dropped from **both** models.
+
+| rows (station × origin × horizon) | in common window | used | dropped | reason dropped |
+|---|---|---|---|---|
+| train | 219,402 | 217,242 | 2,160 | weather archive flags the forecast as having missing values |
+| validation | 25,488 | 25,488 | 0 | |
+| test | 70,398 | 70,074 | 324 | weather archive flags the forecast as having missing values |
+
+No row is unmatched (every row finds a weather forecast) and no row is dropped for the cutoff. 0.8% dropped in total.
 
 **Weather inputs** (`scripts/fetch_weather.py` → `data/weather_6stations.parquet`, `data/station_map.csv`): forecast
 temperature, precipitation, rain, snowfall and wind speed for the target hour, copied from the team-6 release for the
@@ -68,8 +94,10 @@ temperature, precipitation, rain, snowfall and wind speed for the target hour, c
 
 **Horizon alignment.** The weather archive numbers horizons as target = origin + h; the MVP uses origin + (h − 1).
 We join the forecast issued one hour before our origin with the same h, which lands on the same target hour, and
-`mvp_data.add_weather()` asserts the two target timestamps are equal on every row. Every selected weather run was
-available at least 60 minutes before the forecast origin, so the 5-minute issue cutoff holds.
+`mvp_data.add_weather()` asserts the two target timestamps are equal on every row. We never pick a run by target hour
+alone: each row uses the run the weather archive selected for the origin one hour before ours, so a later run cannot
+be chosen. Every selected run was available at least 60 minutes (median 4 hours) before the forecast origin, so the
+5-minute issue cutoff holds on all 312,804 rows.
 
 | MAE / RMSE (dep/hr) | baseline | model 1 calendar | model 2 + weather | model 2 vs 1 (MAE) |
 |---|---|---|---|---|
@@ -92,6 +120,24 @@ available at least 60 minutes before the forecast origin, so the 5-minute issue 
 
 Full per-station / per-horizon / wet-dry metrics and seed summaries: `model2/report.json`. Predictions for both
 models on the same rows: `model2/predictions.parquet`.
+
+**Checks** (`python3 scripts/check_model2.py`, results in `model2/checks.json`; all pass):
+
+| check | result |
+|---|---|
+| same rows for both models | 95,562 scored rows, identical keys, no duplicates |
+| weather is for the departure hour | 0 mismatches in 312,804 rows |
+| weather available before the cutoff | 0 rows after the cutoff; earliest margin 60 minutes |
+| unmatched rows | none; 2,484 dropped as flagged missing (table above) |
+| placebo: weather from the wrong week | validation gain falls from 0.86 to 0.04 MAE, so the gain is real weather signal |
+| month-boundary dates (train from Sep 1 2024, test to Aug 1 2026) | same conclusion: validation 3.20 → 2.36, test 3.84 → 3.37 |
+
+Feature and model decisions use validation only. The test period is not untouched: it was used to report model 1 and
+in early feature experiments, and here to report models 1 and 2. If the team wants a clean final holdout, August
+11–31 2026 has trips and weather but no subway coverage.
+
+**Where it ran.** Locally only so far (Python 3.10–3.13, LightGBM 4.7); the saved outputs reproduce byte-for-byte from
+a fresh clone. Not yet run in Databricks.
 
 ## Next — model 3 (subway)
 Only **2 of the 6 stations** are in the release's subway bridge (Broadway & E 14 St and Fulton St & William St, both
