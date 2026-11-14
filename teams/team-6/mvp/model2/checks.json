@@ -1,0 +1,73 @@
+{
+  "same_rows": {
+    "pass": true,
+    "scored_rows": 95562,
+    "train_rows_both_models": 217242
+  },
+  "weather_is_for_the_target_hour": {
+    "pass": true,
+    "rows_checked": 312804,
+    "mismatched": 0
+  },
+  "weather_available_before_cutoff": {
+    "pass": true,
+    "rows_after_cutoff": 0,
+    "min_minutes_available_before_origin": 60.0,
+    "median_minutes": 240.0,
+    "always_previous_hour_weather_origin": true
+  },
+  "unmatched_rows_reported": {
+    "pass": true,
+    "by_split": {
+      "train": {
+        "eligible": 217242,
+        "forecast_flagged_missing": 2160,
+        "total": 219402
+      },
+      "validation": {
+        "eligible": 25488,
+        "forecast_flagged_missing": 0,
+        "total": 25488
+      },
+      "test": {
+        "eligible": 70074,
+        "forecast_flagged_missing": 324,
+        "total": 70398
+      }
+    },
+    "dropped_share": 0.0079
+  },
+  "placebo_wrong_week_weather": {
+    "pass": true,
+    "validation_mae_model1": 3.207,
+    "validation_mae_model2_real_weather": 2.351,
+    "real_gain": 0.856,
+    "placebo_rows_share": 0.992,
+    "validation_mae_model1_on_placebo_rows": 3.201,
+    "validation_mae_model2_wrong_weather": 3.166,
+    "placebo_gain": 0.035
+  },
+  "date_sensitivity_month_boundaries": {
+    "pass": true,
+    "common_window": {
+      "train_from": "2024-08-11",
+      "test_to": "2026-08-10",
+      "validation_mae_m1": 3.207,
+      "validation_mae_m2": 2.351,
+      "test_mae_m1": 3.862,
+      "test_mae_m2": 3.396
+    },
+    "month_boundaries": {
+      "train_from": "2024-09-01",
+      "test_to": "2026-08-01",
+      "validation_mae_m1": 3.204,
+      "validation_mae_m2": 2.36,
+      "test_mae_m1": 3.843,
+      "test_mae_m2": 3.365,
+      "rows": {
+        "train": 208170,
+        "test": 66186
+      }
+    }
+  }
+}
