@@ -54,11 +54,50 @@ metrics in `model1/report.json`; every test prediction in `model1/predictions.pa
 ask the model about any date/hour, and retrain with features switched off. Runs in Colab with nothing installed,
 or locally with `pip install -r requirements.txt && jupyter lab`.
 
-## Next
-Before model 2: the weather archive labels horizons as target = origin + h, while this MVP (and the 689-station panel)
-uses origin + (h − 1). Weather will be joined on **target hour**, not on the horizon number. Weather coverage starts
-2024-08-10 and subway coverage ends 2026-08-10, so models 1–3 will be compared on the common window
-(train 2024-08-10 → 2025-12-31, test through 2026-08-10), with model 1 re-scored on that window.
+## Model 2 — calendar + forecast weather (`scripts/train_compare.py`)
+Model 1 and model 2 are trained and scored on **identical rows**, so the only difference is the weather columns.
 
-Model 2 (+ weather) and model 3 (+ weather + subway) from the team-6 weather/subway release, same splits, same table.
-Runs unchanged in a Databricks notebook once the hourly parquet is uploaded to a volume.
+**Common window** (weather archive starts 2024-08-10, subway archive ends 2026-08-10):
+train 2024-08-11 → 2025-12-31 · validation 2026-01-01 → 2026-02-28 · test 2026-03-01 → 2026-08-10.
+A row is kept only if its label is known and its weather forecast is usable (99.2% of rows); rows without usable
+weather are dropped from **both** models.
+
+**Weather inputs** (`scripts/fetch_weather.py` → `data/weather_6stations.parquet`, `data/station_map.csv`): forecast
+temperature, precipitation, rain, snowfall and wind speed for the target hour, copied from the team-6 release for the
+3 weather grid cells our 6 stations fall in. Stations are bridged from trip-file short ids to the release's GBFS uuids by name (6 of 6).
+
+**Horizon alignment.** The weather archive numbers horizons as target = origin + h; the MVP uses origin + (h − 1).
+We join the forecast issued one hour before our origin with the same h, which lands on the same target hour, and
+`mvp_data.add_weather()` asserts the two target timestamps are equal on every row. Every selected weather run was
+available at least 60 minutes before the forecast origin, so the 5-minute issue cutoff holds.
+
+| MAE / RMSE (dep/hr) | baseline | model 1 calendar | model 2 + weather | model 2 vs 1 (MAE) |
+|---|---|---|---|---|
+| validation (Jan–Feb 2026) | 6.30 / 9.29 | 3.21 / 5.19 | **2.35 / 3.81** | −27% |
+| test (Mar 1–Aug 10 2026) | 4.29 / 6.77 | 3.86 / 6.16 | **3.40 / 5.37** | −12% |
+| test, wet hours (forecast precip > 0.005 in, 11% of hours) | 6.33 / 9.58 | 6.24 / 9.30 | **4.39 / 7.25** | −30% |
+| test, dry hours | 4.03 / 6.32 | 3.56 / 5.63 | **3.27 / 5.08** | −8% |
+
+- Model 2 beats model 1 at all 6 stations on both validation and test (test: −7% to −15%).
+- Each model was trained with 5 seeds; validation MAE varies by about ±0.01 across seeds, so a 0.85 gap is not seed noise.
+- On wet hours model 1 is no better than the baseline (6.24 vs 6.33); weather is what fixes them.
+- The validation gain is large because Jan–Feb 2026 was colder and snowier than the one winter in the training
+  window (mean forecast temperature 26 °F vs 30 °F; demand about 30% lower). A calendar model can only repeat last
+  winter; temperature lets the model adjust.
+- Horizons 1–3 still score the same: the weather forecast for a target hour barely changes with one or two hours
+  less lead time.
+- Shortening training from 24 to 16.5 months cost model 1 almost nothing (test MAE 3.84 → 3.86 on the same rows).
+- Limitation (from the weather release): early archive entries are reconstructed forecasts with an assumed
+  availability delay, so this is a retrospective forecasting experiment, not proof of live performance.
+
+Full per-station / per-horizon / wet-dry metrics and seed summaries: `model2/report.json`. Predictions for both
+models on the same rows: `model2/predictions.parquet`.
+
+## Next — model 3 (subway)
+Only **2 of the 6 stations** are in the release's subway bridge (Broadway & E 14 St and Fulton St & William St, both
+within ~30 m of a subway complex). The other four have no subway features. Options to decide as a team:
+1. run model 3 on the 2 mapped stations only;
+2. swap in stations that are in the bridge (331 docks are mapped) and rerun models 1–2 on the new cohort;
+3. widen the bridge so every station maps to its nearest complex.
+
+Everything runs unchanged in a Databricks notebook once the `data/` files are uploaded to a volume.

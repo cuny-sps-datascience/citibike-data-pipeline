@@ -1,0 +1,7 @@
+station_id,station_name,station_uuid,weather_request_class,weather_mapping_distance_km,subway_complex_id,minimum_subway_bike_distance_m
+5001.08,Little West St & 1 Pl,66dc90d5-0aca-11e7-82f6-3863bb44ef7c,19,0.32209463240654673,,
+5105.01,Liberty St & Broadway,66db3583-0aca-11e7-82f6-3863bb44ef7c,19,0.8053690554807518,,
+5137.11,Fulton St & William St,66db7637-0aca-11e7-82f6-3863bb44ef7c,19,1.0605470785902895,628,20.628894739138932
+5905.12,Broadway & E 14 St,66db6387-0aca-11e7-82f6-3863bb44ef7c,21,1.6695506366644628,602,27.074202762918546
+6140.05,W 21 St & 6 Ave,66dc120f-0aca-11e7-82f6-3863bb44ef7c,21,2.4693668805821756,,
+7260.09,Amsterdam Ave & W 73 St,66dd4de9-0aca-11e7-82f6-3863bb44ef7c,24,2.8003511638057463,,
