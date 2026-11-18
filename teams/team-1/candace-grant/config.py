@@ -113,8 +113,10 @@ PRIOR_SMOOTHING_M = 20                   # Bayesian smoothing for station x hour
 PRIOR_OOF_FOLD_DAYS = 7                  # training rows get out-of-fold priors from other 7-day blocks
 RANDOM_STATE = 622
 
-# Weather: the proposal requires PUBLISHING nyc_weather_hourly (run Maxfield's PR #61
-# notebooks into this schema). Weather is not a model feature in the MVP; see ASSUMPTIONS.md.
+# Weather:
+
+WEATHER_FORECAST_TABLE = "workspace.default.weather_forecast_history"
+WEATHER_MAPPING_TABLE = "workspace.default.station_forecast_mapping"
 
 # ---------------------------------------------------------------------------
 # Models
