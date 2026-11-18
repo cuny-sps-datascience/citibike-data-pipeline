@@ -585,3 +585,48 @@ def to_pandas_features(df: pd.DataFrame) -> pd.DataFrame:
 def runtime_info() -> str:
     import sklearn
     return json.dumps({"sklearn": sklearn.__version__, "pandas": pd.__version__, "numpy": np.__version__})
+
+def add_weather(bike_features: DataFrame, cfg=C) -> DataFrame:
+    """Attach forecasts available by each row's prediction time."""
+
+    spark = bike_features.sparkSession
+    bike_features.createOrReplaceTempView("bike_features_for_weather")
+
+    return spark.sql(f"""
+        WITH weather_matches AS (
+            SELECT
+                b.*,
+                m.forecast_location_id,
+                w.valid_at_utc AS weather_valid_at_utc,
+                w.retrieved_at_utc AS weather_retrieved_at_utc,
+                w.model AS weather_model,
+                w.temperature_2m,
+                w.apparent_temperature,
+                w.relative_humidity_2m,
+                w.precipitation,
+                w.snowfall,
+                w.wind_speed_10m,
+                w.wind_gusts_10m,
+                w.cloud_cover,
+                w.visibility,
+                ROW_NUMBER() OVER (
+                    PARTITION BY b.station_id, b.prediction_time_utc
+                    ORDER BY w.retrieved_at_utc DESC
+                ) AS weather_match_rank
+            FROM bike_features_for_weather AS b
+            LEFT JOIN {cfg.WEATHER_MAPPING_TABLE} AS m
+                ON b.station_id = m.station_id
+            LEFT JOIN {cfg.WEATHER_FORECAST_TABLE} AS w
+                ON m.forecast_location_id = w.forecast_location_id
+                AND w.retrieved_at_utc <= b.prediction_time_utc
+                AND w.valid_at_utc = date_trunc(
+                    'HOUR',
+                    b.prediction_time_utc
+                        + INTERVAL {cfg.HORIZON_MIN} MINUTES
+                )
+                AND w.model = 'gfs_seamless'
+        )
+        SELECT * EXCEPT (weather_match_rank)
+        FROM weather_matches
+        WHERE weather_match_rank = 1
+    """)
