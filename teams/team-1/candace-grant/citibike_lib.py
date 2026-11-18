@@ -416,25 +416,24 @@ def station_quality(fl: DataFrame) -> DataFrame:
 
 
 def select_stations(quality: DataFrame, live_ids: DataFrame | None, cfg=C) -> DataFrame:
-    """Deterministic selection: half highest event-rate, half seeded random, among
-    well-covered stations that also appear in the live feed.
+    """Keep all stations meeting the coverage requirement."""
 
-    The event-rate half guarantees enough positives to learn from; the random half
-    keeps the evaluation from being only about the hardest stations.  Report both.
-    """
-    q = quality.where(F.col("coverage") >= cfg.MIN_COVERAGE)
+    stations = quality.where(
+        F.col("coverage") >= cfg.MIN_COVERAGE
+    )
+
     if live_ids is not None:
-        q = q.join(live_ids.select("station_id").distinct(), "station_id", "inner")
-    q = q.withColumn("event_rate", F.coalesce("empty_rate", F.lit(0)) + F.coalesce("full_rate", F.lit(0)))
-    n_hi = cfg.N_STATIONS // 2
-    hi = (q.orderBy(F.desc("event_rate"), "station_id").limit(n_hi)
-            .withColumn("selection_stratum", F.lit("high_event_rate")))
-    rest = q.join(hi.select("station_id"), "station_id", "left_anti")
-    rnd = (rest.withColumn("_h", F.xxhash64("station_id", F.lit(cfg.SELECTION_SEED)))
-               .orderBy("_h").limit(cfg.N_STATIONS - n_hi).drop("_h")
-               .withColumn("selection_stratum", F.lit("seeded_random")))
-    return hi.unionByName(rnd).withColumn("selected_at", F.current_timestamp())
+        stations = stations.join(
+            live_ids.select("station_id").distinct(),
+            on="station_id",
+            how="inner"
+        )
 
+    return (
+        stations
+        .withColumn("selection_stratum", F.lit("all_eligible"))
+        .withColumn("selected_at", F.current_timestamp())
+    )
 
 # ===========================================================================
 # Pandas-side modelling helpers (pure functions, unit-testable)

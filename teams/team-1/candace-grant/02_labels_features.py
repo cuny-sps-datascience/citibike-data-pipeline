@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # 02 · Station selection, labels, and features
 # MAGIC Builds `features_labels_15m`, one row per `(station_id, prediction_time_utc)` on a 15-minute UTC grid.
@@ -32,20 +36,69 @@ info = spark.table(C.T["std_info"])
 
 # COMMAND ----------
 
+import pandas as pd
+
 fl_all = L.build_features_labels(status, info, C)
-quality = L.station_quality(fl_all)
+
+bounds = fl_all.agg(
+    F.min("prediction_time_utc").alias("first_time"),
+    F.max("prediction_time_utc").alias("last_time")
+).first()
+
+split = L.compute_split(
+    pd.Series([bounds["first_time"], bounds["last_time"]]),
+    C
+)
+
+training_cutoff = (
+    split["val_start_utc"]
+    - pd.Timedelta(minutes=C.EMBARGO_MIN)
+)
+
+selection_rows = fl_all.where(
+    F.col("prediction_time_utc") < F.lit(training_cutoff.to_pydatetime())
+)
+
+quality = L.station_quality(selection_rows)
+
+print("Validation starts:", split["val_start_utc"])
+print("Test starts:", split["test_start_utc"])
+print("Training ends before:", training_cutoff)
 quality.write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(C.T["station_quality"])
 display(spark.table(C.T["station_quality"]).orderBy(F.desc("coverage")).limit(20))
 
 # COMMAND ----------
 
-# MAGIC %md ## 2 · Select MVP stations (50 high event-rate + 50 seeded random, coverage ≥ 90%, present in the live feed)
+split_record = {
+    "val_start_utc": split["val_start_utc"].to_pydatetime(),
+    "test_start_utc": split["test_start_utc"].to_pydatetime(),
+    "embargo_min": int(split["embargo_min"]),
+    "data_start_utc": bounds["first_time"],
+    "data_end_utc": bounds["last_time"],
+}
+
+(
+    spark.createDataFrame([split_record])
+    .withColumn("created_at", F.current_timestamp())
+    .write
+    .mode("overwrite")
+    .option("overwriteSchema", "true")
+    .saveAsTable(C.T["split_config"])
+)
+
+# COMMAND ----------
+
+# MAGIC %md ## 2 · Use All eligible MVP stations
 
 # COMMAND ----------
 
 live_ids = None
-if spark.catalog.tableExists(C.T["live_status"]):
-    live_ids = spark.table(C.T["live_status"]).select("station_id").distinct()
+if spark.catalog.tableExists(C.SOURCE_LIVE_STATUS_TABLE):
+    live_ids = (
+        spark.table(C.SOURCE_LIVE_STATUS_TABLE)
+        .select("station_id")
+        .distinct()
+    )
     overlap = spark.table(C.T["station_quality"]).join(live_ids, "station_id").count()
     print(f"historical stations also in live feed: {overlap}")
     if overlap == 0:

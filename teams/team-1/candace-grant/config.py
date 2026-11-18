@@ -109,12 +109,15 @@ EMBARGO_MIN = 60                         # gap between splits so lag/label windo
 
 # Training
 TRAIN_MAX_ROWS = 1_500_000               # cap train rows pulled to pandas (serverless memory)
+EVAL_MAX_ROWS = 300_000                   # maximum intended sample size per evaluation split
 PRIOR_SMOOTHING_M = 20                   # Bayesian smoothing for station x hour priors
 PRIOR_OOF_FOLD_DAYS = 7                  # training rows get out-of-fold priors from other 7-day blocks
 RANDOM_STATE = 622
 
-# Weather: the proposal requires PUBLISHING nyc_weather_hourly (run Maxfield's PR #61
-# notebooks into this schema). Weather is not a model feature in the MVP; see ASSUMPTIONS.md.
+# Forecast tables collected by our Open-Meteo pipeline.
+WEATHER_FORECAST_TABLE = "workspace.default.weather_forecast_history"
+WEATHER_MAPPING_TABLE = "workspace.default.station_forecast_mapping"
+SOURCE_LIVE_STATUS_TABLE = "workspace.default.live_station_status"
 
 # ---------------------------------------------------------------------------
 # Models

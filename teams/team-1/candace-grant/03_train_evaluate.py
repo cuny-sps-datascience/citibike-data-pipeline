@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # 03 · Train, evaluate, register
 # MAGIC Two binary classifiers (empty at t+15, full at t+15) compared against persistence.
@@ -32,31 +36,85 @@ mlflow.set_experiment(f"/Users/{user}/{C.EXPERIMENT_NAME}")
 # COMMAND ----------
 
 fl = spark.table(C.T["features_labels"]).where("eligible = 1")
-bounds = fl.agg(F.min("prediction_time_utc").alias("tmin"), F.max("prediction_time_utc").alias("tmax")).first()
-split = L.compute_split(pd.Series([bounds["tmin"], bounds["tmax"]]), C)
-split_row = {"val_start_utc": split["val_start_utc"].to_pydatetime(),
-             "test_start_utc": split["test_start_utc"].to_pydatetime(),
-             "embargo_min": int(split["embargo_min"]),
-             "data_start_utc": bounds["tmin"], "data_end_utc": bounds["tmax"],
-             "created_at": dt.datetime.utcnow()}
-spark.createDataFrame([split_row]).write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(C.T["split_config"])
+
+saved_split = spark.table(C.T["split_config"]).first()
+
+if saved_split is None:
+    raise ValueError(
+        "No split dates saved. Run notebook 02 before training."
+    )
+
+split_row = saved_split.asDict()
+
+split = {
+    "val_start_utc": pd.Timestamp(split_row["val_start_utc"]),
+    "test_start_utc": pd.Timestamp(split_row["test_start_utc"]),
+    "embargo_min": int(split_row["embargo_min"]),
+}
+
 print(split_row)
 
-vs, ts, emb = split_row["val_start_utc"], split_row["test_start_utc"], dt.timedelta(minutes=split_row["embargo_min"])
-train_sdf = fl.where(F.col("prediction_time_utc") < F.lit(vs - emb))
-eval_sdf = fl.where(F.col("prediction_time_utc") >= F.lit(vs))
+vs = split_row["val_start_utc"]
+ts = split_row["test_start_utc"]
+emb = dt.timedelta(minutes=split_row["embargo_min"])
 
-n_train = train_sdf.count()
-if n_train > C.TRAIN_MAX_ROWS:
-    train_sdf = train_sdf.sample(fraction=C.TRAIN_MAX_ROWS / n_train, seed=C.RANDOM_STATE)
-    print(f"train sampled {n_train:,} -> ~{C.TRAIN_MAX_ROWS:,} rows")
+train_sdf = fl.where(
+    F.col("prediction_time_utc") < F.lit(vs - emb)
+)
 
-cols = ["station_id", "prediction_time_utc", *L.FEATURE_COLS_SPARK, "empty_label", "full_label"]
-pdf = pd.concat([train_sdf.select(*cols).toPandas(), eval_sdf.select(*cols).toPandas()], ignore_index=True)
-pdf["prediction_time_utc"] = pd.to_datetime(pdf["prediction_time_utc"])
-pdf["split"] = L.assign_split(pdf["prediction_time_utc"], split)
-pdf = pdf[pdf["split"] != "embargo"].reset_index(drop=True)
-print(pdf.groupby("split").agg(rows=("station_id", "size"), empty_rate=("empty_label", "mean"), full_rate=("full_label", "mean")))
+validation_sdf = fl.where(
+    (F.col("prediction_time_utc") >= F.lit(vs))
+    & (F.col("prediction_time_utc") < F.lit(ts - emb))
+)
+
+test_sdf = fl.where(
+    F.col("prediction_time_utc") >= F.lit(ts)
+)
+
+cols = [
+    "station_id",
+    "prediction_time_utc",
+    *L.FEATURE_COLS_SPARK,
+    "empty_label",
+    "full_label",
+]
+
+frames = []
+
+for name, dataset, row_limit in [
+    ("train", train_sdf, C.TRAIN_MAX_ROWS),
+    ("val", validation_sdf, C.EVAL_MAX_ROWS),
+    ("test", test_sdf, C.EVAL_MAX_ROWS),
+]:
+    row_count = dataset.count()
+
+    if row_count == 0:
+        raise ValueError(f"The {name} split has no eligible rows.")
+
+    if row_count > row_limit:
+        dataset = dataset.sample(
+            fraction=row_limit / row_count,
+            seed=C.RANDOM_STATE,
+        ).limit(row_limit)
+
+    frame = dataset.select(*cols).toPandas()
+    frame["split"] = name
+    frames.append(frame)
+
+    print(f"{name}: using {len(frame):,} of {row_count:,} rows")
+
+pdf = pd.concat(frames, ignore_index=True)
+pdf["prediction_time_utc"] = pd.to_datetime(
+    pdf["prediction_time_utc"]
+)
+
+print(
+    pdf.groupby("split").agg(
+        rows=("station_id", "size"),
+        empty_rate=("empty_label", "mean"),
+        full_rate=("full_label", "mean"),
+    )
+)
 
 # COMMAND ----------
 
