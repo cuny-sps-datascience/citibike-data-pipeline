@@ -1,0 +1,51 @@
+# Databricks notebook source
+# MAGIC %md
+# MAGIC # Citi Bike: pilot window job (prototype v18)
+# MAGIC Runs the current New York window (am 06:30-10:30 or pm 15:30-20:30, plus a 60-minute outcome tail) with frozen candidate A. Intended as the task of the job "Citi Bike Team 3 Pilot Window Runner".
+# MAGIC No alerts. S3 writes happen only when the job parameter publish_mode is "on" (default "off"). State goes to the private folder "Citi Bike - Pilot State". The run fails loudly (job failure email) on any problem.
+# MAGIC Job parameters: retention_keep_last (3 = keep the newest 3 checkpoints of each window, approved); takeover_owner (blank; set only during the manual recovery procedure); publish_mode (off = nothing; dry_run = build the S3 files into the state folder for review, no S3; on = write them to contributions/team-3/pilot/v1/ after each window's tail, only if absent).
+# MAGIC v18 adds: leftover files from a killed checkpoint publish are moved to checkpoints_orphaned/ before a restart publishes again (P5), and the S3 publisher (P6). A publishing failure is logged in publish_log/ and never fails the window.
+
+# COMMAND ----------
+
+# Cell 1: unpack the embedded v18 package and check every file fingerprint
+import base64, hashlib, io, json, sys, tarfile, tempfile
+from pathlib import Path
+PKG_SHA256 = '@@SHA@@'
+PKG_B64 = (
+@@B64@@
+)
+FILES = @@FILES@@
+data = base64.b64decode(PKG_B64)
+assert hashlib.sha256(data).hexdigest() == PKG_SHA256, 'package fingerprint mismatch'
+pkg = Path(tempfile.mkdtemp(prefix='citibike_v18_'))
+with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as t:
+    t.extractall(pkg, filter='data')
+for name, sha in FILES.items():
+    assert hashlib.sha256((pkg / name).read_bytes()).hexdigest() == sha, 'file changed: ' + name
+sys.path.insert(0, str(pkg))
+print('PACKAGE_OK v18', len(FILES), 'files', flush=True)
+
+# COMMAND ----------
+
+# Cell 2: run the current window; any non-zero result fails the job
+dbutils.widgets.text('retention_keep_last', '')
+dbutils.widgets.text('takeover_owner', '')
+keep = dbutils.widgets.get('retention_keep_last').strip()
+takeover = dbutils.widgets.get('takeover_owner').strip() or None
+dbutils.widgets.text('publish_mode', 'off')
+publish_mode = dbutils.widgets.get('publish_mode').strip().lower() or 'off'
+assert publish_mode in ('off', 'dry_run', 'on'), 'publish_mode must be off, dry_run or on'
+def store_factory():
+    import boto3
+    import s3_publisher as pub
+    scope = 'citibike-team3-secrets'
+    client = boto3.client('s3', aws_access_key_id=dbutils.secrets.get(scope, 'aws_access_key_id'), aws_secret_access_key=dbutils.secrets.get(scope, 'aws_secret_access_key'), region_name='us-west-2')
+    return pub.S3Store(client)
+user = spark.sql('select current_user() as u').first()['u']
+import pilot_job_entry as je
+code, summary = je.run(home=Path('/Workspace/Users') / user, retention_keep_last=int(keep) if keep else None, takeover_confirmed_dead_owner=takeover,
+                       publish_mode=publish_mode, store_factory=store_factory)
+print(json.dumps(summary, indent=1, default=str), flush=True)
+if code != 0:
+    raise RuntimeError('Pilot window exit code %d: %s' % (code, summary.get('message')))
