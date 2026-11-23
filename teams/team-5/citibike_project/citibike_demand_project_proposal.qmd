@@ -1,0 +1,993 @@
+---
+title: "Predicting Citi Bike Demand: The Role of Weather Conditions"
+subtitle: "Project Analysis Template and Preliminary EDA"
+author: "Amish Rasheed, Blessing, Kevin Martin, Masoud M. Soltani, and Tenzin"
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    code-fold: true
+    code-summary: "Show code"
+jupyter: data622
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Project overview
+
+### Problem statement
+
+Citi Bike demand varies across time and location because of commuting
+patterns, seasonality, system characteristics, and potentially weather. This
+project will test whether weather conditions improve station-level demand
+forecasts after accounting for calendar, time, and station information. The
+effect of weather will be measured rather than assumed.
+
+### Intended users
+
+The primary intended users are Citi Bike operations staff who need to
+anticipate where bikes or empty docks may be needed. More accurate forecasts
+could support rebalancing and capacity planning and may indirectly improve
+availability for riders.
+
+### Research questions
+
+1. How does Citi Bike demand vary by hour, day of week, season, and station?
+2. Do precipitation, temperature, or other reliable weather measurements
+   improve predictions beyond time and station features?
+3. Do weather effects differ by time of day, season, or demand level?
+4. Which periods or stations are most difficult to predict?
+
+## Data and study design
+
+### Planned unit of analysis and target
+
+The proposed modeling table will contain one row per station-hour. The primary
+numeric target is planned to be the number of trip starts at a station during
+that hour; the team should confirm this definition before modeling. Trip ends
+or net station flow may be retained as secondary operational outcomes.
+
+### Data sources
+
+| Source | Role in the project | Current status |
+|---|---|---|
+| [Citi Bike trip history](https://citibikenyc.com/system-data) and course data | Construct hourly station demand and historical temporal features | Required for modeling; not included in this live-data EDA |
+| Citi Bike station information | Station IDs, names, locations, and capacity | Current snapshot archived |
+| Citi Bike station status | Bike/dock availability and service flags | Current snapshot archived; repeated history still needed |
+| [NOAA MRMS](https://mrms.nssl.noaa.gov/) precipitation estimates | Proposed historical precipitation source for time-aligned modeling | To acquire and validate |
+| [Open-Meteo GFS/HRRR](https://open-meteo.com/en/docs/gfs-api) | Prototype forecast grid and station-to-weather-cell mapping | Reference mapping created |
+
+The Open-Meteo lookup supplies a spatial join key but does not contain weather
+measurements. The final historical weather source should be selected based on
+coverage, reliability, and the ability to align observations to station-hour
+records. If MRMS and Open-Meteo serve different historical and forecasting
+roles, that distinction should remain explicit throughout the report.
+
+### Refreshing the live data
+
+The project includes one command that retrieves the real, current data used by
+this EDA. It downloads `station_information` and `station_status` from Citi
+Bike's official GBFS feed and verifies that every current station coordinate
+has an HRRR weather-cell mapping. The generated `data/` directory is excluded
+from Git and does not need to be included in the repository; the command
+creates the full directory hierarchy when run from a clean checkout.
+
+From the `DATA 622` directory, run:
+
+```bash
+python citibike_project/refresh_live_data.py
+```
+
+Or, from inside `citibike_project`, run:
+
+```bash
+python refresh_live_data.py
+```
+
+Each execution writes new gzip-compressed GBFS snapshots to UTC-partitioned
+folders under:
+
+```text
+data/raw/station_information/year=YYYY/month=MM/day=DD/
+data/raw/station_status/year=YYYY/month=MM/day=DD/
+```
+
+The script checks `data/raw/weather_forecast/reference/` and reuses the HRRR
+mapping when all station IDs and coordinates still match. It contacts
+Open-Meteo and rebuilds the mapping only when it is missing, stations have
+changed, or `--force-weather-map` is supplied. A forced rebuild can take
+several minutes because API requests are deliberately batched and paused:
+
+```bash
+python citibike_project/refresh_live_data.py --force-weather-map
+```
+
+For an automated run, record the source revision in each raw archive:
+
+```bash
+python citibike_project/refresh_live_data.py --git-sha YOUR_COMMIT_SHA
+```
+
+Internet access is required. After the command succeeds, render this report to
+analyze the newest snapshots.
+
+### Live-data scope
+
+The EDA below uses only current operational data: the latest archived station
+information and status snapshots plus the station-to-weather-cell reference.
+It describes a point in time and cannot establish historical demand patterns
+or the effect of weather on demand. Those questions require the planned
+station-hour trip and weather history.
+
+## Analysis
+
+### Exploratory data analysis
+
+The preliminary EDA examines the current station-information and status feeds
+and validates the station-to-weather-cell lookup. It is an initial live-data
+pipeline check rather than the final station-hour analysis proposed for
+modeling.
+
+#### Setup
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import gzip
+import json
+from pathlib import Path
+```
+
+#### Live station availability
+
+The next cells read the newest locally archived information and status files.
+Station information supplies names, coordinates, and designed capacity;
+station status supplies current bike and dock availability and service flags.
+
+```{python}
+def read_snapshot(path):
+    with gzip.open(path, "rt", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def read_latest_snapshot(root):
+    paths = sorted(Path(root).rglob("*.json.gz"))
+    if not paths:
+        raise FileNotFoundError(
+            f"No snapshots found under {root}. Run the station downloaders first."
+        )
+
+    path = paths[-1]
+    return path, read_snapshot(path)
+
+
+info_path, info_archive = read_latest_snapshot(
+    "data/raw/station_information"
+)
+status_path, status_archive = read_latest_snapshot(
+    "data/raw/station_status"
+)
+
+station_info = pd.DataFrame(info_archive["payload"]["data"]["stations"])
+station_status = pd.DataFrame(status_archive["payload"]["data"]["stations"])
+
+snapshot_metadata = pd.DataFrame(
+    {
+        "feed": ["station_information", "station_status"],
+        "file": [info_path.name, status_path.name],
+        "fetched_at_utc": pd.to_datetime(
+            [info_archive["fetched_at"], status_archive["fetched_at"]],
+            utc=True,
+        ),
+        "records": [len(station_info), len(station_status)],
+    }
+)
+
+snapshot_metadata
+```
+
+Join the status records to station names and locations, then check how many
+records matched. A status record without matching station information is
+retained so that feed changes remain visible.
+
+```{python}
+info_columns = [
+    column
+    for column in ["station_id", "name", "lat", "lon", "capacity"]
+    if column in station_info.columns
+]
+
+stations = station_status.merge(
+    station_info[info_columns],
+    on="station_id",
+    how="left",
+    validate="one_to_one",
+)
+
+join_checks = pd.Series(
+    {
+        "status_records": len(station_status),
+        "information_records": len(station_info),
+        "matched_status_records": stations["name"].notna().sum(),
+        "unmatched_status_records": stations["name"].isna().sum(),
+        "duplicate_status_ids": station_status["station_id"].duplicated().sum(),
+        "duplicate_information_ids": station_info["station_id"].duplicated().sum(),
+    },
+    name="count",
+).to_frame()
+
+join_checks
+```
+
+#### Data quality and feed freshness
+
+An active station must be installed and allow both bike rentals and returns.
+The checks below also validate inventory fields, station capacity, and the age
+of each station's most recent report relative to the archived status snapshot.
+Timestamps before 2020 or more than five minutes in the future are treated as
+invalid placeholders rather than extreme reporting delays.
+
+```{python}
+flag_columns = ["is_installed", "is_renting", "is_returning"]
+for column in flag_columns:
+    stations[column] = pd.to_numeric(stations[column], errors="coerce")
+
+inventory_columns = [
+    "num_bikes_available",
+    "num_bikes_disabled",
+    "num_docks_available",
+    "num_docks_disabled",
+]
+for column in inventory_columns + ["capacity"]:
+    stations[column] = pd.to_numeric(stations[column], errors="coerce")
+
+stations["active"] = stations[flag_columns].eq(1).all(axis=1)
+stations["service_state"] = stations["active"].map(
+    {True: "Active", False: "Inactive"}
+)
+status_snapshot_time = pd.to_datetime(status_archive["fetched_at"], utc=True)
+stations["status_reported_at_utc"] = pd.to_datetime(
+    stations["last_reported"], unit="s", utc=True, errors="coerce"
+)
+stations["status_age_minutes"] = (
+    status_snapshot_time - stations["status_reported_at_utc"]
+).dt.total_seconds() / 60
+stations["valid_status_timestamp"] = (
+    stations["status_reported_at_utc"]
+    .ge(pd.Timestamp("2020-01-01", tz="UTC"))
+    .fillna(False)
+    & stations["status_age_minutes"].ge(-5).fillna(False)
+)
+stations["valid_status_age_minutes"] = stations["status_age_minutes"].where(
+    stations["valid_status_timestamp"]
+)
+
+stations["accounted_inventory"] = stations[inventory_columns].sum(
+    axis=1, min_count=len(inventory_columns)
+)
+stations["capacity_gap"] = (
+    stations["accounted_inventory"] - stations["capacity"]
+)
+
+required_columns = [
+    "station_id",
+    "name",
+    "lat",
+    "lon",
+    "capacity",
+    "last_reported",
+] + flag_columns + inventory_columns
+
+data_quality_checks = pd.Series(
+    {
+        "records with a missing required value": (
+            stations[required_columns].isna().any(axis=1).sum()
+        ),
+        "records with a negative inventory count": (
+            stations[inventory_columns].lt(0).any(axis=1).sum()
+        ),
+        "invalid or placeholder status timestamps": (
+            (~stations["valid_status_timestamp"]).sum()
+        ),
+        "valid reports more than 10 minutes old": (
+            stations["valid_status_timestamp"]
+            & stations["status_age_minutes"].gt(10)
+        ).sum(),
+        "valid reports more than 60 minutes old": (
+            stations["valid_status_timestamp"]
+            & stations["status_age_minutes"].gt(60)
+        ).sum(),
+        "active stations with capacity difference": (
+            stations["active"] & stations["capacity_gap"].ne(0)
+        ).sum(),
+        "active stations with capacity difference over 2": (
+            stations["active"] & stations["capacity_gap"].abs().gt(2)
+        ).sum(),
+    },
+    name="station_count",
+).to_frame()
+
+data_quality_checks
+```
+
+Freshness is summarized separately for active and inactive stations so that
+placeholder timestamps from stations out of service do not distort the active
+network. Ages below are calculated only from valid timestamps.
+
+```{python}
+freshness_by_service = (
+    stations.groupby("service_state", sort=False)
+    .agg(
+        stations=("station_id", "size"),
+        valid_timestamps=("valid_status_timestamp", "sum"),
+        invalid_timestamps=(
+            "valid_status_timestamp",
+            lambda values: (~values).sum(),
+        ),
+        median_age_minutes=("valid_status_age_minutes", "median"),
+        p95_age_minutes=(
+            "valid_status_age_minutes",
+            lambda values: values.quantile(0.95),
+        ),
+        maximum_age_minutes=("valid_status_age_minutes", "max"),
+    )
+    .round(1)
+)
+
+freshness_by_service
+```
+
+A difference between designed capacity and accounted inventory is a diagnostic
+flag, not automatically a feed error: temporary station configurations and
+out-of-service equipment can also create differences. The largest active
+differences are shown for review.
+
+```{python}
+capacity_differences = (
+    stations.loc[
+        stations["active"] & stations["capacity_gap"].ne(0),
+        [
+            "name",
+            "capacity",
+            "accounted_inventory",
+            "capacity_gap",
+            "num_bikes_disabled",
+            "num_docks_disabled",
+        ],
+    ]
+    .assign(absolute_gap=lambda frame: frame["capacity_gap"].abs())
+    .nlargest(10, "absolute_gap")
+    .drop(columns="absolute_gap")
+)
+
+capacity_differences
+```
+
+#### Change between archived snapshots
+
+When at least two status archives exist, the next comparison measures how
+availability changed between the two newest observations. These changes are a
+pipeline and system-activity check; they are **not** trip demand because they
+can combine rentals, returns, rebalancing, maintenance, and feed corrections.
+
+```{python}
+status_paths = sorted(Path("data/raw/station_status").rglob("*.json.gz"))
+
+if len(status_paths) >= 2:
+    previous_status_path, current_status_path = status_paths[-2:]
+    previous_status_archive = read_snapshot(previous_status_path)
+    current_status_archive = read_snapshot(current_status_path)
+    previous_status = pd.DataFrame(
+        previous_status_archive["payload"]["data"]["stations"]
+    )
+    current_status = pd.DataFrame(
+        current_status_archive["payload"]["data"]["stations"]
+    )
+
+    station_changes = previous_status[
+        ["station_id", "num_bikes_available", "num_docks_available"]
+    ].merge(
+        current_status[
+            ["station_id", "num_bikes_available", "num_docks_available"]
+        ],
+        on="station_id",
+        how="outer",
+        suffixes=("_previous", "_current"),
+        indicator=True,
+        validate="one_to_one",
+    )
+    station_changes = station_changes.merge(
+        station_info[["station_id", "name"]],
+        on="station_id",
+        how="left",
+        validate="one_to_one",
+    )
+    matched_changes = station_changes.loc[
+        station_changes["_merge"].eq("both")
+    ].copy()
+    matched_changes["bike_change"] = (
+        matched_changes["num_bikes_available_current"]
+        - matched_changes["num_bikes_available_previous"]
+    )
+    matched_changes["dock_change"] = (
+        matched_changes["num_docks_available_current"]
+        - matched_changes["num_docks_available_previous"]
+    )
+
+    previous_time = pd.to_datetime(
+        previous_status_archive["fetched_at"], utc=True
+    )
+    current_time = pd.to_datetime(
+        current_status_archive["fetched_at"], utc=True
+    )
+    elapsed_minutes = (current_time - previous_time).total_seconds() / 60
+
+    snapshot_change_summary = pd.Series(
+        {
+            "previous snapshot (UTC)": previous_time,
+            "current snapshot (UTC)": current_time,
+            "elapsed minutes": round(elapsed_minutes, 1),
+            "stations in both snapshots": len(matched_changes),
+            "stations added": station_changes["_merge"].eq("right_only").sum(),
+            "stations removed": station_changes["_merge"].eq("left_only").sum(),
+            "stations with a bike-count change": (
+                matched_changes["bike_change"].ne(0).sum()
+            ),
+            "sum of absolute bike-count changes": (
+                matched_changes["bike_change"].abs().sum()
+            ),
+            "net change in available bikes": matched_changes["bike_change"].sum(),
+        },
+        name="value",
+    ).to_frame()
+else:
+    matched_changes = pd.DataFrame()
+    snapshot_change_summary = pd.DataFrame(
+        {"value": ["At least two status snapshots are required."]},
+        index=["snapshot comparison"],
+    )
+
+snapshot_change_summary
+```
+
+```{python}
+if not matched_changes.empty:
+    changed_bikes = matched_changes.loc[
+        matched_changes["bike_change"].ne(0), "bike_change"
+    ]
+    limit = max(1, int(changed_bikes.abs().quantile(0.99)))
+
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.hist(
+        changed_bikes.clip(-limit, limit),
+        bins=range(-limit, limit + 2),
+        color="#0057B8",
+        edgecolor="white",
+    )
+    ax.axvline(0, color="black", linewidth=1)
+    ax.set(
+        title="Change in available bikes between the two latest snapshots",
+        xlabel=(
+            "Change in bikes available per station "
+            f"(values clipped at the 99th percentile: ±{limit})"
+        ),
+        ylabel="Number of stations",
+    )
+    fig.tight_layout()
+    plt.show()
+```
+
+The stations with the largest absolute changes provide a quick check that the
+aggregate result is not driven by a single record.
+
+```{python}
+if not matched_changes.empty:
+    largest_changes = (
+        matched_changes.assign(
+            absolute_bike_change=lambda frame: frame["bike_change"].abs()
+        )
+        .nlargest(10, "absolute_bike_change")
+        [
+            [
+                "name",
+                "num_bikes_available_previous",
+                "num_bikes_available_current",
+                "bike_change",
+                "dock_change",
+            ]
+        ]
+    )
+else:
+    largest_changes = pd.DataFrame()
+
+largest_changes
+```
+
+#### Operational availability
+
+Bike share is calculated from currently available bikes and docks; it is not
+a historical utilization rate. In addition to exact stockouts, the summary
+uses 10% and 90% thresholds to identify stations approaching an operational
+constraint. E-bike share is calculated among all currently available bikes.
+
+```{python}
+stations["available_slots"] = (
+    stations["num_bikes_available"] + stations["num_docks_available"]
+)
+stations["bike_share"] = (
+    stations["num_bikes_available"]
+    .div(stations["available_slots"].where(stations["available_slots"].gt(0)))
+)
+
+active = stations.loc[stations["active"]].copy()
+ebikes_available = (
+    active["num_ebikes_available"].sum()
+    if "num_ebikes_available" in active.columns
+    else pd.NA
+)
+ebike_share = (
+    ebikes_available / active["num_bikes_available"].sum()
+    if pd.notna(ebikes_available) and active["num_bikes_available"].sum() > 0
+    else pd.NA
+)
+
+network_summary = pd.Series(
+    {
+        "stations_reporting": len(stations),
+        "active_stations": len(active),
+        "bikes_available": active["num_bikes_available"].sum(),
+        "e-bikes_available": ebikes_available,
+        "e-bike_share_of_available_bikes": ebike_share,
+        "docks_available": active["num_docks_available"].sum(),
+        "stations_with_no_bikes": active["num_bikes_available"].eq(0).sum(),
+        "stations_at_or_below_10%_bike_share": active["bike_share"].le(0.10).sum(),
+        "stations_with_no_docks": active["num_docks_available"].eq(0).sum(),
+        "stations_at_or_above_90%_bike_share": active["bike_share"].ge(0.90).sum(),
+        "disabled_bikes": active["num_bikes_disabled"].sum(),
+        "disabled_docks": active["num_docks_disabled"].sum(),
+        "median_bike_share": active["bike_share"].median(),
+    },
+    name="value",
+).to_frame()
+
+percentage_metrics = {
+    "e-bike_share_of_available_bikes",
+    "median_bike_share",
+}
+network_summary_display = network_summary.copy()
+network_summary_display["value"] = [
+    f"{value:.1%}" if metric in percentage_metrics else f"{value:,.0f}"
+    for metric, value in network_summary["value"].items()
+]
+
+network_summary_display
+```
+
+Group stations into operational availability bands. Exact empty and full
+stations are separated from those that are close to those limits.
+
+```{python}
+active["availability_band"] = "Balanced (>10%-<90%)"
+active.loc[
+    active["bike_share"].gt(0) & active["bike_share"].le(0.10),
+    "availability_band",
+] = "Near empty (>0%-10%)"
+active.loc[active["bike_share"].eq(0), "availability_band"] = "Empty (0%)"
+active.loc[
+    active["bike_share"].ge(0.90) & active["bike_share"].lt(1),
+    "availability_band",
+] = "Near full (90%-<100%)"
+active.loc[active["bike_share"].eq(1), "availability_band"] = "Full (100%)"
+active.loc[
+    active["bike_share"].isna(), "availability_band"
+] = "No available bikes or docks"
+
+availability_order = [
+    "Empty (0%)",
+    "Near empty (>0%-10%)",
+    "Balanced (>10%-<90%)",
+    "Near full (90%-<100%)",
+    "Full (100%)",
+    "No available bikes or docks",
+]
+availability_counts = (
+    active["availability_band"]
+    .value_counts()
+    .reindex(availability_order, fill_value=0)
+)
+
+fig, ax = plt.subplots(figsize=(8, 4))
+bars = ax.bar(
+    availability_counts.index,
+    availability_counts.values,
+    color=["#B2182B", "#EF8A62", "#67A9CF", "#92C5DE", "#2166AC", "#777777"],
+)
+ax.bar_label(bars, padding=3, fmt="%.0f")
+ax.set(
+    title="Active stations by operational availability band",
+    xlabel="",
+    ylabel="Number of stations",
+)
+ax.tick_params(axis="x", rotation=25)
+for label in ax.get_xticklabels():
+    label.set_horizontalalignment("right")
+fig.tight_layout()
+plt.show()
+```
+
+The distribution below shows whether active stations were relatively empty,
+balanced, or relatively full when the status snapshot was collected.
+
+```{python}
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.hist(
+    active["bike_share"].dropna(),
+    bins=20,
+    color="#0057B8",
+    edgecolor="white",
+)
+ax.set(
+    title="Bike availability across active stations",
+    xlabel="Share of currently available slots containing a bike",
+    ylabel="Number of stations",
+)
+ax.xaxis.set_major_formatter(lambda value, position: f"{value:.0%}")
+fig.tight_layout()
+plt.show()
+```
+
+To avoid ranking large stations highly simply because of their capacity, the
+table below prioritizes the largest stations already near an empty or full
+constraint and reports both raw counts and capacity-normalized bike share.
+
+```{python}
+near_empty = (
+    active.loc[active["bike_share"].le(0.10)]
+    .nlargest(10, "available_slots")
+    .assign(operational_risk="At or below 10% bike share")
+)
+near_full = (
+    active.loc[active["bike_share"].ge(0.90)]
+    .nlargest(10, "available_slots")
+    .assign(operational_risk="At or above 90% bike share")
+)
+
+operational_extremes = pd.concat([near_empty, near_full], ignore_index=True)[
+    [
+        "operational_risk",
+        "name",
+        "num_bikes_available",
+        "num_docks_available",
+        "available_slots",
+        "bike_share",
+    ]
+]
+
+operational_extremes.style.format(
+    {
+        "bike_share": "{:.1%}",
+    }
+)
+```
+
+#### Weather-grid coverage
+
+The weather reference files assign every station coordinate to an HRRR grid
+cell. First, check the configuration and whether the lookup covers the current
+station-information and station-status records.
+
+```{python}
+weather_reference_directory = Path(
+    "data/raw/weather_forecast/reference"
+)
+weather_lookup = pd.read_csv(
+    weather_reference_directory / "station_weather_lookup.csv",
+    dtype={"station_id": "string"},
+)
+with open(
+    weather_reference_directory / "hrrr_locations.json",
+    encoding="utf-8",
+) as file:
+    weather_configuration = json.load(file)
+
+weather_locations = pd.DataFrame(weather_configuration["locations"])
+station_weather = stations.merge(
+    weather_lookup[["station_id", "location_id"]],
+    on="station_id",
+    how="left",
+    validate="one_to_one",
+)
+
+weather_coverage = pd.Series(
+    {
+        "weather_model": weather_configuration["model"],
+        "weather_cells": weather_lookup["location_id"].nunique(),
+        "stations_in_lookup": weather_lookup["station_id"].nunique(),
+        "status_stations_with_weather_cell": (
+            station_weather["location_id"].notna().sum()
+        ),
+        "status_stations_without_weather_cell": (
+            station_weather["location_id"].isna().sum()
+        ),
+        "median_stations_per_weather_cell": (
+            weather_lookup.groupby("location_id")["station_id"].nunique().median()
+        ),
+    },
+    name="value",
+).to_frame()
+
+weather_coverage
+```
+
+Aggregate current bike and dock availability to the same weather-cell level.
+This is the structure a later forecast model can use to join one weather row
+to multiple nearby Citi Bike stations.
+
+```{python}
+active_station_weather = station_weather.loc[
+    station_weather["active"] & station_weather["location_id"].notna()
+].copy()
+
+weather_cell_status = (
+    active_station_weather.groupby("location_id", as_index=False)
+    .agg(
+        station_count=("station_id", "nunique"),
+        bikes_available=("num_bikes_available", "sum"),
+        docks_available=("num_docks_available", "sum"),
+    )
+)
+weather_cell_status["bike_share"] = (
+    weather_cell_status["bikes_available"]
+    / (
+        weather_cell_status["bikes_available"]
+        + weather_cell_status["docks_available"]
+    ).where(
+        (
+            weather_cell_status["bikes_available"]
+            + weather_cell_status["docks_available"]
+        ).gt(0)
+    )
+)
+
+weather_cell_status.describe().T
+```
+
+The map below summarizes current availability at weather-cell resolution.
+Point size represents the number of active Citi Bike stations assigned to a
+cell, and color represents the share of available slots containing a bike.
+The plotted coordinates are representative API request locations from the
+reference file, not exact HRRR cell centroids.
+
+```{python}
+weather_cell_map = weather_locations.merge(
+    weather_cell_status,
+    on="location_id",
+    how="inner",
+    validate="one_to_one",
+)
+
+fig, ax = plt.subplots(figsize=(7, 7))
+points = ax.scatter(
+    weather_cell_map["longitude"],
+    weather_cell_map["latitude"],
+    s=20 + 8 * weather_cell_map["station_count"],
+    c=weather_cell_map["bike_share"],
+    cmap="RdYlBu_r",
+    vmin=0,
+    vmax=1,
+    alpha=0.8,
+    edgecolor="white",
+    linewidth=0.5,
+)
+colorbar = fig.colorbar(points, ax=ax, shrink=0.8)
+colorbar.set_label("Share of available slots containing a bike")
+colorbar.ax.yaxis.set_major_formatter(
+    lambda value, position: f"{value:.0%}"
+)
+ax.set(
+    title="Current Citi Bike availability by HRRR weather cell",
+    xlabel="Longitude",
+    ylabel="Latitude",
+)
+fig.tight_layout()
+plt.show()
+```
+
+#### Preliminary EDA summary
+
+The live data are sufficient to verify ingestion, station joins, status
+metrics, and weather-cell coverage and to describe current bike availability.
+They are not sufficient to answer the project's central prediction question
+because the status data contain only a point-in-time snapshot and the weather
+reference contains locations rather than historical weather values.
+
+### Feature engineering template
+
+#### Target construction
+
+Document the final target precisely before fitting models.
+
+- **Proposed target:** hourly trip starts per station.
+- **Time zone:** convert and aggregate consistently in `America/New_York`,
+  including daylight-saving transitions.
+- **Zero-demand rows:** construct a complete station-hour panel so hours with
+  no trips are represented rather than omitted.
+- **Secondary outcomes:** consider trip ends, net bike flow, or an indicator
+  for unusually high demand if operationally useful.
+
+#### Baseline predictors
+
+| Feature group | Candidate variables | Notes |
+|---|---|---|
+| Calendar | Hour, day of week, weekend, month, season, holiday | Encode cyclical hour/month effects where appropriate |
+| Station | Station ID, capacity, latitude/longitude, region | Use only attributes valid at the prediction time |
+| Demand history | Previous hour/day/week demand, rolling averages | Lag all values to prevent target leakage |
+| System state | Bikes and docks available | Use only if a real forecast would have the value at scoring time |
+
+#### Weather predictors
+
+Candidate variables include hourly precipitation, precipitation intensity,
+temperature, apparent temperature, wind, and severe-weather indicators.
+Interactions with hour of day or season may be useful, but should be justified
+and evaluated on held-out periods. Record the weather source, spatial cell,
+observation or forecast timestamp, units, missingness, and any imputation for
+every variable.
+
+#### Modeling-table checks
+
+Before training, report:
+
+1. the date range and number of station-hour rows;
+2. target distribution and percentage of zero-demand hours;
+3. missingness by feature and time period;
+4. station and weather-cell coverage;
+5. duplicate station-hour keys; and
+6. evidence that features use only information available at prediction time.
+
+### Modeling template
+
+#### Baseline model
+
+Fit a reproducible baseline using calendar, time, station, and approved lagged
+demand features without external weather variables. A simple seasonal or
+historical-average benchmark should be included so that more complex models
+must demonstrate practical improvement.
+
+#### Weather-enhanced model
+
+Fit a comparable model using the same rows, split, preprocessing, and baseline
+features, then add the weather variables. Keeping all other conditions fixed
+isolates the incremental predictive value of weather.
+
+#### Candidate algorithms
+
+The proposal identifies linear regression, decision trees, and random forests
+as initial candidates. Start with interpretable specifications, then add model
+complexity only when chronological validation shows a meaningful benefit.
+
+```{python}
+#| eval: false
+# Modeling skeleton to complete after the station-hour table is available.
+
+target = "trip_starts"
+baseline_features = [
+    # calendar, station, and leakage-safe lag features
+]
+weather_features = [
+    # precipitation, temperature, wind, and approved interactions
+]
+
+# 1. Sort by observation time.
+# 2. Create chronological training, validation, and test periods.
+# 3. Fit the baseline model on baseline_features.
+# 4. Fit the weather model on baseline_features + weather_features.
+# 5. Evaluate both models on the identical held-out observations.
+```
+
+### Model evaluation template
+
+#### Chronological validation
+
+Preserve time order rather than relying on a random row split. Document the
+exact training, validation, and test boundaries and ensure that feature
+engineering is refit within each training period. Where practical, use
+rolling-origin evaluation to determine whether conclusions are stable across
+seasons.
+
+#### Primary metrics
+
+Use MAE as an easily interpreted average error and RMSE to place more weight
+on large misses. Report performance at both the overall and station levels,
+and compare high-, medium-, and low-demand periods.
+
+| Model | Feature set | Test period | MAE | RMSE | Change from baseline |
+|---|---|---|---:|---:|---:|
+| Seasonal benchmark | Historical pattern | *To complete* | — | — | — |
+| Baseline model | Time + station + approved lags | *To complete* | — | — | — |
+| Weather-enhanced model | Baseline + weather | *To complete* | — | — | — |
+
+#### Error analysis
+
+Complete the following after generating held-out predictions:
+
+- Plot actual and predicted demand over time.
+- Examine residuals by station, hour, weekday, season, and weather condition.
+- Identify unusually high- and low-demand periods with large errors.
+- Check whether weather improves average performance consistently or only
+  during severe conditions.
+- Report both statistical improvement and operational relevance.
+
+## Training and retraining strategy
+
+Evaluate monthly retraining with a rolling 12-month window. This gives each
+fit a full seasonal cycle while allowing the model to adapt to newer commuting
+patterns and system expansion. A production design should also monitor input
+coverage, feature drift, prediction error, and station-network changes between
+scheduled retraining runs.
+
+## Minimum viable product progress
+
+- [x] Archive current Citi Bike station information.
+- [x] Archive a current station-status snapshot.
+- [x] Create station-to-HRRR weather-cell mappings.
+- [x] Complete preliminary live station and weather-grid EDA.
+- [ ] Build the historical station-hour demand table.
+- [ ] Obtain and validate historical weather measurements.
+- [ ] Join weather and Citi Bike observations by time and location.
+- [ ] Finalize the numeric demand target and leakage-safe predictors.
+- [ ] Train a baseline model without weather.
+- [ ] Train a comparable weather-enhanced model.
+- [ ] Evaluate both models on held-out chronological data using MAE and RMSE.
+- [ ] Present actual-versus-predicted plots and weather-related findings.
+
+## Limitations and risks
+
+- A single live status snapshot describes availability, not historical demand
+  or a temporal relationship.
+- The current weather files provide spatial mapping only; they contain no
+  precipitation, temperature, or wind values.
+- Station definitions and locations can change over time, creating a slowly
+  changing dimension that must be handled in historical joins.
+- Weather may be correlated with season or time of day, so model comparison
+  and leakage-safe chronological validation are essential.
+- Results from one period may not generalize after system expansion or changes
+  in commuting behavior.
+
+## Conclusions and operational implications
+
+1. **Demand patterns:** Summarize the strongest temporal and station-level
+   patterns found in the final EDA.
+2. **Weather contribution:** State whether weather improved held-out MAE or
+   RMSE and quantify the improvement relative to the baseline.
+3. **Conditions of greatest impact:** Identify weather conditions, seasons,
+   stations, or times for which performance changed most.
+4. **Operational use:** Explain how the forecast could inform bike rebalancing
+   or dock-capacity decisions.
+5. **Recommendation:** Recommend deployment, further testing, or retaining the
+   simpler baseline based on predictive and operational evidence.
+
+## Reproducibility
+
+From the `DATA 622` directory, refresh the local reference inputs with:
+
+```bash
+python citibike_project/refresh_live_data.py
+```
+
+Then render this report from `citibike_project`:
+
+```bash
+quarto render citibike_demand_project_proposal.qmd
+```
+
+Archived feed timestamps, poller versions, and Git SHAs should remain with all
+raw snapshots so results can be traced to the data and code that produced them.
+
+## References
+
+- Citi Bike. [Citi Bike System Data](https://citibikenyc.com/system-data).
+- National Severe Storms Laboratory. [Multi-Radar Multi-Sensor System](https://www.nssl.noaa.gov/projects/mrms/).
+- Open-Meteo. [GFS and HRRR Forecast API](https://open-meteo.com/en/docs/gfs-api).

@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Amish Rasheed, Blessing, Kevin Martin, Masoud M. Soltani, and Tenzin">
+
+<title>Predicting Citi Bike Demand: The Role of Weather Conditions</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="citibike_demand_project_proposal_files/libs/clipboard/clipboard.min.js"></script>
+<script src="citibike_demand_project_proposal_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="citibike_demand_project_proposal_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="citibike_demand_project_proposal_files/libs/quarto-html/popper.min.js"></script>
+<script src="citibike_demand_project_proposal_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="citibike_demand_project_proposal_files/libs/quarto-html/anchor.min.js"></script>
+<link href="citibike_demand_project_proposal_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="citibike_demand_project_proposal_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="citibike_demand_project_proposal_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="citibike_demand_project_proposal_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="citibike_demand_project_proposal_files/libs/bootstrap/bootstrap-917079515d91bccb85b543faf8aa8bb6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview"><span class="header-section-number">1</span> Project overview</a>
+  <ul>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement"><span class="header-section-number">1.1</span> Problem statement</a></li>
+  <li><a href="#intended-users" id="toc-intended-users" class="nav-link" data-scroll-target="#intended-users"><span class="header-section-number">1.2</span> Intended users</a></li>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions"><span class="header-section-number">1.3</span> Research questions</a></li>
+  </ul></li>
+  <li><a href="#data-and-study-design" id="toc-data-and-study-design" class="nav-link" data-scroll-target="#data-and-study-design"><span class="header-section-number">2</span> Data and study design</a>
+  <ul>
+  <li><a href="#planned-unit-of-analysis-and-target" id="toc-planned-unit-of-analysis-and-target" class="nav-link" data-scroll-target="#planned-unit-of-analysis-and-target"><span class="header-section-number">2.1</span> Planned unit of analysis and target</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources"><span class="header-section-number">2.2</span> Data sources</a></li>
+  <li><a href="#refreshing-the-live-data" id="toc-refreshing-the-live-data" class="nav-link" data-scroll-target="#refreshing-the-live-data"><span class="header-section-number">2.3</span> Refreshing the live data</a></li>
+  <li><a href="#live-data-scope" id="toc-live-data-scope" class="nav-link" data-scroll-target="#live-data-scope"><span class="header-section-number">2.4</span> Live-data scope</a></li>
+  </ul></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="header-section-number">3</span> Analysis</a>
+  <ul>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">3.1</span> Exploratory data analysis</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">3.1.1</span> Setup</a></li>
+  <li><a href="#live-station-availability" id="toc-live-station-availability" class="nav-link" data-scroll-target="#live-station-availability"><span class="header-section-number">3.1.2</span> Live station availability</a></li>
+  <li><a href="#data-quality-and-feed-freshness" id="toc-data-quality-and-feed-freshness" class="nav-link" data-scroll-target="#data-quality-and-feed-freshness"><span class="header-section-number">3.1.3</span> Data quality and feed freshness</a></li>
+  <li><a href="#change-between-archived-snapshots" id="toc-change-between-archived-snapshots" class="nav-link" data-scroll-target="#change-between-archived-snapshots"><span class="header-section-number">3.1.4</span> Change between archived snapshots</a></li>
+  <li><a href="#operational-availability" id="toc-operational-availability" class="nav-link" data-scroll-target="#operational-availability"><span class="header-section-number">3.1.5</span> Operational availability</a></li>
+  <li><a href="#weather-grid-coverage" id="toc-weather-grid-coverage" class="nav-link" data-scroll-target="#weather-grid-coverage"><span class="header-section-number">3.1.6</span> Weather-grid coverage</a></li>
+  <li><a href="#preliminary-eda-summary" id="toc-preliminary-eda-summary" class="nav-link" data-scroll-target="#preliminary-eda-summary"><span class="header-section-number">3.1.7</span> Preliminary EDA summary</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering-template" id="toc-feature-engineering-template" class="nav-link" data-scroll-target="#feature-engineering-template"><span class="header-section-number">3.2</span> Feature engineering template</a>
+  <ul class="collapse">
+  <li><a href="#target-construction" id="toc-target-construction" class="nav-link" data-scroll-target="#target-construction"><span class="header-section-number">3.2.1</span> Target construction</a></li>
+  <li><a href="#baseline-predictors" id="toc-baseline-predictors" class="nav-link" data-scroll-target="#baseline-predictors"><span class="header-section-number">3.2.2</span> Baseline predictors</a></li>
+  <li><a href="#weather-predictors" id="toc-weather-predictors" class="nav-link" data-scroll-target="#weather-predictors"><span class="header-section-number">3.2.3</span> Weather predictors</a></li>
+  <li><a href="#modeling-table-checks" id="toc-modeling-table-checks" class="nav-link" data-scroll-target="#modeling-table-checks"><span class="header-section-number">3.2.4</span> Modeling-table checks</a></li>
+  </ul></li>
+  <li><a href="#modeling-template" id="toc-modeling-template" class="nav-link" data-scroll-target="#modeling-template"><span class="header-section-number">3.3</span> Modeling template</a>
+  <ul class="collapse">
+  <li><a href="#baseline-model" id="toc-baseline-model" class="nav-link" data-scroll-target="#baseline-model"><span class="header-section-number">3.3.1</span> Baseline model</a></li>
+  <li><a href="#weather-enhanced-model" id="toc-weather-enhanced-model" class="nav-link" data-scroll-target="#weather-enhanced-model"><span class="header-section-number">3.3.2</span> Weather-enhanced model</a></li>
+  <li><a href="#candidate-algorithms" id="toc-candidate-algorithms" class="nav-link" data-scroll-target="#candidate-algorithms"><span class="header-section-number">3.3.3</span> Candidate algorithms</a></li>
+  </ul></li>
+  <li><a href="#model-evaluation-template" id="toc-model-evaluation-template" class="nav-link" data-scroll-target="#model-evaluation-template"><span class="header-section-number">3.4</span> Model evaluation template</a>
+  <ul class="collapse">
+  <li><a href="#chronological-validation" id="toc-chronological-validation" class="nav-link" data-scroll-target="#chronological-validation"><span class="header-section-number">3.4.1</span> Chronological validation</a></li>
+  <li><a href="#primary-metrics" id="toc-primary-metrics" class="nav-link" data-scroll-target="#primary-metrics"><span class="header-section-number">3.4.2</span> Primary metrics</a></li>
+  <li><a href="#error-analysis" id="toc-error-analysis" class="nav-link" data-scroll-target="#error-analysis"><span class="header-section-number">3.4.3</span> Error analysis</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#training-and-retraining-strategy" id="toc-training-and-retraining-strategy" class="nav-link" data-scroll-target="#training-and-retraining-strategy"><span class="header-section-number">4</span> Training and retraining strategy</a></li>
+  <li><a href="#minimum-viable-product-progress" id="toc-minimum-viable-product-progress" class="nav-link" data-scroll-target="#minimum-viable-product-progress"><span class="header-section-number">5</span> Minimum viable product progress</a></li>
+  <li><a href="#limitations-and-risks" id="toc-limitations-and-risks" class="nav-link" data-scroll-target="#limitations-and-risks"><span class="header-section-number">6</span> Limitations and risks</a></li>
+  <li><a href="#conclusions-and-operational-implications" id="toc-conclusions-and-operational-implications" class="nav-link" data-scroll-target="#conclusions-and-operational-implications"><span class="header-section-number">7</span> Conclusions and operational implications</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility"><span class="header-section-number">8</span> Reproducibility</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">9</span> References</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Predicting Citi Bike Demand: The Role of Weather Conditions</h1>
+<p class="subtitle lead">Project Analysis Template and Preliminary EDA</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Amish Rasheed, Blessing, Kevin Martin, Masoud M. Soltani, and Tenzin </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="project-overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="project-overview"><span class="header-section-number">1</span> Project overview</h2>
+<section id="problem-statement" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="problem-statement"><span class="header-section-number">1.1</span> Problem statement</h3>
+<p>Citi Bike demand varies across time and location because of commuting patterns, seasonality, system characteristics, and potentially weather. This project will test whether weather conditions improve station-level demand forecasts after accounting for calendar, time, and station information. The effect of weather will be measured rather than assumed.</p>
+</section>
+<section id="intended-users" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="intended-users"><span class="header-section-number">1.2</span> Intended users</h3>
+<p>The primary intended users are Citi Bike operations staff who need to anticipate where bikes or empty docks may be needed. More accurate forecasts could support rebalancing and capacity planning and may indirectly improve availability for riders.</p>
+</section>
+<section id="research-questions" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="research-questions"><span class="header-section-number">1.3</span> Research questions</h3>
+<ol type="1">
+<li>How does Citi Bike demand vary by hour, day of week, season, and station?</li>
+<li>Do precipitation, temperature, or other reliable weather measurements improve predictions beyond time and station features?</li>
+<li>Do weather effects differ by time of day, season, or demand level?</li>
+<li>Which periods or stations are most difficult to predict?</li>
+</ol>
+</section>
+</section>
+<section id="data-and-study-design" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="data-and-study-design"><span class="header-section-number">2</span> Data and study design</h2>
+<section id="planned-unit-of-analysis-and-target" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="planned-unit-of-analysis-and-target"><span class="header-section-number">2.1</span> Planned unit of analysis and target</h3>
+<p>The proposed modeling table will contain one row per station-hour. The primary numeric target is planned to be the number of trip starts at a station during that hour; the team should confirm this definition before modeling. Trip ends or net station flow may be retained as secondary operational outcomes.</p>
+</section>
+<section id="data-sources" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="data-sources"><span class="header-section-number">2.2</span> Data sources</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Role in the project</th>
+<th>Current status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://citibikenyc.com/system-data">Citi Bike trip history</a> and course data</td>
+<td>Construct hourly station demand and historical temporal features</td>
+<td>Required for modeling; not included in this live-data EDA</td>
+</tr>
+<tr class="even">
+<td>Citi Bike station information</td>
+<td>Station IDs, names, locations, and capacity</td>
+<td>Current snapshot archived</td>
+</tr>
+<tr class="odd">
+<td>Citi Bike station status</td>
+<td>Bike/dock availability and service flags</td>
+<td>Current snapshot archived; repeated history still needed</td>
+</tr>
+<tr class="even">
+<td><a href="https://mrms.nssl.noaa.gov/">NOAA MRMS</a> precipitation estimates</td>
+<td>Proposed historical precipitation source for time-aligned modeling</td>
+<td>To acquire and validate</td>
+</tr>
+<tr class="odd">
+<td><a href="https://open-meteo.com/en/docs/gfs-api">Open-Meteo GFS/HRRR</a></td>
+<td>Prototype forecast grid and station-to-weather-cell mapping</td>
+<td>Reference mapping created</td>
+</tr>
+</tbody>
+</table>
+<p>The Open-Meteo lookup supplies a spatial join key but does not contain weather measurements. The final historical weather source should be selected based on coverage, reliability, and the ability to align observations to station-hour records. If MRMS and Open-Meteo serve different historical and forecasting roles, that distinction should remain explicit throughout the report.</p>
+</section>
+<section id="refreshing-the-live-data" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="refreshing-the-live-data"><span class="header-section-number">2.3</span> Refreshing the live data</h3>
+<p>The project includes one command that retrieves the real, current data used by this EDA. It downloads <code>station_information</code> and <code>station_status</code> from Citi Bike’s official GBFS feed and verifies that every current station coordinate has an HRRR weather-cell mapping. The generated <code>data/</code> directory is excluded from Git and does not need to be included in the repository; the command creates the full directory hierarchy when run from a clean checkout.</p>
+<p>From the <code>DATA 622</code> directory, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> citibike_project/refresh_live_data.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or, from inside <code>citibike_project</code>, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> refresh_live_data.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Each execution writes new gzip-compressed GBFS snapshots to UTC-partitioned folders under:</p>
+<pre class="text"><code>data/raw/station_information/year=YYYY/month=MM/day=DD/
+data/raw/station_status/year=YYYY/month=MM/day=DD/</code></pre>
+<p>The script checks <code>data/raw/weather_forecast/reference/</code> and reuses the HRRR mapping when all station IDs and coordinates still match. It contacts Open-Meteo and rebuilds the mapping only when it is missing, stations have changed, or <code>--force-weather-map</code> is supplied. A forced rebuild can take several minutes because API requests are deliberately batched and paused:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> citibike_project/refresh_live_data.py <span class="at">--force-weather-map</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For an automated run, record the source revision in each raw archive:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> citibike_project/refresh_live_data.py <span class="at">--git-sha</span> YOUR_COMMIT_SHA</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Internet access is required. After the command succeeds, render this report to analyze the newest snapshots.</p>
+</section>
+<section id="live-data-scope" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="live-data-scope"><span class="header-section-number">2.4</span> Live-data scope</h3>
+<p>The EDA below uses only current operational data: the latest archived station information and status snapshots plus the station-to-weather-cell reference. It describes a point in time and cannot establish historical demand patterns or the effect of weather on demand. Those questions require the planned station-hour trip and weather history.</p>
+</section>
+</section>
+<section id="analysis" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="analysis"><span class="header-section-number">3</span> Analysis</h2>
+<section id="exploratory-data-analysis" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">3.1</span> Exploratory data analysis</h3>
+<p>The preliminary EDA examines the current station-information and status feeds and validates the station-to-weather-cell lookup. It is an initial live-data pipeline check rather than the final station-hour analysis proposed for modeling.</p>
+<section id="setup" class="level4" data-number="3.1.1">
+<h4 data-number="3.1.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">3.1.1</span> Setup</h4>
+<div id="b5bd757b" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gzip</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="live-station-availability" class="level4" data-number="3.1.2">
+<h4 data-number="3.1.2" class="anchored" data-anchor-id="live-station-availability"><span class="header-section-number">3.1.2</span> Live station availability</h4>
+<p>The next cells read the newest locally archived information and status files. Station information supplies names, coordinates, and designed capacity; station status supplies current bike and dock availability and service flags.</p>
+<div id="40068582" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_snapshot(path):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> gzip.<span class="bu">open</span>(path, <span class="st">"rt"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.load(<span class="bu">file</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_latest_snapshot(root):</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    paths <span class="op">=</span> <span class="bu">sorted</span>(Path(root).rglob(<span class="st">"*.json.gz"</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> paths:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"No snapshots found under </span><span class="sc">{</span>root<span class="sc">}</span><span class="ss">. Run the station downloaders first."</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> paths[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> path, read_snapshot(path)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>info_path, info_archive <span class="op">=</span> read_latest_snapshot(</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/raw/station_information"</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>status_path, status_archive <span class="op">=</span> read_latest_snapshot(</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/raw/station_status"</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>station_info <span class="op">=</span> pd.DataFrame(info_archive[<span class="st">"payload"</span>][<span class="st">"data"</span>][<span class="st">"stations"</span>])</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>station_status <span class="op">=</span> pd.DataFrame(status_archive[<span class="st">"payload"</span>][<span class="st">"data"</span>][<span class="st">"stations"</span>])</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>snapshot_metadata <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"feed"</span>: [<span class="st">"station_information"</span>, <span class="st">"station_status"</span>],</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"file"</span>: [info_path.name, status_path.name],</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">"fetched_at_utc"</span>: pd.to_datetime(</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>            [info_archive[<span class="st">"fetched_at"</span>], status_archive[<span class="st">"fetched_at"</span>]],</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>            utc<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"records"</span>: [<span class="bu">len</span>(station_info), <span class="bu">len</span>(station_status)],</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>snapshot_metadata</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feed</th>
+<th data-quarto-table-cell-role="th">file</th>
+<th data-quarto-table-cell-role="th">fetched_at_utc</th>
+<th data-quarto-table-cell-role="th">records</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>station_information</td>
+<td>info_20261103T012851Z.json.gz</td>
+<td>2026-11-03 01:28:51.146677+00:00</td>
+<td>2518</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>station_status</td>
+<td>status_20261103T012851Z.json.gz</td>
+<td>2026-11-03 01:28:51.495948+00:00</td>
+<td>2518</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Join the status records to station names and locations, then check how many records matched. A status record without matching station information is retained so that feed changes remain visible.</p>
+<div id="364512d8" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>info_columns <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    column</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> column <span class="kw">in</span> [<span class="st">"station_id"</span>, <span class="st">"name"</span>, <span class="st">"lat"</span>, <span class="st">"lon"</span>, <span class="st">"capacity"</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> column <span class="kw">in</span> station_info.columns</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> station_status.merge(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    station_info[info_columns],</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">"station_id"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    validate<span class="op">=</span><span class="st">"one_to_one"</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>join_checks <span class="op">=</span> pd.Series(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"status_records"</span>: <span class="bu">len</span>(station_status),</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"information_records"</span>: <span class="bu">len</span>(station_info),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"matched_status_records"</span>: stations[<span class="st">"name"</span>].notna().<span class="bu">sum</span>(),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"unmatched_status_records"</span>: stations[<span class="st">"name"</span>].isna().<span class="bu">sum</span>(),</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"duplicate_status_ids"</span>: station_status[<span class="st">"station_id"</span>].duplicated().<span class="bu">sum</span>(),</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"duplicate_information_ids"</span>: station_info[<span class="st">"station_id"</span>].duplicated().<span class="bu">sum</span>(),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"count"</span>,</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>).to_frame()</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>join_checks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">status_records</th>
+<td>2518</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">information_records</th>
+<td>2518</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">matched_status_records</th>
+<td>2518</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">unmatched_status_records</th>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">duplicate_status_ids</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">duplicate_information_ids</th>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="data-quality-and-feed-freshness" class="level4" data-number="3.1.3">
+<h4 data-number="3.1.3" class="anchored" data-anchor-id="data-quality-and-feed-freshness"><span class="header-section-number">3.1.3</span> Data quality and feed freshness</h4>
+<p>An active station must be installed and allow both bike rentals and returns. The checks below also validate inventory fields, station capacity, and the age of each station’s most recent report relative to the archived status snapshot. Timestamps before 2020 or more than five minutes in the future are treated as invalid placeholders rather than extreme reporting delays.</p>
+<div id="858f83ca" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>flag_columns <span class="op">=</span> [<span class="st">"is_installed"</span>, <span class="st">"is_renting"</span>, <span class="st">"is_returning"</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> column <span class="kw">in</span> flag_columns:</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    stations[column] <span class="op">=</span> pd.to_numeric(stations[column], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>inventory_columns <span class="op">=</span> [</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"num_bikes_available"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"num_bikes_disabled"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"num_docks_available"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"num_docks_disabled"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> column <span class="kw">in</span> inventory_columns <span class="op">+</span> [<span class="st">"capacity"</span>]:</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    stations[column] <span class="op">=</span> pd.to_numeric(stations[column], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"active"</span>] <span class="op">=</span> stations[flag_columns].eq(<span class="dv">1</span>).<span class="bu">all</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"service_state"</span>] <span class="op">=</span> stations[<span class="st">"active"</span>].<span class="bu">map</span>(</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    {<span class="va">True</span>: <span class="st">"Active"</span>, <span class="va">False</span>: <span class="st">"Inactive"</span>}</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>status_snapshot_time <span class="op">=</span> pd.to_datetime(status_archive[<span class="st">"fetched_at"</span>], utc<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"status_reported_at_utc"</span>] <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    stations[<span class="st">"last_reported"</span>], unit<span class="op">=</span><span class="st">"s"</span>, utc<span class="op">=</span><span class="va">True</span>, errors<span class="op">=</span><span class="st">"coerce"</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"status_age_minutes"</span>] <span class="op">=</span> (</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    status_snapshot_time <span class="op">-</span> stations[<span class="st">"status_reported_at_utc"</span>]</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>).dt.total_seconds() <span class="op">/</span> <span class="dv">60</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"valid_status_timestamp"</span>] <span class="op">=</span> (</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    stations[<span class="st">"status_reported_at_utc"</span>]</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    .ge(pd.Timestamp(<span class="st">"2020-01-01"</span>, tz<span class="op">=</span><span class="st">"UTC"</span>))</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    .fillna(<span class="va">False</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> stations[<span class="st">"status_age_minutes"</span>].ge(<span class="op">-</span><span class="dv">5</span>).fillna(<span class="va">False</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"valid_status_age_minutes"</span>] <span class="op">=</span> stations[<span class="st">"status_age_minutes"</span>].where(</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    stations[<span class="st">"valid_status_timestamp"</span>]</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"accounted_inventory"</span>] <span class="op">=</span> stations[inventory_columns].<span class="bu">sum</span>(</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    axis<span class="op">=</span><span class="dv">1</span>, min_count<span class="op">=</span><span class="bu">len</span>(inventory_columns)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"capacity_gap"</span>] <span class="op">=</span> (</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    stations[<span class="st">"accounted_inventory"</span>] <span class="op">-</span> stations[<span class="st">"capacity"</span>]</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>required_columns <span class="op">=</span> [</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"station_id"</span>,</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name"</span>,</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lat"</span>,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lon"</span>,</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"capacity"</span>,</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"last_reported"</span>,</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>] <span class="op">+</span> flag_columns <span class="op">+</span> inventory_columns</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>data_quality_checks <span class="op">=</span> pd.Series(</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"records with a missing required value"</span>: (</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>            stations[required_columns].isna().<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>).<span class="bu">sum</span>()</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"records with a negative inventory count"</span>: (</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>            stations[inventory_columns].lt(<span class="dv">0</span>).<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>).<span class="bu">sum</span>()</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"invalid or placeholder status timestamps"</span>: (</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>            (<span class="op">~</span>stations[<span class="st">"valid_status_timestamp"</span>]).<span class="bu">sum</span>()</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">"valid reports more than 10 minutes old"</span>: (</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>            stations[<span class="st">"valid_status_timestamp"</span>]</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> stations[<span class="st">"status_age_minutes"</span>].gt(<span class="dv">10</span>)</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>        ).<span class="bu">sum</span>(),</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">"valid reports more than 60 minutes old"</span>: (</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>            stations[<span class="st">"valid_status_timestamp"</span>]</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> stations[<span class="st">"status_age_minutes"</span>].gt(<span class="dv">60</span>)</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>        ).<span class="bu">sum</span>(),</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">"active stations with capacity difference"</span>: (</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>            stations[<span class="st">"active"</span>] <span class="op">&amp;</span> stations[<span class="st">"capacity_gap"</span>].ne(<span class="dv">0</span>)</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>        ).<span class="bu">sum</span>(),</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>        <span class="st">"active stations with capacity difference over 2"</span>: (</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>            stations[<span class="st">"active"</span>] <span class="op">&amp;</span> stations[<span class="st">"capacity_gap"</span>].<span class="bu">abs</span>().gt(<span class="dv">2</span>)</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>        ).<span class="bu">sum</span>(),</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"station_count"</span>,</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>).to_frame()</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>data_quality_checks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">station_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">records with a missing required value</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">records with a negative inventory count</th>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">invalid or placeholder status timestamps</th>
+<td>50</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">valid reports more than 10 minutes old</th>
+<td>39</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">valid reports more than 60 minutes old</th>
+<td>39</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">active stations with capacity difference</th>
+<td>834</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">active stations with capacity difference over 2</th>
+<td>77</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Freshness is summarized separately for active and inactive stations so that placeholder timestamps from stations out of service do not distort the active network. Ages below are calculated only from valid timestamps.</p>
+<div id="728cf4e3" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>freshness_by_service <span class="op">=</span> (</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    stations.groupby(<span class="st">"service_state"</span>, sort<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        stations<span class="op">=</span>(<span class="st">"station_id"</span>, <span class="st">"size"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        valid_timestamps<span class="op">=</span>(<span class="st">"valid_status_timestamp"</span>, <span class="st">"sum"</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        invalid_timestamps<span class="op">=</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"valid_status_timestamp"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> values: (<span class="op">~</span>values).<span class="bu">sum</span>(),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        median_age_minutes<span class="op">=</span>(<span class="st">"valid_status_age_minutes"</span>, <span class="st">"median"</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        p95_age_minutes<span class="op">=</span>(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"valid_status_age_minutes"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> values: values.quantile(<span class="fl">0.95</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        maximum_age_minutes<span class="op">=</span>(<span class="st">"valid_status_age_minutes"</span>, <span class="st">"max"</span>),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>freshness_by_service</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">stations</th>
+<th data-quarto-table-cell-role="th">valid_timestamps</th>
+<th data-quarto-table-cell-role="th">invalid_timestamps</th>
+<th data-quarto-table-cell-role="th">median_age_minutes</th>
+<th data-quarto-table-cell-role="th">p95_age_minutes</th>
+<th data-quarto-table-cell-role="th">maximum_age_minutes</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">service_state</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Inactive</th>
+<td>97</td>
+<td>47</td>
+<td>50</td>
+<td>992.5</td>
+<td>6559.7</td>
+<td>157569.4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Active</th>
+<td>2421</td>
+<td>2421</td>
+<td>0</td>
+<td>1.8</td>
+<td>3.0</td>
+<td>8.1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>A difference between designed capacity and accounted inventory is a diagnostic flag, not automatically a feed error: temporary station configurations and out-of-service equipment can also create differences. The largest active differences are shown for review.</p>
+<div id="52a77a07" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>capacity_differences <span class="op">=</span> (</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    stations.loc[</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        stations[<span class="st">"active"</span>] <span class="op">&amp;</span> stations[<span class="st">"capacity_gap"</span>].ne(<span class="dv">0</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"name"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"capacity"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"accounted_inventory"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"capacity_gap"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"num_bikes_disabled"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"num_docks_disabled"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    .assign(absolute_gap<span class="op">=</span><span class="kw">lambda</span> frame: frame[<span class="st">"capacity_gap"</span>].<span class="bu">abs</span>())</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    .nlargest(<span class="dv">10</span>, <span class="st">"absolute_gap"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    .drop(columns<span class="op">=</span><span class="st">"absolute_gap"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>capacity_differences</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">capacity</th>
+<th data-quarto-table-cell-role="th">accounted_inventory</th>
+<th data-quarto-table-cell-role="th">capacity_gap</th>
+<th data-quarto-table-cell-role="th">num_bikes_disabled</th>
+<th data-quarto-table-cell-role="th">num_docks_disabled</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1834</th>
+<td>Icahn Stadium Plaza</td>
+<td>4</td>
+<td>18</td>
+<td>14</td>
+<td>17</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2260</th>
+<td>Washington St &amp; Laight St</td>
+<td>63</td>
+<td>77</td>
+<td>14</td>
+<td>6</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">786</th>
+<td>Southern Blvd &amp; E 187 St</td>
+<td>23</td>
+<td>14</td>
+<td>-9</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1283</th>
+<td>Greenwich St &amp; Hubert St</td>
+<td>35</td>
+<td>43</td>
+<td>8</td>
+<td>4</td>
+<td>38</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">589</th>
+<td>Central Park S &amp; 6 Ave</td>
+<td>73</td>
+<td>66</td>
+<td>-7</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">829</th>
+<td>Catherine St &amp; Monroe St</td>
+<td>35</td>
+<td>28</td>
+<td>-7</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">33</th>
+<td>Pacific St &amp; Sackman St</td>
+<td>19</td>
+<td>13</td>
+<td>-6</td>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">112</th>
+<td>112 St &amp; Northern Blvd</td>
+<td>20</td>
+<td>14</td>
+<td>-6</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">283</th>
+<td>Lexington Ave &amp; E 127 St</td>
+<td>33</td>
+<td>27</td>
+<td>-6</td>
+<td>10</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">681</th>
+<td>1 Ave &amp; E 6 St</td>
+<td>94</td>
+<td>88</td>
+<td>-6</td>
+<td>4</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="change-between-archived-snapshots" class="level4" data-number="3.1.4">
+<h4 data-number="3.1.4" class="anchored" data-anchor-id="change-between-archived-snapshots"><span class="header-section-number">3.1.4</span> Change between archived snapshots</h4>
+<p>When at least two status archives exist, the next comparison measures how availability changed between the two newest observations. These changes are a pipeline and system-activity check; they are <strong>not</strong> trip demand because they can combine rentals, returns, rebalancing, maintenance, and feed corrections.</p>
+<div id="f1bceb8c" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>status_paths <span class="op">=</span> <span class="bu">sorted</span>(Path(<span class="st">"data/raw/station_status"</span>).rglob(<span class="st">"*.json.gz"</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(status_paths) <span class="op">&gt;=</span> <span class="dv">2</span>:</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    previous_status_path, current_status_path <span class="op">=</span> status_paths[<span class="op">-</span><span class="dv">2</span>:]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    previous_status_archive <span class="op">=</span> read_snapshot(previous_status_path)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    current_status_archive <span class="op">=</span> read_snapshot(current_status_path)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    previous_status <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        previous_status_archive[<span class="st">"payload"</span>][<span class="st">"data"</span>][<span class="st">"stations"</span>]</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    current_status <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        current_status_archive[<span class="st">"payload"</span>][<span class="st">"data"</span>][<span class="st">"stations"</span>]</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    station_changes <span class="op">=</span> previous_status[</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"station_id"</span>, <span class="st">"num_bikes_available"</span>, <span class="st">"num_docks_available"</span>]</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    ].merge(</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        current_status[</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>            [<span class="st">"station_id"</span>, <span class="st">"num_bikes_available"</span>, <span class="st">"num_docks_available"</span>]</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        on<span class="op">=</span><span class="st">"station_id"</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        how<span class="op">=</span><span class="st">"outer"</span>,</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        suffixes<span class="op">=</span>(<span class="st">"_previous"</span>, <span class="st">"_current"</span>),</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>        indicator<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        validate<span class="op">=</span><span class="st">"one_to_one"</span>,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    station_changes <span class="op">=</span> station_changes.merge(</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        station_info[[<span class="st">"station_id"</span>, <span class="st">"name"</span>]],</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        on<span class="op">=</span><span class="st">"station_id"</span>,</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>        validate<span class="op">=</span><span class="st">"one_to_one"</span>,</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    matched_changes <span class="op">=</span> station_changes.loc[</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>        station_changes[<span class="st">"_merge"</span>].eq(<span class="st">"both"</span>)</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    ].copy()</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    matched_changes[<span class="st">"bike_change"</span>] <span class="op">=</span> (</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>        matched_changes[<span class="st">"num_bikes_available_current"</span>]</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span> matched_changes[<span class="st">"num_bikes_available_previous"</span>]</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    matched_changes[<span class="st">"dock_change"</span>] <span class="op">=</span> (</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>        matched_changes[<span class="st">"num_docks_available_current"</span>]</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span> matched_changes[<span class="st">"num_docks_available_previous"</span>]</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    previous_time <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>        previous_status_archive[<span class="st">"fetched_at"</span>], utc<span class="op">=</span><span class="va">True</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>    current_time <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>        current_status_archive[<span class="st">"fetched_at"</span>], utc<span class="op">=</span><span class="va">True</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>    elapsed_minutes <span class="op">=</span> (current_time <span class="op">-</span> previous_time).total_seconds() <span class="op">/</span> <span class="dv">60</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    snapshot_change_summary <span class="op">=</span> pd.Series(</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>            <span class="st">"previous snapshot (UTC)"</span>: previous_time,</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>            <span class="st">"current snapshot (UTC)"</span>: current_time,</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>            <span class="st">"elapsed minutes"</span>: <span class="bu">round</span>(elapsed_minutes, <span class="dv">1</span>),</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>            <span class="st">"stations in both snapshots"</span>: <span class="bu">len</span>(matched_changes),</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">"stations added"</span>: station_changes[<span class="st">"_merge"</span>].eq(<span class="st">"right_only"</span>).<span class="bu">sum</span>(),</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>            <span class="st">"stations removed"</span>: station_changes[<span class="st">"_merge"</span>].eq(<span class="st">"left_only"</span>).<span class="bu">sum</span>(),</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>            <span class="st">"stations with a bike-count change"</span>: (</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>                matched_changes[<span class="st">"bike_change"</span>].ne(<span class="dv">0</span>).<span class="bu">sum</span>()</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>            ),</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>            <span class="st">"sum of absolute bike-count changes"</span>: (</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>                matched_changes[<span class="st">"bike_change"</span>].<span class="bu">abs</span>().<span class="bu">sum</span>()</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>            ),</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>            <span class="st">"net change in available bikes"</span>: matched_changes[<span class="st">"bike_change"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">"value"</span>,</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>    ).to_frame()</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>    matched_changes <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>    snapshot_change_summary <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"value"</span>: [<span class="st">"At least two status snapshots are required."</span>]},</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[<span class="st">"snapshot comparison"</span>],</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>snapshot_change_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">previous snapshot (UTC)</th>
+<td>2026-11-03 00:59:21.060141+00:00</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">current snapshot (UTC)</th>
+<td>2026-11-03 01:28:51.495948+00:00</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">elapsed minutes</th>
+<td>29.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">stations in both snapshots</th>
+<td>2518</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">stations added</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">stations removed</th>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">stations with a bike-count change</th>
+<td>1284</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">sum of absolute bike-count changes</th>
+<td>2846</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">net change in available bikes</th>
+<td>256</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="2ef1fe88" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> matched_changes.empty:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    changed_bikes <span class="op">=</span> matched_changes.loc[</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        matched_changes[<span class="st">"bike_change"</span>].ne(<span class="dv">0</span>), <span class="st">"bike_change"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    limit <span class="op">=</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">int</span>(changed_bikes.<span class="bu">abs</span>().quantile(<span class="fl">0.99</span>)))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    ax.hist(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        changed_bikes.clip(<span class="op">-</span>limit, limit),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        bins<span class="op">=</span><span class="bu">range</span>(<span class="op">-</span>limit, limit <span class="op">+</span> <span class="dv">2</span>),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"#0057B8"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    ax.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    ax.<span class="bu">set</span>(</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="st">"Change in available bikes between the two latest snapshots"</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        xlabel<span class="op">=</span>(</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Change in bikes available per station "</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"(values clipped at the 99th percentile: ±</span><span class="sc">{</span>limit<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        ylabel<span class="op">=</span><span class="st">"Number of stations"</span>,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    fig.tight_layout()</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="citibike_demand_project_proposal_files/figure-html/cell-9-output-1.png" width="759" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The stations with the largest absolute changes provide a quick check that the aggregate result is not driven by a single record.</p>
+<div id="082351f0" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> matched_changes.empty:</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    largest_changes <span class="op">=</span> (</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        matched_changes.assign(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            absolute_bike_change<span class="op">=</span><span class="kw">lambda</span> frame: frame[<span class="st">"bike_change"</span>].<span class="bu">abs</span>()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        .nlargest(<span class="dv">10</span>, <span class="st">"absolute_bike_change"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>            [</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"name"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                <span class="st">"num_bikes_available_previous"</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">"num_bikes_available_current"</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">"bike_change"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">"dock_change"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>            ]</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    largest_changes <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>largest_changes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">num_bikes_available_previous</th>
+<th data-quarto-table-cell-role="th">num_bikes_available_current</th>
+<th data-quarto-table-cell-role="th">bike_change</th>
+<th data-quarto-table-cell-role="th">dock_change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1334</th>
+<td>Greenwich St &amp; W Houston St</td>
+<td>49</td>
+<td>74</td>
+<td>25</td>
+<td>-25</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">316</th>
+<td>56 Ave &amp; 92 St</td>
+<td>0</td>
+<td>24</td>
+<td>24</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2188</th>
+<td>W Broadway &amp; Spring St</td>
+<td>64</td>
+<td>41</td>
+<td>-23</td>
+<td>23</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2506</th>
+<td>Crescent St &amp; 30 Ave</td>
+<td>0</td>
+<td>18</td>
+<td>18</td>
+<td>-17</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1415</th>
+<td>W 20 St &amp; 8 Ave</td>
+<td>41</td>
+<td>58</td>
+<td>17</td>
+<td>-8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">487</th>
+<td>Pier 61 at Chelsea Piers</td>
+<td>19</td>
+<td>4</td>
+<td>-15</td>
+<td>14</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">942</th>
+<td>W 44 St &amp; 11 Ave</td>
+<td>48</td>
+<td>62</td>
+<td>14</td>
+<td>-13</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1766</th>
+<td>W 52 St &amp; 6 Ave</td>
+<td>0</td>
+<td>14</td>
+<td>14</td>
+<td>-15</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">146</th>
+<td>W 27 St &amp; 6 Ave</td>
+<td>22</td>
+<td>9</td>
+<td>-13</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1299</th>
+<td>E 2 St &amp; Ave B</td>
+<td>39</td>
+<td>52</td>
+<td>13</td>
+<td>-13</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="operational-availability" class="level4" data-number="3.1.5">
+<h4 data-number="3.1.5" class="anchored" data-anchor-id="operational-availability"><span class="header-section-number">3.1.5</span> Operational availability</h4>
+<p>Bike share is calculated from currently available bikes and docks; it is not a historical utilization rate. In addition to exact stockouts, the summary uses 10% and 90% thresholds to identify stations approaching an operational constraint. E-bike share is calculated among all currently available bikes.</p>
+<div id="16a253e7" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"available_slots"</span>] <span class="op">=</span> (</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    stations[<span class="st">"num_bikes_available"</span>] <span class="op">+</span> stations[<span class="st">"num_docks_available"</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>stations[<span class="st">"bike_share"</span>] <span class="op">=</span> (</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    stations[<span class="st">"num_bikes_available"</span>]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    .div(stations[<span class="st">"available_slots"</span>].where(stations[<span class="st">"available_slots"</span>].gt(<span class="dv">0</span>)))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>active <span class="op">=</span> stations.loc[stations[<span class="st">"active"</span>]].copy()</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>ebikes_available <span class="op">=</span> (</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    active[<span class="st">"num_ebikes_available"</span>].<span class="bu">sum</span>()</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"num_ebikes_available"</span> <span class="kw">in</span> active.columns</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> pd.NA</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>ebike_share <span class="op">=</span> (</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    ebikes_available <span class="op">/</span> active[<span class="st">"num_bikes_available"</span>].<span class="bu">sum</span>()</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.notna(ebikes_available) <span class="kw">and</span> active[<span class="st">"num_bikes_available"</span>].<span class="bu">sum</span>() <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> pd.NA</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>network_summary <span class="op">=</span> pd.Series(</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"stations_reporting"</span>: <span class="bu">len</span>(stations),</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"active_stations"</span>: <span class="bu">len</span>(active),</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"bikes_available"</span>: active[<span class="st">"num_bikes_available"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"e-bikes_available"</span>: ebikes_available,</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"e-bike_share_of_available_bikes"</span>: ebike_share,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">"docks_available"</span>: active[<span class="st">"num_docks_available"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"stations_with_no_bikes"</span>: active[<span class="st">"num_bikes_available"</span>].eq(<span class="dv">0</span>).<span class="bu">sum</span>(),</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"stations_at_or_below_10%_bike_share"</span>: active[<span class="st">"bike_share"</span>].le(<span class="fl">0.10</span>).<span class="bu">sum</span>(),</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">"stations_with_no_docks"</span>: active[<span class="st">"num_docks_available"</span>].eq(<span class="dv">0</span>).<span class="bu">sum</span>(),</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"stations_at_or_above_90%_bike_share"</span>: active[<span class="st">"bike_share"</span>].ge(<span class="fl">0.90</span>).<span class="bu">sum</span>(),</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">"disabled_bikes"</span>: active[<span class="st">"num_bikes_disabled"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"disabled_docks"</span>: active[<span class="st">"num_docks_disabled"</span>].<span class="bu">sum</span>(),</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"median_bike_share"</span>: active[<span class="st">"bike_share"</span>].median(),</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"value"</span>,</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>).to_frame()</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>percentage_metrics <span class="op">=</span> {</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"e-bike_share_of_available_bikes"</span>,</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"median_bike_share"</span>,</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>network_summary_display <span class="op">=</span> network_summary.copy()</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>network_summary_display[<span class="st">"value"</span>] <span class="op">=</span> [</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.1%}</span><span class="ss">"</span> <span class="cf">if</span> metric <span class="kw">in</span> percentage_metrics <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:,.0f}</span><span class="ss">"</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric, value <span class="kw">in</span> network_summary[<span class="st">"value"</span>].items()</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>network_summary_display</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">stations_reporting</th>
+<td>2,518</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">active_stations</th>
+<td>2,421</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">bikes_available</th>
+<td>30,716</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">e-bikes_available</th>
+<td>12,155</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">e-bike_share_of_available_bikes</th>
+<td>39.6%</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">docks_available</th>
+<td>31,214</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">stations_with_no_bikes</th>
+<td>168</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">stations_at_or_below_10%_bike_share</th>
+<td>399</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">stations_with_no_docks</th>
+<td>224</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">stations_at_or_above_90%_bike_share</th>
+<td>459</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">disabled_bikes</th>
+<td>9,384</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">disabled_docks</th>
+<td>382</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">median_bike_share</th>
+<td>51.1%</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Group stations into operational availability bands. Exact empty and full stations are separated from those that are close to those limits.</p>
+<div id="a2e8c716" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>active[<span class="st">"availability_band"</span>] <span class="op">=</span> <span class="st">"Balanced (&gt;10%-&lt;90%)"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>active.loc[</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    active[<span class="st">"bike_share"</span>].gt(<span class="dv">0</span>) <span class="op">&amp;</span> active[<span class="st">"bike_share"</span>].le(<span class="fl">0.10</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"availability_band"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> <span class="st">"Near empty (&gt;0</span><span class="sc">%-10%</span><span class="st">)"</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>active.loc[active[<span class="st">"bike_share"</span>].eq(<span class="dv">0</span>), <span class="st">"availability_band"</span>] <span class="op">=</span> <span class="st">"Empty (0%)"</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>active.loc[</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    active[<span class="st">"bike_share"</span>].ge(<span class="fl">0.90</span>) <span class="op">&amp;</span> active[<span class="st">"bike_share"</span>].lt(<span class="dv">1</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"availability_band"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> <span class="st">"Near full (90%-&lt;100%)"</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>active.loc[active[<span class="st">"bike_share"</span>].eq(<span class="dv">1</span>), <span class="st">"availability_band"</span>] <span class="op">=</span> <span class="st">"Full (100%)"</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>active.loc[</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    active[<span class="st">"bike_share"</span>].isna(), <span class="st">"availability_band"</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>] <span class="op">=</span> <span class="st">"No available bikes or docks"</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>availability_order <span class="op">=</span> [</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Empty (0%)"</span>,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Near empty (&gt;0</span><span class="sc">%-10%</span><span class="st">)"</span>,</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Balanced (&gt;10%-&lt;90%)"</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Near full (90%-&lt;100%)"</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Full (100%)"</span>,</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"No available bikes or docks"</span>,</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>availability_counts <span class="op">=</span> (</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    active[<span class="st">"availability_band"</span>]</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    .reindex(availability_order, fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.bar(</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    availability_counts.index,</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    availability_counts.values,</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>[<span class="st">"#B2182B"</span>, <span class="st">"#EF8A62"</span>, <span class="st">"#67A9CF"</span>, <span class="st">"#92C5DE"</span>, <span class="st">"#2166AC"</span>, <span class="st">"#777777"</span>],</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>ax.bar_label(bars, padding<span class="op">=</span><span class="dv">3</span>, fmt<span class="op">=</span><span class="st">"%.0f"</span>)</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Active stations by operational availability band"</span>,</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="st">""</span>,</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="st">"Number of stations"</span>,</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"x"</span>, rotation<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> label <span class="kw">in</span> ax.get_xticklabels():</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>    label.set_horizontalalignment(<span class="st">"right"</span>)</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="citibike_demand_project_proposal_files/figure-html/cell-12-output-1.png" width="760" height="378" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The distribution below shows whether active stations were relatively empty, balanced, or relatively full when the status snapshot was collected.</p>
+<div id="6fda4a6b" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ax.hist(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    active[<span class="st">"bike_share"</span>].dropna(),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"#0057B8"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Bike availability across active stations"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="st">"Share of currently available slots containing a bike"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="st">"Number of stations"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(<span class="kw">lambda</span> value, position: <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.0%}</span><span class="ss">"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="citibike_demand_project_proposal_files/figure-html/cell-13-output-1.png" width="759" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To avoid ranking large stations highly simply because of their capacity, the table below prioritizes the largest stations already near an empty or full constraint and reports both raw counts and capacity-normalized bike share.</p>
+<div id="1aa2bf1f" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>near_empty <span class="op">=</span> (</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    active.loc[active[<span class="st">"bike_share"</span>].le(<span class="fl">0.10</span>)]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    .nlargest(<span class="dv">10</span>, <span class="st">"available_slots"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    .assign(operational_risk<span class="op">=</span><span class="st">"At or below 10% bike share"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>near_full <span class="op">=</span> (</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    active.loc[active[<span class="st">"bike_share"</span>].ge(<span class="fl">0.90</span>)]</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    .nlargest(<span class="dv">10</span>, <span class="st">"available_slots"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    .assign(operational_risk<span class="op">=</span><span class="st">"At or above 90% bike share"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>operational_extremes <span class="op">=</span> pd.concat([near_empty, near_full], ignore_index<span class="op">=</span><span class="va">True</span>)[</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"operational_risk"</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"num_bikes_available"</span>,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"num_docks_available"</span>,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"available_slots"</span>,</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"bike_share"</span>,</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>operational_extremes.style.<span class="bu">format</span>(</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"bike_share"</span>: <span class="st">"</span><span class="sc">{:.1%}</span><span class="st">"</span>,</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<style type="text/css">
+</style>
+
+<table id="T_81f0d" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_81f0d_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">operational_risk</th>
+<th id="T_81f0d_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">name</th>
+<th id="T_81f0d_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">num_bikes_available</th>
+<th id="T_81f0d_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">num_docks_available</th>
+<th id="T_81f0d_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">available_slots</th>
+<th id="T_81f0d_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">bike_share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th id="T_81f0d_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</th>
+<td id="T_81f0d_row0_col0" class="data row0 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row0_col1" class="data row0 col1">E 40 St &amp; Park Ave</td>
+<td id="T_81f0d_row0_col2" class="data row0 col2">0</td>
+<td id="T_81f0d_row0_col3" class="data row0 col3">114</td>
+<td id="T_81f0d_row0_col4" class="data row0 col4">114</td>
+<td id="T_81f0d_row0_col5" class="data row0 col5">0.0%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</th>
+<td id="T_81f0d_row1_col0" class="data row1 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row1_col1" class="data row1 col1">Park Ave &amp; E 41 St</td>
+<td id="T_81f0d_row1_col2" class="data row1 col2">0</td>
+<td id="T_81f0d_row1_col3" class="data row1 col3">99</td>
+<td id="T_81f0d_row1_col4" class="data row1 col4">99</td>
+<td id="T_81f0d_row1_col5" class="data row1 col5">0.0%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</th>
+<td id="T_81f0d_row2_col0" class="data row2 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row2_col1" class="data row2 col1">Broadway &amp; E 14 St</td>
+<td id="T_81f0d_row2_col2" class="data row2 col2">3</td>
+<td id="T_81f0d_row2_col3" class="data row2 col3">95</td>
+<td id="T_81f0d_row2_col4" class="data row2 col4">98</td>
+<td id="T_81f0d_row2_col5" class="data row2 col5">3.1%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</th>
+<td id="T_81f0d_row3_col0" class="data row3 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row3_col1" class="data row3 col1">Broadway &amp; W 48 St</td>
+<td id="T_81f0d_row3_col2" class="data row3 col2">0</td>
+<td id="T_81f0d_row3_col3" class="data row3 col3">96</td>
+<td id="T_81f0d_row3_col4" class="data row3 col4">96</td>
+<td id="T_81f0d_row3_col5" class="data row3 col5">0.0%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</th>
+<td id="T_81f0d_row4_col0" class="data row4 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row4_col1" class="data row4 col1">9 Ave &amp; W 33 St</td>
+<td id="T_81f0d_row4_col2" class="data row4 col2">5</td>
+<td id="T_81f0d_row4_col3" class="data row4 col3">86</td>
+<td id="T_81f0d_row4_col4" class="data row4 col4">91</td>
+<td id="T_81f0d_row4_col5" class="data row4 col5">5.5%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</th>
+<td id="T_81f0d_row5_col0" class="data row5 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row5_col1" class="data row5 col1">E 11 St &amp; Broadway</td>
+<td id="T_81f0d_row5_col2" class="data row5 col2">3</td>
+<td id="T_81f0d_row5_col3" class="data row5 col3">88</td>
+<td id="T_81f0d_row5_col4" class="data row5 col4">91</td>
+<td id="T_81f0d_row5_col5" class="data row5 col5">3.3%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">6</th>
+<td id="T_81f0d_row6_col0" class="data row6 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row6_col1" class="data row6 col1">Broadway &amp; W 29 St</td>
+<td id="T_81f0d_row6_col2" class="data row6 col2">9</td>
+<td id="T_81f0d_row6_col3" class="data row6 col3">81</td>
+<td id="T_81f0d_row6_col4" class="data row6 col4">90</td>
+<td id="T_81f0d_row6_col5" class="data row6 col5">10.0%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</th>
+<td id="T_81f0d_row7_col0" class="data row7 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row7_col1" class="data row7 col1">E 40 St &amp; 5 Ave</td>
+<td id="T_81f0d_row7_col2" class="data row7 col2">3</td>
+<td id="T_81f0d_row7_col3" class="data row7 col3">86</td>
+<td id="T_81f0d_row7_col4" class="data row7 col4">89</td>
+<td id="T_81f0d_row7_col5" class="data row7 col5">3.4%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</th>
+<td id="T_81f0d_row8_col0" class="data row8 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row8_col1" class="data row8 col1">1 Ave &amp; E 44 St</td>
+<td id="T_81f0d_row8_col2" class="data row8 col2">2</td>
+<td id="T_81f0d_row8_col3" class="data row8 col3">85</td>
+<td id="T_81f0d_row8_col4" class="data row8 col4">87</td>
+<td id="T_81f0d_row8_col5" class="data row8 col5">2.3%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">9</th>
+<td id="T_81f0d_row9_col0" class="data row9 col0">At or below 10% bike share</td>
+<td id="T_81f0d_row9_col1" class="data row9 col1">Broadway &amp; E 19 St</td>
+<td id="T_81f0d_row9_col2" class="data row9 col2">5</td>
+<td id="T_81f0d_row9_col3" class="data row9 col3">80</td>
+<td id="T_81f0d_row9_col4" class="data row9 col4">85</td>
+<td id="T_81f0d_row9_col5" class="data row9 col5">5.9%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">10</th>
+<td id="T_81f0d_row10_col0" class="data row10 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row10_col1" class="data row10 col1">W 41 St &amp; 8 Ave</td>
+<td id="T_81f0d_row10_col2" class="data row10 col2">87</td>
+<td id="T_81f0d_row10_col3" class="data row10 col3">3</td>
+<td id="T_81f0d_row10_col4" class="data row10 col4">90</td>
+<td id="T_81f0d_row10_col5" class="data row10 col5">96.7%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">11</th>
+<td id="T_81f0d_row11_col0" class="data row11 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row11_col1" class="data row11 col1">Riverside Blvd &amp; W 67 St</td>
+<td id="T_81f0d_row11_col2" class="data row11 col2">78</td>
+<td id="T_81f0d_row11_col3" class="data row11 col3">0</td>
+<td id="T_81f0d_row11_col4" class="data row11 col4">78</td>
+<td id="T_81f0d_row11_col5" class="data row11 col5">100.0%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">12</th>
+<td id="T_81f0d_row12_col0" class="data row12 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row12_col1" class="data row12 col1">E 2 St &amp; 2 Ave</td>
+<td id="T_81f0d_row12_col2" class="data row12 col2">73</td>
+<td id="T_81f0d_row12_col3" class="data row12 col3">4</td>
+<td id="T_81f0d_row12_col4" class="data row12 col4">77</td>
+<td id="T_81f0d_row12_col5" class="data row12 col5">94.8%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">13</th>
+<td id="T_81f0d_row13_col0" class="data row13 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row13_col1" class="data row13 col1">7 Ave S &amp; Bleecker St</td>
+<td id="T_81f0d_row13_col2" class="data row13 col2">74</td>
+<td id="T_81f0d_row13_col3" class="data row13 col3">2</td>
+<td id="T_81f0d_row13_col4" class="data row13 col4">76</td>
+<td id="T_81f0d_row13_col5" class="data row13 col5">97.4%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">14</th>
+<td id="T_81f0d_row14_col0" class="data row14 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row14_col1" class="data row14 col1">Greenwich St &amp; W Houston St</td>
+<td id="T_81f0d_row14_col2" class="data row14 col2">74</td>
+<td id="T_81f0d_row14_col3" class="data row14 col3">0</td>
+<td id="T_81f0d_row14_col4" class="data row14 col4">74</td>
+<td id="T_81f0d_row14_col5" class="data row14 col5">100.0%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">15</th>
+<td id="T_81f0d_row15_col0" class="data row15 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row15_col1" class="data row15 col1">Water St &amp; Fletcher St</td>
+<td id="T_81f0d_row15_col2" class="data row15 col2">67</td>
+<td id="T_81f0d_row15_col3" class="data row15 col3">7</td>
+<td id="T_81f0d_row15_col4" class="data row15 col4">74</td>
+<td id="T_81f0d_row15_col5" class="data row15 col5">90.5%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">16</th>
+<td id="T_81f0d_row16_col0" class="data row16 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row16_col1" class="data row16 col1">3 St &amp; 3 Ave</td>
+<td id="T_81f0d_row16_col2" class="data row16 col2">67</td>
+<td id="T_81f0d_row16_col3" class="data row16 col3">6</td>
+<td id="T_81f0d_row16_col4" class="data row16 col4">73</td>
+<td id="T_81f0d_row16_col5" class="data row16 col5">91.8%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">17</th>
+<td id="T_81f0d_row17_col0" class="data row17 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row17_col1" class="data row17 col1">West Thames St</td>
+<td id="T_81f0d_row17_col2" class="data row17 col2">72</td>
+<td id="T_81f0d_row17_col3" class="data row17 col3">0</td>
+<td id="T_81f0d_row17_col4" class="data row17 col4">72</td>
+<td id="T_81f0d_row17_col5" class="data row17 col5">100.0%</td>
+</tr>
+<tr class="odd">
+<th id="T_81f0d_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">18</th>
+<td id="T_81f0d_row18_col0" class="data row18 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row18_col1" class="data row18 col1">Kent Ave &amp; N 7 St</td>
+<td id="T_81f0d_row18_col2" class="data row18 col2">72</td>
+<td id="T_81f0d_row18_col3" class="data row18 col3">0</td>
+<td id="T_81f0d_row18_col4" class="data row18 col4">72</td>
+<td id="T_81f0d_row18_col5" class="data row18 col5">100.0%</td>
+</tr>
+<tr class="even">
+<th id="T_81f0d_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">19</th>
+<td id="T_81f0d_row19_col0" class="data row19 col0">At or above 90% bike share</td>
+<td id="T_81f0d_row19_col1" class="data row19 col1">Greenwich St &amp; Christopher St</td>
+<td id="T_81f0d_row19_col2" class="data row19 col2">70</td>
+<td id="T_81f0d_row19_col3" class="data row19 col3">0</td>
+<td id="T_81f0d_row19_col4" class="data row19 col4">70</td>
+<td id="T_81f0d_row19_col5" class="data row19 col5">100.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="weather-grid-coverage" class="level4" data-number="3.1.6">
+<h4 data-number="3.1.6" class="anchored" data-anchor-id="weather-grid-coverage"><span class="header-section-number">3.1.6</span> Weather-grid coverage</h4>
+<p>The weather reference files assign every station coordinate to an HRRR grid cell. First, check the configuration and whether the lookup covers the current station-information and station-status records.</p>
+<div id="ad485dc0" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>weather_reference_directory <span class="op">=</span> Path(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/raw/weather_forecast/reference"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>weather_lookup <span class="op">=</span> pd.read_csv(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    weather_reference_directory <span class="op">/</span> <span class="st">"station_weather_lookup.csv"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    dtype<span class="op">=</span>{<span class="st">"station_id"</span>: <span class="st">"string"</span>},</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    weather_reference_directory <span class="op">/</span> <span class="st">"hrrr_locations.json"</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">"utf-8"</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    weather_configuration <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>weather_locations <span class="op">=</span> pd.DataFrame(weather_configuration[<span class="st">"locations"</span>])</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>station_weather <span class="op">=</span> stations.merge(</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    weather_lookup[[<span class="st">"station_id"</span>, <span class="st">"location_id"</span>]],</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">"station_id"</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    validate<span class="op">=</span><span class="st">"one_to_one"</span>,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>weather_coverage <span class="op">=</span> pd.Series(</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"weather_model"</span>: weather_configuration[<span class="st">"model"</span>],</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"weather_cells"</span>: weather_lookup[<span class="st">"location_id"</span>].nunique(),</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"stations_in_lookup"</span>: weather_lookup[<span class="st">"station_id"</span>].nunique(),</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"status_stations_with_weather_cell"</span>: (</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>            station_weather[<span class="st">"location_id"</span>].notna().<span class="bu">sum</span>()</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"status_stations_without_weather_cell"</span>: (</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>            station_weather[<span class="st">"location_id"</span>].isna().<span class="bu">sum</span>()</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">"median_stations_per_weather_cell"</span>: (</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>            weather_lookup.groupby(<span class="st">"location_id"</span>)[<span class="st">"station_id"</span>].nunique().median()</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"value"</span>,</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>).to_frame()</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>weather_coverage</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">weather_model</th>
+<td>gfs_hrrr</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">weather_cells</th>
+<td>52</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">stations_in_lookup</th>
+<td>2518</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">status_stations_with_weather_cell</th>
+<td>2518</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">status_stations_without_weather_cell</th>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">median_stations_per_weather_cell</th>
+<td>42.5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Aggregate current bike and dock availability to the same weather-cell level. This is the structure a later forecast model can use to join one weather row to multiple nearby Citi Bike stations.</p>
+<div id="628e1b48" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>active_station_weather <span class="op">=</span> station_weather.loc[</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    station_weather[<span class="st">"active"</span>] <span class="op">&amp;</span> station_weather[<span class="st">"location_id"</span>].notna()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>].copy()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>weather_cell_status <span class="op">=</span> (</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    active_station_weather.groupby(<span class="st">"location_id"</span>, as_index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    .agg(</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        station_count<span class="op">=</span>(<span class="st">"station_id"</span>, <span class="st">"nunique"</span>),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        bikes_available<span class="op">=</span>(<span class="st">"num_bikes_available"</span>, <span class="st">"sum"</span>),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        docks_available<span class="op">=</span>(<span class="st">"num_docks_available"</span>, <span class="st">"sum"</span>),</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>weather_cell_status[<span class="st">"bike_share"</span>] <span class="op">=</span> (</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    weather_cell_status[<span class="st">"bikes_available"</span>]</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">/</span> (</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        weather_cell_status[<span class="st">"bikes_available"</span>]</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> weather_cell_status[<span class="st">"docks_available"</span>]</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    ).where(</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>        (</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>            weather_cell_status[<span class="st">"bikes_available"</span>]</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> weather_cell_status[<span class="st">"docks_available"</span>]</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>        ).gt(<span class="dv">0</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>weather_cell_status.describe().T</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">station_count</th>
+<td>52.0</td>
+<td>46.557692</td>
+<td>35.871455</td>
+<td>1.000000</td>
+<td>12.000000</td>
+<td>41.000000</td>
+<td>70.000000</td>
+<td>131.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">bikes_available</th>
+<td>52.0</td>
+<td>590.692308</td>
+<td>701.461347</td>
+<td>5.000000</td>
+<td>104.250000</td>
+<td>414.500000</td>
+<td>885.000000</td>
+<td>3392.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">docks_available</th>
+<td>52.0</td>
+<td>600.269231</td>
+<td>861.499175</td>
+<td>8.000000</td>
+<td>99.000000</td>
+<td>378.500000</td>
+<td>798.000000</td>
+<td>4739.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">bike_share</th>
+<td>52.0</td>
+<td>0.512588</td>
+<td>0.172977</td>
+<td>0.140732</td>
+<td>0.416232</td>
+<td>0.533195</td>
+<td>0.645023</td>
+<td>0.834646</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The map below summarizes current availability at weather-cell resolution. Point size represents the number of active Citi Bike stations assigned to a cell, and color represents the share of available slots containing a bike. The plotted coordinates are representative API request locations from the reference file, not exact HRRR cell centroids.</p>
+<div id="24de414d" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>weather_cell_map <span class="op">=</span> weather_locations.merge(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    weather_cell_status,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">"location_id"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"inner"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    validate<span class="op">=</span><span class="st">"one_to_one"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> ax.scatter(</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    weather_cell_map[<span class="st">"longitude"</span>],</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    weather_cell_map[<span class="st">"latitude"</span>],</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="dv">20</span> <span class="op">+</span> <span class="dv">8</span> <span class="op">*</span> weather_cell_map[<span class="st">"station_count"</span>],</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    c<span class="op">=</span>weather_cell_map[<span class="st">"bike_share"</span>],</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"RdYlBu_r"</span>,</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    vmax<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>colorbar <span class="op">=</span> fig.colorbar(points, ax<span class="op">=</span>ax, shrink<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>colorbar.set_label(<span class="st">"Share of available slots containing a bike"</span>)</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>colorbar.ax.yaxis.set_major_formatter(</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> value, position: <span class="ss">f"</span><span class="sc">{</span>value<span class="sc">:.0%}</span><span class="ss">"</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Current Citi Bike availability by HRRR weather cell"</span>,</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="st">"Longitude"</span>,</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="st">"Latitude"</span>,</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="citibike_demand_project_proposal_files/figure-html/cell-17-output-1.png" width="661" height="662" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="preliminary-eda-summary" class="level4" data-number="3.1.7">
+<h4 data-number="3.1.7" class="anchored" data-anchor-id="preliminary-eda-summary"><span class="header-section-number">3.1.7</span> Preliminary EDA summary</h4>
+<p>The live data are sufficient to verify ingestion, station joins, status metrics, and weather-cell coverage and to describe current bike availability. They are not sufficient to answer the project’s central prediction question because the status data contain only a point-in-time snapshot and the weather reference contains locations rather than historical weather values.</p>
+</section>
+</section>
+<section id="feature-engineering-template" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="feature-engineering-template"><span class="header-section-number">3.2</span> Feature engineering template</h3>
+<section id="target-construction" class="level4" data-number="3.2.1">
+<h4 data-number="3.2.1" class="anchored" data-anchor-id="target-construction"><span class="header-section-number">3.2.1</span> Target construction</h4>
+<p>Document the final target precisely before fitting models.</p>
+<ul>
+<li><strong>Proposed target:</strong> hourly trip starts per station.</li>
+<li><strong>Time zone:</strong> convert and aggregate consistently in <code>America/New_York</code>, including daylight-saving transitions.</li>
+<li><strong>Zero-demand rows:</strong> construct a complete station-hour panel so hours with no trips are represented rather than omitted.</li>
+<li><strong>Secondary outcomes:</strong> consider trip ends, net bike flow, or an indicator for unusually high demand if operationally useful.</li>
+</ul>
+</section>
+<section id="baseline-predictors" class="level4" data-number="3.2.2">
+<h4 data-number="3.2.2" class="anchored" data-anchor-id="baseline-predictors"><span class="header-section-number">3.2.2</span> Baseline predictors</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature group</th>
+<th>Candidate variables</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Calendar</td>
+<td>Hour, day of week, weekend, month, season, holiday</td>
+<td>Encode cyclical hour/month effects where appropriate</td>
+</tr>
+<tr class="even">
+<td>Station</td>
+<td>Station ID, capacity, latitude/longitude, region</td>
+<td>Use only attributes valid at the prediction time</td>
+</tr>
+<tr class="odd">
+<td>Demand history</td>
+<td>Previous hour/day/week demand, rolling averages</td>
+<td>Lag all values to prevent target leakage</td>
+</tr>
+<tr class="even">
+<td>System state</td>
+<td>Bikes and docks available</td>
+<td>Use only if a real forecast would have the value at scoring time</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="weather-predictors" class="level4" data-number="3.2.3">
+<h4 data-number="3.2.3" class="anchored" data-anchor-id="weather-predictors"><span class="header-section-number">3.2.3</span> Weather predictors</h4>
+<p>Candidate variables include hourly precipitation, precipitation intensity, temperature, apparent temperature, wind, and severe-weather indicators. Interactions with hour of day or season may be useful, but should be justified and evaluated on held-out periods. Record the weather source, spatial cell, observation or forecast timestamp, units, missingness, and any imputation for every variable.</p>
+</section>
+<section id="modeling-table-checks" class="level4" data-number="3.2.4">
+<h4 data-number="3.2.4" class="anchored" data-anchor-id="modeling-table-checks"><span class="header-section-number">3.2.4</span> Modeling-table checks</h4>
+<p>Before training, report:</p>
+<ol type="1">
+<li>the date range and number of station-hour rows;</li>
+<li>target distribution and percentage of zero-demand hours;</li>
+<li>missingness by feature and time period;</li>
+<li>station and weather-cell coverage;</li>
+<li>duplicate station-hour keys; and</li>
+<li>evidence that features use only information available at prediction time.</li>
+</ol>
+</section>
+</section>
+<section id="modeling-template" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="modeling-template"><span class="header-section-number">3.3</span> Modeling template</h3>
+<section id="baseline-model" class="level4" data-number="3.3.1">
+<h4 data-number="3.3.1" class="anchored" data-anchor-id="baseline-model"><span class="header-section-number">3.3.1</span> Baseline model</h4>
+<p>Fit a reproducible baseline using calendar, time, station, and approved lagged demand features without external weather variables. A simple seasonal or historical-average benchmark should be included so that more complex models must demonstrate practical improvement.</p>
+</section>
+<section id="weather-enhanced-model" class="level4" data-number="3.3.2">
+<h4 data-number="3.3.2" class="anchored" data-anchor-id="weather-enhanced-model"><span class="header-section-number">3.3.2</span> Weather-enhanced model</h4>
+<p>Fit a comparable model using the same rows, split, preprocessing, and baseline features, then add the weather variables. Keeping all other conditions fixed isolates the incremental predictive value of weather.</p>
+</section>
+<section id="candidate-algorithms" class="level4" data-number="3.3.3">
+<h4 data-number="3.3.3" class="anchored" data-anchor-id="candidate-algorithms"><span class="header-section-number">3.3.3</span> Candidate algorithms</h4>
+<p>The proposal identifies linear regression, decision trees, and random forests as initial candidates. Start with interpretable specifications, then add model complexity only when chronological validation shows a meaningful benefit.</p>
+<div id="267ce1a5" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modeling skeleton to complete after the station-hour table is available.</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> <span class="st">"trip_starts"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>baseline_features <span class="op">=</span> [</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calendar, station, and leakage-safe lag features</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>weather_features <span class="op">=</span> [</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># precipitation, temperature, wind, and approved interactions</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Sort by observation time.</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Create chronological training, validation, and test periods.</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Fit the baseline model on baseline_features.</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Fit the weather model on baseline_features + weather_features.</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Evaluate both models on the identical held-out observations.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
+<section id="model-evaluation-template" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="model-evaluation-template"><span class="header-section-number">3.4</span> Model evaluation template</h3>
+<section id="chronological-validation" class="level4" data-number="3.4.1">
+<h4 data-number="3.4.1" class="anchored" data-anchor-id="chronological-validation"><span class="header-section-number">3.4.1</span> Chronological validation</h4>
+<p>Preserve time order rather than relying on a random row split. Document the exact training, validation, and test boundaries and ensure that feature engineering is refit within each training period. Where practical, use rolling-origin evaluation to determine whether conclusions are stable across seasons.</p>
+</section>
+<section id="primary-metrics" class="level4" data-number="3.4.2">
+<h4 data-number="3.4.2" class="anchored" data-anchor-id="primary-metrics"><span class="header-section-number">3.4.2</span> Primary metrics</h4>
+<p>Use MAE as an easily interpreted average error and RMSE to place more weight on large misses. Report performance at both the overall and station levels, and compare high-, medium-, and low-demand periods.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Feature set</th>
+<th>Test period</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: right;">RMSE</th>
+<th style="text-align: right;">Change from baseline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Seasonal benchmark</td>
+<td>Historical pattern</td>
+<td><em>To complete</em></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>Baseline model</td>
+<td>Time + station + approved lags</td>
+<td><em>To complete</em></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>Weather-enhanced model</td>
+<td>Baseline + weather</td>
+<td><em>To complete</em></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="error-analysis" class="level4" data-number="3.4.3">
+<h4 data-number="3.4.3" class="anchored" data-anchor-id="error-analysis"><span class="header-section-number">3.4.3</span> Error analysis</h4>
+<p>Complete the following after generating held-out predictions:</p>
+<ul>
+<li>Plot actual and predicted demand over time.</li>
+<li>Examine residuals by station, hour, weekday, season, and weather condition.</li>
+<li>Identify unusually high- and low-demand periods with large errors.</li>
+<li>Check whether weather improves average performance consistently or only during severe conditions.</li>
+<li>Report both statistical improvement and operational relevance.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="training-and-retraining-strategy" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="training-and-retraining-strategy"><span class="header-section-number">4</span> Training and retraining strategy</h2>
+<p>Evaluate monthly retraining with a rolling 12-month window. This gives each fit a full seasonal cycle while allowing the model to adapt to newer commuting patterns and system expansion. A production design should also monitor input coverage, feature drift, prediction error, and station-network changes between scheduled retraining runs.</p>
+</section>
+<section id="minimum-viable-product-progress" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="minimum-viable-product-progress"><span class="header-section-number">5</span> Minimum viable product progress</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">Archive current Citi Bike station information.</label></li>
+<li><label><input type="checkbox" checked="">Archive a current station-status snapshot.</label></li>
+<li><label><input type="checkbox" checked="">Create station-to-HRRR weather-cell mappings.</label></li>
+<li><label><input type="checkbox" checked="">Complete preliminary live station and weather-grid EDA.</label></li>
+<li><label><input type="checkbox">Build the historical station-hour demand table.</label></li>
+<li><label><input type="checkbox">Obtain and validate historical weather measurements.</label></li>
+<li><label><input type="checkbox">Join weather and Citi Bike observations by time and location.</label></li>
+<li><label><input type="checkbox">Finalize the numeric demand target and leakage-safe predictors.</label></li>
+<li><label><input type="checkbox">Train a baseline model without weather.</label></li>
+<li><label><input type="checkbox">Train a comparable weather-enhanced model.</label></li>
+<li><label><input type="checkbox">Evaluate both models on held-out chronological data using MAE and RMSE.</label></li>
+<li><label><input type="checkbox">Present actual-versus-predicted plots and weather-related findings.</label></li>
+</ul>
+</section>
+<section id="limitations-and-risks" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="limitations-and-risks"><span class="header-section-number">6</span> Limitations and risks</h2>
+<ul>
+<li>A single live status snapshot describes availability, not historical demand or a temporal relationship.</li>
+<li>The current weather files provide spatial mapping only; they contain no precipitation, temperature, or wind values.</li>
+<li>Station definitions and locations can change over time, creating a slowly changing dimension that must be handled in historical joins.</li>
+<li>Weather may be correlated with season or time of day, so model comparison and leakage-safe chronological validation are essential.</li>
+<li>Results from one period may not generalize after system expansion or changes in commuting behavior.</li>
+</ul>
+</section>
+<section id="conclusions-and-operational-implications" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="conclusions-and-operational-implications"><span class="header-section-number">7</span> Conclusions and operational implications</h2>
+<ol type="1">
+<li><strong>Demand patterns:</strong> Summarize the strongest temporal and station-level patterns found in the final EDA.</li>
+<li><strong>Weather contribution:</strong> State whether weather improved held-out MAE or RMSE and quantify the improvement relative to the baseline.</li>
+<li><strong>Conditions of greatest impact:</strong> Identify weather conditions, seasons, stations, or times for which performance changed most.</li>
+<li><strong>Operational use:</strong> Explain how the forecast could inform bike rebalancing or dock-capacity decisions.</li>
+<li><strong>Recommendation:</strong> Recommend deployment, further testing, or retaining the simpler baseline based on predictive and operational evidence.</li>
+</ol>
+</section>
+<section id="reproducibility" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="reproducibility"><span class="header-section-number">8</span> Reproducibility</h2>
+<p>From the <code>DATA 622</code> directory, refresh the local reference inputs with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> citibike_project/refresh_live_data.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then render this report from <code>citibike_project</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render citibike_demand_project_proposal.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Archived feed timestamps, poller versions, and Git SHAs should remain with all raw snapshots so results can be traced to the data and code that produced them.</p>
+</section>
+<section id="references" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="references"><span class="header-section-number">9</span> References</h2>
+<ul>
+<li>Citi Bike. <a href="https://citibikenyc.com/system-data">Citi Bike System Data</a>.</li>
+<li>National Severe Storms Laboratory. <a href="https://www.nssl.noaa.gov/projects/mrms/">Multi-Radar Multi-Sensor System</a>.</li>
+<li>Open-Meteo. <a href="https://open-meteo.com/en/docs/gfs-api">GFS and HRRR Forecast API</a>.</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
