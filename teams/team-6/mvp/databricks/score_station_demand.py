@@ -54,7 +54,7 @@ prediction_dir = artifact_root / "predictions"
 prediction_dir.mkdir(parents=True, exist_ok=True)
 stamp = as_of.strftime("%Y%m%dT%H%M%S%fZ")
 prediction_path = prediction_dir / f"next_hour_{stamp}.parquet"
-predictions.to_parquet(prediction_path, index=False)
+prediction_path.write_bytes(predictions.to_parquet(index=False))
 print(f"PREDICTIONS={prediction_path}")
 display(predictions[[
     "station_id", "station_name", "target_new_york", "model_used", "predicted_departures",

@@ -73,7 +73,7 @@ def save_forecasts(forecasts: pd.DataFrame, directory: Path) -> Path:
     stamp = forecasts.received_at_utc.max().strftime("%Y%m%dT%H%M%S%fZ")
     path = directory / f"open_meteo_{stamp}.parquet"
     with path.open("xb") as output:
-        forecasts.to_parquet(output, index=False)
+        output.write(forecasts.to_parquet(index=False))
     return path
 
 

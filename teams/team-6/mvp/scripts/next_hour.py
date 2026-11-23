@@ -127,12 +127,17 @@ def fit_and_save(data_dir: Path, model_dir: Path) -> dict:
     }
 
     model_dir.mkdir(parents=True, exist_ok=False)
+    # Unity Catalog volumes require sequential writes. save_model() opens the
+    # file twice and uses append mode for LightGBM's pandas category metadata.
     for name, model in fitted.items():
-        model.save_model(str(model_dir / f"{name}.txt"))
-    curve.to_parquet(model_dir / "demand_curves.parquet", index=False)
-    scored.to_parquet(model_dir / "backtest_predictions.parquet", index=False)
-    pd.DataFrame(by_station_hour).to_parquet(model_dir / "metrics_by_station_hour.parquet", index=False)
-    station_map.to_parquet(model_dir / "stations.parquet", index=False)
+        (model_dir / f"{name}.txt").write_text(model.model_to_string(), encoding="utf-8")
+    for filename, table in {
+        "demand_curves.parquet": curve,
+        "backtest_predictions.parquet": scored,
+        "metrics_by_station_hour.parquet": pd.DataFrame(by_station_hour),
+        "stations.parquet": station_map,
+    }.items():
+        (model_dir / filename).write_bytes(table.to_parquet(index=False))
     (model_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest
 
@@ -195,7 +200,7 @@ def score_next_hour(model_dir: Path, as_of, mode="both", station_id="", forecast
         frame["weather_source"] = pd.Series(pd.NA, index=frame.index, dtype="string")
         frame[WEATHER_FEATURES] = np.nan
     for name, rows in frame.groupby("model_used").groups.items():
-        model = lgb.Booster(model_file=str(model_dir / f"{name}.txt"))
+        model = lgb.Booster(model_str=(model_dir / f"{name}.txt").read_text(encoding="utf-8"))
         frame.loc[rows, "predicted_departures"] = np.maximum(
             model.predict(frame.loc[rows, MODEL_FEATURES[name]], num_threads=4), RATE_FLOOR
         )
