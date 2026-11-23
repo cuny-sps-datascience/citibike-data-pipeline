@@ -32,6 +32,8 @@ The compact historical dataset currently supports **the nominal target-month rel
 
 The same release-receipt CSV can be supplied to historical training to use known availability wherever the receipts cover the study period. Once supplied, missing months are treated as unavailable. Monitoring always requires verified receipts to assign a score.
 
+Databricks reproduced the table above and logged the fold results to MLflow on Nov 23, 2026. The registry contains LightGBM `champion` version 2 and Poisson `challenger` version 1. Both versions scored six stations for the 2 p.m. New York hour using Open-Meteo forecasts captured before issue. The monitoring refresh retained all 12 forecast rows as pending because their target hours had yet to finish. Its evaluated-row count was zero. The forecast and monitoring outputs are under `/Volumes/workspace/citibike_3h/exports/team6_next_hour/professor-adaptations-20261123`. [Training and registration run](https://dbc-d00cbd4c-c74c.cloud.databricks.com/?o=7474644096185196#job/879427206491328/run/322811839115423) · [Live scoring and monitoring run](https://dbc-d00cbd4c-c74c.cloud.databricks.com/?o=7474644096185196#job/714909205400302/run/762173014669954)
+
 ## GitHub integration plan
 
 | Work | Disposition |
