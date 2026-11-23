@@ -1,5 +1,7 @@
 # Team 6 MVP — 6-station hourly departure forecast
 
+For the post-demo next-hour model, see [Databricks training, scoring, and source plan](databricks/README.md).
+
 Scope agreed 11/6: few stations, deep history, departures as the target, three models compared
 (calendar only → + weather → + weather + subway). This folder holds the data prep and **model 1**.
 

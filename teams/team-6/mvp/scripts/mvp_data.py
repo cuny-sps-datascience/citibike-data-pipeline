@@ -75,7 +75,7 @@ def build_frame(h: pd.DataFrame | None = None, splits: dict = SPLITS) -> pd.Data
     return df[df.split.notna()].reset_index(drop=True)
 
 
-def add_weather(df: pd.DataFrame) -> pd.DataFrame:
+def add_weather(df: pd.DataFrame, data_dir: Path = MVP_ROOT / "data") -> pd.DataFrame:
     """Attach forecast weather for each row's TARGET hour and flag rows where it is usable.
 
     The two sources number horizons differently:
@@ -86,15 +86,17 @@ def add_weather(df: pd.DataFrame) -> pd.DataFrame:
     target hour, and we assert that the two target timestamps are equal on every joined row. Using the previous
     weather origin also guarantees the selected model run was available before the 5-minute issue cutoff.
     """
-    smap = pd.read_csv(MVP_ROOT / "data" / "station_map.csv", dtype={"station_id": str})
-    w = pd.read_parquet(MVP_ROOT / "data" / "weather_6stations.parquet")
+    smap = pd.read_csv(data_dir / "station_map.csv", dtype={"station_id": str})
+    w = pd.read_parquet(data_dir / "weather_6stations.parquet")
     w = w.rename(columns={"forecast_origin_utc": "weather_origin_utc", "forecast_horizon": "horizon",
                           "target_hour_utc": "weather_target_hour_utc"})
     out = df.merge(smap[["station_id", "weather_request_class"]].astype({"station_id": str}),
-                   left_on=df.station_id.astype(str), right_on="station_id", how="left", suffixes=("", "_map"))
+                   left_on=df.station_id.astype(str), right_on="station_id", how="left",
+                   suffixes=("", "_map"), validate="many_to_one")
     out = out.drop(columns=[c for c in ("key_0", "station_id_map") if c in out.columns])
     out["weather_origin_utc"] = out.origin_utc - pd.Timedelta(hours=1)
-    out = out.merge(w, on=["weather_request_class", "weather_origin_utc", "horizon"], how="left")
+    out = out.merge(w, on=["weather_request_class", "weather_origin_utc", "horizon"], how="left",
+                    validate="many_to_one")
     joined = out.weather_target_hour_utc.notna()
     if not (out.loc[joined, "weather_target_hour_utc"] == out.loc[joined, "target_hour_utc"]).all():
         raise ValueError("weather target hour does not match the departure target hour")
