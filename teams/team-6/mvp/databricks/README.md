@@ -30,7 +30,9 @@ The acceptance check is one Databricks training run and one next-hour score with
 - **Poisson log loss** is the negative log probability of the observed count. The model provides the expected count and the Poisson distribution supplies the probability of that count. Rates have a 0.1 lower bound. MAE is secondary. Comparing calendar, weather, and both on identical rows isolates the information in each input set.
 - In the original Colab convention, horizon 2 is the target one hour after the origin. We retain that horizon and the original date splits. The retrospective March–August test period was already used in earlier exploration. Freeze the model and weighting, then evaluate on fresh forward data with matched forecasts before making a live-performance claim.
 
-## Local acceptance results
+## Validation
+
+Databricks serverless trained all three model variants and saved the boosters, station curves and retrospective predictions in Unity Catalog. The live scoring run used a current ECMWF forecast for all six stations. [Databricks training run](https://dbc-d00cbd4c-c74c.cloud.databricks.com/?o=7474644096185196#job/107505380933494/run/617109931608033) · [Databricks live scoring run](https://dbc-d00cbd4c-c74c.cloud.databricks.com/?o=7474644096185196#job/813444845826644/run/719524888056)
 
 On 23,358 matched next-hour test rows, calendar plus weather had the lowest scores. The two log-loss columns measure the same per-row loss with different weights.
 
@@ -52,7 +54,7 @@ The curves show distinct weekday peaks. These are training-period averages acros
 | W 21 St & 6 Ave | 6 p.m. | 57.1 |
 | Amsterdam Ave & W 73 St | 8 a.m. | 23.9 |
 
-On Nov 23, 2026 the local runtime captured forecasts for all three grid classes at about 12:53 p.m. New York time and scored all six stations for the 1 p.m. hour. Broadway & E 14 St was forecast at 25.7 departures compared with its usual 19.1 for that hour. A stale-snapshot check selected the calendar fallback at all six stations.
+At 1:09 p.m. New York time on Nov 23, 2026, Databricks scored all six stations for the 2 p.m. hour. Broadway & E 14 St was forecast at 28.3 departures compared with its usual 21.8 for that hour. The forecasts were retrieved before the scoring timestamp. A separate local stale-snapshot check selected the calendar fallback at all six stations.
 
 ## Source decisions
 
