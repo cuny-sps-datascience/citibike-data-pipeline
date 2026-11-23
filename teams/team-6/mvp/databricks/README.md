@@ -2,6 +2,36 @@
 
 The model estimates **recorded departures** for the next New York clock hour at six pilot stations. Given an issue time of 1:05 p.m., it predicts trips beginning from 2:00 through 2:59 p.m. Train and score in Databricks, using the original Colab comparison as a reproducible starting point. Reported departures measure completed trips. Inventory and unmet demand require separate evidence.
 
+## Adapting the professor's workflow
+
+The professor's model estimates whether a new stockout will occur in the next 30 minutes. Team 6 estimates an hourly count of recorded departures. We adapted his validation, modeling, and deployment methods to the timing of Citi Bike's monthly count labels and the different daily curves of the six pilot stations. [Professor's training notebook](https://github.com/cuny-sps-datascience/citibike-data-pipeline/blob/a778401df8e1c33ed7b09020b78fa0d6555c155a/free_edition_models/4-train-sklearn-FE.ipynb) · [Professor's live monitoring notebook](https://github.com/cuny-sps-datascience/citibike-data-pipeline/blob/a778401df8e1c33ed7b09020b78fa0d6555c155a/free_edition_models/4-publish-log-loss-chart.ipynb)
+
+1. **Fit using only labels available at the time.** We reused the professor's expanding-window approach. Each outer fold fits five minutes before the first nominal issue time for that New York target month. A row can enter fitting only after its departure hour ends and its month has a release timestamp strictly earlier than fitting. The latest complete mature month is used for tuning. The inner training fit observes its own earlier cutoff. After tuning, both models refit on the same eligible data available to the outer fold. Each fold also rebuilds its historical average and station-hour weights using those fitting rows.
+2. **Compare LightGBM with a regularized count model.** The professor's 24-hour and 12-hour sine and cosine terms give a smooth daily cycle and permit two daily peaks. The Poisson challenger gives each station its own cycle, with separate adjustments on weekends. It also uses day of week, holidays, annual terms, and the same forecast weather as LightGBM. The L2 penalty is selected on inner validation using Poisson log loss. The comparison uses the same held-out station-hours for both models. This tests whether the boosted trees improve on a simpler count model with distinct station curves.
+3. **Separate training, live scoring, and evaluation.** MLflow records settings, fold losses, the tuning decisions, and pooled metrics. A registry training run saves the Poisson bundle as `challenger`. The already verified LightGBM bundle can initialize `champion` when that alias is first created. Later challenger training leaves the champion alias under explicit review. Scoring resolves an alias once, loads that exact model version, and saves it on each prediction row along with the issue, target and forecast receipt times. The monitoring notebook joins frozen forecasts to validated counts once release evidence is available. It separates model versions and reports coverage, Poisson log loss and MAE by station and local hour. [Databricks model registry and aliases](https://docs.databricks.com/aws/en/machine-learning/manage-model-lifecycle/)
+
+### Release-aware results
+
+The March through Aug 10, 2026 comparison contains 23,358 matched rows in six monthly folds. August is a partial **evaluation** fold. Lower is better for every metric.
+
+| Model | Poisson log loss | Weighted Poisson log loss | MAE (departures/hour) |
+|---|---:|---:|---:|
+| Historical station, weekday and hour average | 3.354 | 2.280 | 4.48 |
+| Regularized Poisson challenger | 3.219 | 2.341 | 4.23 |
+| LightGBM with calendar and weather | 2.722 | 1.942 | 3.40 |
+
+LightGBM leads on both versions of log loss. The Poisson model improves the unweighted score over historical averages, while its weighted score is higher. That distinction matters because the weighted score gives quieter station-hours more influence.
+
+The compact historical dataset currently supports **the nominal target-month release assumption** used in Team 6's earlier work. The backtest defaults to month end plus 45 days at 00:00 UTC. This is a retrospective timing assumption. The compact file lacks per-trip-file provenance, and some historical forecast availability times are also reconstructed. A verified receipt must give the timestamp when all files and validated counts supporting that target month became available. The tested March–August window was already used in project development. Keep a fresh period for any final performance claim.
+
+### Run the release-aware workflow
+
+1. Run `train_release_aware.py` with the same `data_dir` as the original training notebook. Use `run_mode=dev` to log a development comparison, or `run_mode=register` to update the challenger alias in `workspace.citibike_3h.team6_next_hour_departures`. Set `champion_bootstrap_dir` to a verified LightGBM model directory when initializing the champion for the first time. Subsequent scoring runs can choose either alias.
+2. Run `score_station_demand.py` with `model_dir` blank to score by registry alias. The default is `champion`. Set `artifact_root` to the scoring output directory in a writable volume. An explicit `model_dir` continues to support direct replay of the original volume bundles. Archive the forecast rows with the exact version and the saved station-hour weight.
+3. Run `monitor_station_demand.py` with the same `artifact_root`. To score released outcomes, pass a validated hourly Parquet file with `station_id`, `hour_utc`, and `departures`, and a release CSV with unique `target_month` values (YYYY-MM) and `label_available_at_utc` values with time zones. An absent receipt leaves the row pending. An available receipt with no validated count leaves the row awaiting a count. Validated zeros enter the metrics. Monitoring reports pending and evaluated row counts alongside the loss, so gaps in outcome coverage are visible.
+
+The same release-receipt CSV can be supplied to historical training to use known availability wherever the receipts cover the study period. Once supplied, missing months are treated as unavailable. Monitoring always requires verified receipts to assign a score.
+
 ## GitHub integration plan
 
 | Work | Disposition |
@@ -13,7 +43,7 @@ The model estimates **recorded departures** for the next New York clock hour at 
 
 Archived branch heads are identifiable by the `archive/team-6/` tags. New Team 6 implementation PRs target `team-6`.
 
-## Run the end-to-end demo
+## Reproduce the original volume-based demo
 
 1. Open the feature branch in a Databricks Git folder. Open `mvp/databricks/train_station_demand.py` with Python serverless notebook compute. The notebook installs `requirements-databricks.txt`. The Git folder includes the compact, derived Parquet inputs that backed the Colab study. Alternatively, set `data_dir` to a Unity Catalog volume directory containing `trips_6stations_hourly.parquet`, `station_map.csv`, and `weather_6stations.parquet`.
 2. Use the default `artifact_root` if you have write access to the Team 6 exports volume, or set it to another existing writable volume directory. Run the training notebook. It displays the weekday and weekend curves, overall scores, and scores by station and local hour. Keep the printed `MODEL_DIR`. The output includes versioned boosters, station curves, metrics and held-out predictions.

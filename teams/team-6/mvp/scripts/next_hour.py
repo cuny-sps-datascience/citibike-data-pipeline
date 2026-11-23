@@ -64,14 +64,42 @@ def poisson_log_loss(counts, rates) -> np.ndarray:
     return rate - y * np.log(rate) + gammaln(y + 1)
 
 
-def fit_and_save(data_dir: Path, model_dir: Path) -> dict:
+def load_next_hour(data_dir: Path, splits=SPLITS_COMMON) -> pd.DataFrame:
     trip_hours = load_hourly(data_dir / "trips_6stations_hourly.parquet")
-    stations = sorted(trip_hours.station_id.astype(str).unique())
-    frame = build_frame(trip_hours, splits=SPLITS_COMMON)
+    frame = build_frame(trip_hours, splits=splits)
     next_hour = frame.loc[frame.horizon.eq(NEXT_HOUR)].copy()
     next_hour = add_weather(next_hour, data_dir)
     if next_hour.duplicated(["station_id", "target_hour_utc"]).any():
         raise ValueError("Expected one next-hour label per station and target hour.")
+    return next_hour
+
+
+def fit_lightgbm(train, features, validation=None, iterations=3000):
+    model = lgb.LGBMRegressor(
+        objective="poisson", n_estimators=iterations, learning_rate=0.03, num_leaves=63,
+        min_child_samples=50, subsample=0.8, subsample_freq=1, colsample_bytree=0.9,
+        random_state=622, n_jobs=4, verbosity=-1,
+    )
+    options = {} if validation is None else {
+        "eval_set": [(validation[features], validation[TARGET])],
+        "eval_metric": "poisson",
+        "callbacks": [lgb.early_stopping(150, verbose=False)],
+    }
+    model.fit(train[features], train[TARGET], categorical_feature=["station_id"], **options)
+    return model.booster_
+
+
+def load_station_map(data_dir, stations):
+    station_map = pd.read_csv(data_dir / "station_map.csv", dtype={"station_id": str})
+    station_map = station_map[["station_id", "station_name", "weather_request_class"]]
+    if set(station_map.station_id) != set(stations) or station_map.station_id.duplicated().any():
+        raise ValueError("Expected one weather mapping for each trained station.")
+    return station_map
+
+
+def fit_and_save(data_dir: Path, model_dir: Path) -> dict:
+    next_hour = load_next_hour(data_dir)
+    stations = sorted(next_hour.station_id.astype(str).unique())
     curve = demand_curves(next_hour.loc[next_hour.split.eq("train")])
     eligible = attach_curve(next_hour.loc[next_hour.weather_eligible], curve)
     eligible["station_id"] = pd.Categorical(eligible.station_id, categories=stations)
@@ -79,20 +107,7 @@ def fit_and_save(data_dir: Path, model_dir: Path) -> dict:
     if train.empty or validation.empty:
         raise ValueError("Training and validation both require weather-eligible observations.")
 
-    fitted = {}
-    for name, features in MODEL_FEATURES.items():
-        model = lgb.LGBMRegressor(
-            objective="poisson", n_estimators=3000, learning_rate=0.03, num_leaves=63,
-            min_child_samples=50, subsample=0.8, subsample_freq=1, colsample_bytree=0.9,
-            random_state=622, n_jobs=4, verbosity=-1,
-        )
-        model.fit(
-            train[features], train[TARGET],
-            eval_set=[(validation[features], validation[TARGET])],
-            eval_metric="poisson", categorical_feature=["station_id"],
-            callbacks=[lgb.early_stopping(150, verbose=False)],
-        )
-        fitted[name] = model.booster_
+    fitted = {name: fit_lightgbm(train, features, validation) for name, features in MODEL_FEATURES.items()}
 
     scored = eligible.loc[eligible.split.isin(["validation", "test"])].copy()
     if not scored.split.eq("test").any():
@@ -112,10 +127,7 @@ def fit_and_save(data_dir: Path, model_dir: Path) -> dict:
         )
         for model_name in ("baseline", *MODEL_FEATURES)
     ]
-    station_map = pd.read_csv(data_dir / "station_map.csv", dtype={"station_id": str})
-    station_map = station_map[["station_id", "station_name", "weather_request_class"]]
-    if set(station_map.station_id) != set(stations) or station_map.station_id.duplicated().any():
-        raise ValueError("Expected one weather mapping for each trained station.")
+    station_map = load_station_map(data_dir, stations)
     manifest = {
         "trained_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
         "target": "recorded_departures",
@@ -199,14 +211,21 @@ def score_next_hour(model_dir: Path, as_of, mode="both", station_id="", forecast
         frame["received_at_utc"] = pd.Series(pd.NaT, index=frame.index, dtype="datetime64[ns, UTC]")
         frame["weather_source"] = pd.Series(pd.NA, index=frame.index, dtype="string")
         frame[WEATHER_FEATURES] = np.nan
+    family = manifest.get("estimator_family", "lightgbm")
     for name, rows in frame.groupby("model_used").groups.items():
-        model = lgb.Booster(model_str=(model_dir / f"{name}.txt").read_text(encoding="utf-8"))
-        frame.loc[rows, "predicted_departures"] = np.maximum(
-            model.predict(frame.loc[rows, MODEL_FEATURES[name]], num_threads=4), RATE_FLOOR
-        )
+        if family == "poisson_glm":
+            from poisson_challenger import predict_saved_glm
+
+            rates = predict_saved_glm(model_dir / f"{name}.joblib", frame.loc[rows], name)
+        else:
+            model = lgb.Booster(model_str=(model_dir / f"{name}.txt").read_text(encoding="utf-8"))
+            rates = model.predict(frame.loc[rows, MODEL_FEATURES[name]], num_threads=4)
+        frame.loc[rows, "predicted_departures"] = np.maximum(rates, RATE_FLOOR)
     frame["relative_to_typical"] = frame.predicted_departures.div(frame.typical_departures.replace(0, np.nan))
     frame["target_new_york"] = frame.target_hour_utc.dt.tz_convert("America/New_York").astype(str)
     frame["requested_model"] = mode
+    frame["estimator_family"] = family
+    frame["bundle_version"] = manifest.get("bundle_version") or model_dir.name
     return frame
 
 

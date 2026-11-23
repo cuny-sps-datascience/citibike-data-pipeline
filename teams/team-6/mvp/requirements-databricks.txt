@@ -1,5 +1,6 @@
 lightgbm==4.7.0
 matplotlib>=3.8
+mlflow>=3,<4
 numpy>=1.26,<3
 pandas>=2.2,<4
 pyarrow>=15
